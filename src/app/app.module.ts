@@ -3,19 +3,38 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login';
 import { DashboardComponent } from './dashboard/dashboard';
-import { AppRoutingModule } from './app-routing.module'; // Importa AppRoutingModule
+import { AppRoutingModule } from './app-routing.module';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { FormsModule } from '@angular/forms';
+
+// Configuración de Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyBhSsqGVw9Lt0WEUSsRw4X2OAiAX1vKE2g",
+  authDomain: "adventureforge-fabulasdesapo.firebaseapp.com",
+  projectId: "adventureforge-fabulasdesapo",
+  storageBucket: "adventureforge-fabulasdesapo.firebasestorage.app",
+  messagingSenderId: "35104120341",
+  appId: "1:35104120341:web:4a534960ead69c6482f81c",
+  measurementId: "G-7MEZM0BC26"
+};
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule // Importar el módulo de rutas
+    AppRoutingModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [
+    provideFirebaseApp(() => initializeApp(firebaseConfig)), // Mover aquí
+    provideAuth(() => getAuth()), // Mover aquí
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
