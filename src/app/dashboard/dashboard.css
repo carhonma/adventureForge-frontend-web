@@ -1,20 +1,57 @@
 
   .dashboard-container {
     padding: 1rem;
-    
     border-radius: 8px;
-    justify-content: center;
-    align-items: center;
     place-items: center;
-  
-  div{
-    width: fit-content;
+  }
+  .center-container {
+    position: relative;
+    padding: 8px;
+    min-height: 70vh; /* Ocupa el 100% de la altura de la pantalla */
     background-color: #c4e0ff;
-    padding: 10px;
-    border-radius: 10px;
+    border-radius: 4px;
+    
+    overflow: auto; /* Añade scroll si el contenido es demasiado grande */
+    margin: 0; /* Elimina márgenes por defecto */
+    flex-direction: column;
+
+  span{
+    font-family: 'Arial', sans-serif; /* Cambia el tipo de fuente */
+    font-size: 16px; /* Tamaño de la letra */
+    font-weight: bold; /* Grosor de la letra (normal, bold, lighter) */
+    color: #022347; /* Color del texto */
+    align-self: flex-start;
   }
   }
 
+  /* Contenedor principal para los botones de los héroes */
+.heroes-container {
+  flex-direction: column; /* Apila los botones verticalmente */
+  justify-content: flex-start; /* Alinea los botones desde la parte superior */
+  padding: 20px;
+  gap: 10px; /* Espacio entre botones */
+  background-color: #c4e0ff;
+  border-radius: 4px;
+
+}
+
+/* Estilo de los botones individuales */
+.heroes-container button {
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white; /* Color del texto */
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.heroes-container button:hover {
+  background-color: #63acfa;
+}
 
   h2 {
     text-align: center;
@@ -41,4 +78,93 @@
     border-radius: 4px;
     font-size: 1.3rem;
     
+  }
+  button {
+    margin: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #007bff;
+    color: white;
+  }
+  .image-container {
+    margin: 20px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #e24a84;
+    width: 300px;
+    align-self: flex-start;
+  }
+  
+  .image-container img {
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+    border-radius: 8px;
+    align-self: flex-start;
+  }
+  img:hover {
+    background-color: #f3f9ff15;
+    color: white;
+  }
+  .hero-title {
+    position: fixed;
+    margin: 5px;
+    text-align: center;
+    padding: 1rem;
+    border: 2px solid #ffffff20;
+    border-radius: 8px;
+    background-color: #6a99ce;
+    align-self: flex-start;
+  }
+  .hero-details {
+    min-height: 70vh;
+    text-align: center;
+    padding: 1rem;
+    border: 2px solid #ffffff20;
+    border-radius: 8px;
+    background-color: #0c0e0f48;
+  }
+  .hero-details div{
+    margin: 1cm;
+    display: inline-block;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: flex-end;
+    max-width: 20vh;
+    align-self:center;
+    text-align: center;
+    padding: 1rem;
+    border: 2px solid #ffffff20;
+    border-radius: 8px;
+    background-color: #c4e0ff;
+  }
+  .hero-ausencia {
+    align-content:flex-end;
+    position: relative;
+    text-align: center;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #e6f1ff;
+  }
+  
+  .no-hero-selected {
+    font-size: 1.2rem;
+    color: #555;
+    font-style: italic;
+    margin: 20px 0;
+  }
+  
+  .hero-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-top: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }

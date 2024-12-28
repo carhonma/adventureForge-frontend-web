@@ -1,6 +1,58 @@
 <div class="dashboard-container">
-<div>
-  <h2>{{title}}</h2>
-  
-</div>
+  <table>
+    <tr>
+      <!-- Columna principal para detalles del héroe -->
+      <td style="width: 80%;">
+        <div class="center-container"[ngStyle]="{ 'background-color': heroType !== 'sin tipo' ? heroLongBackground : '#f9f9f9' }">
+          <div class="hero-ausencia" *ngIf="heroName === 'sin nombre'">
+            <!-- Mostrar mensaje si no se ha seleccionado ningún héroe -->
+              <p class="no-hero-selected">🔔 ¡Selecciona un héroe para ver sus detalles!</p>
+            </div>
+            <div class="hero-title"*ngIf="heroName != 'sin nombre'"[ngStyle]="{ 'background-color': heroType !== 'sin tipo' ? heroBackground : '#f9f9f9' }">
+            <!-- Mostrar detalles del héroe si se ha seleccionado uno -->
+              <h3>{{ heroName }}</h3>
+              <img *ngIf="imageUrl" [src]="imageUrl" alt="{{ heroName }}" class="hero-image" />
+          </div>
+          <div class="hero-details"*ngIf="heroName != 'sin nombre'">
+            <div [ngStyle]="{ 'background-color': heroType !== 'sin tipo' ? heroLongBackground : '#f9f9f9' }">
+              <h3>Level: {{ heroLevel }}</h3>
+              <p>Vida: {{ heroActualLife }}</p>
+              <p>Exp: {{ heroActualExp }}</p>
+            </div>
+            <div [ngStyle]="{ 'background-color': heroType !== 'sin tipo' ? heroLongBackground : '#f9f9f9' }">
+              <p>skill1: {{ heroSkill1 }}</p>
+              <p>skill2: {{ heroSkill2 }}</p>
+              <p>skill3: {{ heroSkill3 }}</p>
+              <p>skill4: {{ heroSkill4 }}</p>
+              <p>skill5: {{ heroSkill5 }}</p>
+            </div>
+            <div [ngStyle]="{ 'background-color': heroType !== 'sin tipo' ? heroLongBackground : '#f9f9f9' }">
+              <p>Dbrutal: {{ heroDbrutal }}</p>
+              <p>Dletal: {{ heroDletal }}</p>
+              <p>Dmistic: {{ heroDmistic }}</p>
+              <p>Armor: {{ heroArmor }}</p>
+              <p>Resistance: {{ heroResistance }}</p>
+              <p>Accuracy: {{ heroAccuracy }}</p>
+              <p>Evasion: {{ heroEvasion }}</p>
+              <p>Critic: {{ heroCritic }}</p>
+              <p>MaxHealth: {{ heroMaxHealth }}</p>
+              <p>MaxExp: {{ heroMaxExp }}</p>
+            </div>  
+            </div>
+        </div>
+      </td>
+
+      <!-- Columna secundaria para la lista de héroes -->
+      <td style="width: 20%;">
+        <div class="heroes-container">
+          <h2>Héroes de {{ title }}</h2>
+          <div *ngFor="let hero of heroes">
+            <button (click)="onHeroClick(hero)">
+              {{ hero.name }}
+            </button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
 </div>

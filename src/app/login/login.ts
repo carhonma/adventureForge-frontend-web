@@ -22,8 +22,6 @@ export class LoginComponent {
       // Llamada al servicio para hacer login
       this.authService.login(this.email, this.password)
         .then(() => {
-          console.log('Usuario:', this.email);
-          console.log('Contraseña:', this.password);
           alert('Inicio de sesión exitoso');
           this.router.navigate(['/dashboard']);
         })

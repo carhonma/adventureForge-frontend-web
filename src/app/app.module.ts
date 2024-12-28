@@ -6,6 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard';
 import { AppRoutingModule } from './app-routing.module';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
+import { getFirestore, collection, addDoc,} from "@angular/fire/firestore";
 import { FormsModule } from '@angular/forms';
 
 // Configuración de Firebase
