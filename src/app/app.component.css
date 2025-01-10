@@ -1,12 +1,13 @@
 
-  body {
-    background-color: #7ebcfd;
-    border-radius: 8px;
-    justify-content: center;
-    align-items: center;
-    place-items: center;
-    
-
-  }
+body {
+  background-image: imageUrl; /* Reemplaza con la ruta de tu textura */
+  background-size: cover; /* Ajusta para que la textura cubra todo el fondo */
+  background-repeat: repeat; /* Si deseas que se repita, usa "repeat" */
+  background-attachment: fixed; /* Fija la textura al fondo */
+  border-radius: 8px;
+  display: flex; /* Asegúrate de usar flexbox para centrar contenido */
+  justify-content: center;
+  align-items: center;
+}
 
   
