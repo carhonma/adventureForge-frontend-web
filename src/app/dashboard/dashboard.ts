@@ -8,6 +8,7 @@ import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
 import { Hero,BaseStats} from '../domain/hero';
 import { HeroBackground, HeroIcono, HeroLongBackground, HeroType } from '../enum/heroType';
+import { ImageService } from '../services/image.service';
 
 interface User {
   name: string;
@@ -48,14 +49,39 @@ export class DashboardComponent implements OnInit {
   heroMaxExp: number = 0;  
   heroBackground: string = '#f9f9f9';
   heroLongBackground: string = '#f9f9f9';
-  constructor(private authService: AuthService, private router: Router,private storageService: StorageService) {}
+  heroImageUrls: { [key: string]: string } = {};
+  constructor(private authService: AuthService, private router: Router,private storageService: StorageService,private imageService: ImageService) {}
 
-  ngOnInit() {
+  async ngOnInit(): Promise<void> {
 
     
     this.createFirestoreDocument();
     this.getHerosData();
     this.loadUserData();
+    try {
+      // Precargar las imágenes necesarias
+      await this.imageService.preloadImages([
+        'fondos/desierto4.jpg',
+        'iconos/add.png',
+        'iconos/guerrero.png',
+        'iconos/picaro.png',
+        'iconos/mago.png',
+        'iconos/paladin.png',
+        'iconos/cazador.png',
+        'iconos/clerigo.png',
+      ]);
+    // Obtener las URLs de las imágenes precargadas desde el servicio
+    this.heroImageUrls['FONDO'] = this.imageService.getCachedImage('fondos/desierto4.jpg')!;
+    this.heroImageUrls['ADD'] = this.imageService.getCachedImage('iconos/add.png')!;
+    this.heroImageUrls['GUERRERO'] = this.imageService.getCachedImage('iconos/guerrero.png')!;
+    this.heroImageUrls['PICARO'] = this.imageService.getCachedImage('iconos/picaro.png')!;
+    this.heroImageUrls['MAGO'] = this.imageService.getCachedImage('iconos/mago.png')!;
+    this.heroImageUrls['PALADIN'] = this.imageService.getCachedImage('iconos/paladin.png')!;
+    this.heroImageUrls['CAZADOR'] = this.imageService.getCachedImage('iconos/cazador.png')!;
+    this.heroImageUrls['CLERIGO'] = this.imageService.getCachedImage('iconos/clerigo.png')!;
+  } catch (error) {
+    //console.error('Error al precargar las imágenes:', error);
+  }
   }
  
 async getHerosData() { 
@@ -71,7 +97,6 @@ async getHerosData() {
         this.heroes = await Promise.all(querySnapshot.docs.map(async (docSnapshot) => {
           const heroData = docSnapshot.data();
           const type = heroData['Type'] || 'Tipo Desconocido';
-
           // Referencia al subdocumento BaseStats
           const baseStatsRef = doc(this.firestore, 'heros', userEmail, 'userheros', docSnapshot.id,'Details','BaseStats');
           let baseStats: BaseStats = { Dbrutal: 0, Dletal: 0, Dmistic: 0, armor: 0, resistance: 0, accuracy: 0, evasion: 0, critic: 0, maxHealth: 0, maxExp: 0}; // Valores por defecto

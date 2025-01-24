@@ -6,8 +6,9 @@ import { DashboardComponent } from './dashboard/dashboard';
 import { AppRoutingModule } from './app-routing.module';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
-import { getFirestore, collection, addDoc,} from "@angular/fire/firestore";
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
+import { provideStorage, getStorage } from '@angular/fire/storage';
 
 // Configuración de Firebase
 const firebaseConfig = {
@@ -30,11 +31,14 @@ const firebaseConfig = {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    
   ],
   providers: [
     provideFirebaseApp(() => initializeApp(firebaseConfig)), // Mover aquí
     provideAuth(() => getAuth()), // Mover aquí
+    provideFirestore(() => getFirestore()), // Proporciona Firestore
+    provideStorage(() => getStorage()) // Proporciona Storage
   ],
   bootstrap: [AppComponent]
 })

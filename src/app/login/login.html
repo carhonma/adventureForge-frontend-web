@@ -5,7 +5,10 @@
 <div class="login-container">
   <table class="box">
     <tr>
-    <td style="width: 50%;"><img [src]="imageUrl" alt="imagenHeroe" /></td>
+    <td style="width: 50%;">
+      <img *ngIf="state=='loginState'"style="width: 500px;" [src]="heroImageUrls['MAGO']" alt="imageHeroe" />
+      <img *ngIf="state=='registerState'"style="width: 500px;" [src]="heroImageUrls['PICARO']" alt="imageHeroe" />
+    </td>
       <td style="width: 50%;">
         <div class="fomrulary"*ngIf="state=='loginState'">
     
@@ -32,12 +35,29 @@
           required
         >
       </div>
-      <button type="submit">Entrar</button>
-    </form><br>
-      <button (click)="register(state)">Registar</button>
+      <div style="display: flex; flex-direction: column; align-items: stretch; gap: 10px;">
+        <!-- Contenedor de los dos botones superiores -->
+        <div style="display: flex; gap: 10px;">
+          <button style="flex: 1;">Entrar</button>
+          <button style="flex: 1;" (click)="register(state)">Registrar</button>
+        </div>
+      
+        <!-- Botón inferior -->
+        <div>
+          <button id="googleButton" (click)="getInputsLogin($event)" class="google-button">
+            <label>Iniciar sesión con </label> 
+            <img [src]="otherImageUrls['GOOGLE']" alt="Google Icon"style="width: 20px; height: 20px; "/>
+          </button>
+        </div>
+      </div>
+          
+          
+          
+    
       <div class="link">
         <a href="#">¿Olvidaste tu contraseña?</a>
       </div>
+    </form>
   </div>
 
 
@@ -59,18 +79,18 @@
         <input 
           type="password" 
           placeholder="password" 
-          id="password" 
-          name="password" 
-          [(ngModel)]="password" 
+          id="password1" 
+          name="password1" 
+          [(ngModel)]="password1" 
           required
         >
         <label for="password">Repite contraseña</label>
         <input 
           type="password" 
           placeholder="password" 
-          id="password" 
-          name="password" 
-          [(ngModel)]="password" 
+          id="password2" 
+          name="password2" 
+          [(ngModel)]="password2" 
           required
         >
       </div>

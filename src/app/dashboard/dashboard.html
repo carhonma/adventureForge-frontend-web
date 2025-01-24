@@ -1,58 +1,65 @@
-<div class="dashboard-container">
-  <table>
-    <tr>
-      <!-- Columna principal para detalles del héroe -->
-      <td style="width: 80%;">
-        <div class="center-container"[ngStyle]="{ 'background-color': heroType !== 'sin tipo' ? heroLongBackground : '#f9f9f9' }">
-          <div class="hero-ausencia" *ngIf="heroName === 'sin nombre'">
-            <!-- Mostrar mensaje si no se ha seleccionado ningún héroe -->
-              <p class="no-hero-selected">🔔 ¡Selecciona un héroe para ver sus detalles!</p>
-            </div>
-            <div class="hero-title"*ngIf="heroName != 'sin nombre'"[ngStyle]="{ 'background-color': heroType !== 'sin tipo' ? heroBackground : '#f9f9f9' }">
-            <!-- Mostrar detalles del héroe si se ha seleccionado uno -->
-              <h3>{{ heroName }}</h3>
-              <img *ngIf="imageUrl" [src]="imageUrl" alt="{{ heroName }}" class="hero-image" />
-          </div>
-          <div class="hero-details"*ngIf="heroName != 'sin nombre'">
-            <div [ngStyle]="{ 'background-color': heroType !== 'sin tipo' ? heroLongBackground : '#f9f9f9' }">
-              <h3>Level: {{ heroLevel }}</h3>
-              <p>Vida: {{ heroActualLife }}</p>
-              <p>Exp: {{ heroActualExp }}</p>
-            </div>
-            <div [ngStyle]="{ 'background-color': heroType !== 'sin tipo' ? heroLongBackground : '#f9f9f9' }">
-              <p>skill1: {{ heroSkill1 }}</p>
-              <p>skill2: {{ heroSkill2 }}</p>
-              <p>skill3: {{ heroSkill3 }}</p>
-              <p>skill4: {{ heroSkill4 }}</p>
-              <p>skill5: {{ heroSkill5 }}</p>
-            </div>
-            <div [ngStyle]="{ 'background-color': heroType !== 'sin tipo' ? heroLongBackground : '#f9f9f9' }">
-              <p>Dbrutal: {{ heroDbrutal }}</p>
-              <p>Dletal: {{ heroDletal }}</p>
-              <p>Dmistic: {{ heroDmistic }}</p>
-              <p>Armor: {{ heroArmor }}</p>
-              <p>Resistance: {{ heroResistance }}</p>
-              <p>Accuracy: {{ heroAccuracy }}</p>
-              <p>Evasion: {{ heroEvasion }}</p>
-              <p>Critic: {{ heroCritic }}</p>
-              <p>MaxHealth: {{ heroMaxHealth }}</p>
-              <p>MaxExp: {{ heroMaxExp }}</p>
-            </div>  
-            </div>
+<div class="dashboard">
+  <!-- Sección izquierda -->
+  <div *ngIf="imageUrl"class="left-section">
+    <div class="top-left-overlay" *ngIf="heroName != 'sin nombre'"[ngStyle]="{ 'background-color': heroType !== 'sin tipo' ? heroBackground : '#f9f9f9' }">
+      <h3>{{ heroName }}</h3>
+      <img *ngIf="imageUrl" [src]="this.heroImageUrls[heroType]" alt="Mago"  class="hero-image" />
+    </div>
+    <div class="big-left-div">
+      <img *ngIf="imageUrl" [src]="this.heroImageUrls[heroType]" alt="Mago" style="width: 500px;"/><!--position: absolute;z-index: 10;-->
+      <!--<img *ngIf="imageUrl" [src]="this.heroImageUrls['FONDO']" alt="Mago" style="width: 500px;"/>-->
+    </div>
+    <div class="right-columns">
+      <div class="first-right-column">
+        <div class="full-column-div">
+          <p>Dbrutal: {{ heroDbrutal }}</p>
+          <p>Dletal: {{ heroDletal }}</p>
+          <p>Dmistic: {{ heroDmistic }}</p>
+          <p>Armor: {{ heroArmor }}</p>
+          <p>Resistance: {{ heroResistance }}</p>
+          <p>Accuracy: {{ heroAccuracy }}</p>
+          <p>Evasion: {{ heroEvasion }}</p>
+          <p>Critic: {{ heroCritic }}</p>
+          <p>MaxHealth: {{ heroMaxHealth }}</p>
+          <p>MaxExp: {{ heroMaxExp }}</p>
         </div>
-      </td>
+      </div>
+      <div class="second-right-column">
+        <div class="half-first-column-div">
+          <h3>Level: {{ heroLevel }}</h3>
+          <p>Vida: {{ heroActualLife }}</p>
+          <p>Exp: {{ heroActualExp }}</p>
+        </div>
+        <div class="half-second-column-div">
+          <p>skill1: {{ heroSkill1 }}</p>
+          <p>skill2: {{ heroSkill2 }}</p>
+          <p>skill3: {{ heroSkill3 }}</p>
+          <p>skill4: {{ heroSkill4 }}</p>
+          <p>skill5: {{ heroSkill5 }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!imageUrl"class="left-section">
+    <img [src]="this.heroImageUrls['FONDO']" alt="Mago" style="width: 100%; height: 545px;border-radius: 5px;"/>
+  </div>
 
-      <!-- Columna secundaria para la lista de héroes -->
-      <td style="width: 20%;">
-        <div class="heroes-container">
-          <h2>Héroes de {{ title }}</h2>
-          <div *ngFor="let hero of heroes">
-            <button (click)="onHeroClick(hero)">
-              {{ hero.name }}
-            </button>
-          </div>
+  <!-- Sección derecha -->
+  <div class="right-section">
+    <div *ngFor="let hero of heroes" class="button-wrapper">
+      <button (click)="onHeroClick(hero)" class="hero-button">
+        <div class="button-content">
+          <img [src]="heroImageUrls[hero.type]" alt="{{ hero.name }}" class="hero-image-button" />
+          <label class="hero-label">{{ hero.name }}</label>
         </div>
-      </td>
-    </tr>
-  </table>
+      </button>
+    </div>
+    <div class="button-wrapper">
+    <button class="hero-button" style="justify-content: center;border: 2px solid #5a3e2b;">
+      <div class="button-content">
+        <img [src]="heroImageUrls['ADD']" class="hero-image-button" />
+      </div>
+    </button>
+    </div>
+  </div>
 </div>
