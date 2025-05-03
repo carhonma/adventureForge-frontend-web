@@ -9,6 +9,7 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
 import { provideStorage, getStorage } from '@angular/fire/storage';
+import { HttpClientModule } from '@angular/common/http';
 
 // Configuración de Firebase
 const firebaseConfig = {
@@ -32,6 +33,7 @@ const firebaseConfig = {
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    HttpClientModule,
     
   ],
   providers: [

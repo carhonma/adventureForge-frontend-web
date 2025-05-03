@@ -1,13 +1,13 @@
   // Ajusta la importación según donde esté el archivo
 
-import {HeroIcono, HeroType } from "../enum/heroType";
+import {heroStyles, HeroType } from "../enum/heroType";
 
 
 export class Hero {
   id: string;
   name: string;
   type: HeroType;
-  imageUrl: string;
+  icon: string;
   level: number;
   actualLife: string;
   actualExp: string;
@@ -33,7 +33,7 @@ export class Hero {
     this.id = id;
     this.name = name;
     this.type = type;
-    this.imageUrl = HeroIcono[this.type];
+    this.icon = heroStyles[type as HeroType]?.icon || '❓'
     this.level = level;
     this.actualLife = actualLife;
     this.actualExp = actualExp;

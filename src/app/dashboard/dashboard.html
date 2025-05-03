@@ -1,63 +1,114 @@
 <div class="dashboard">
-  <!-- Sección izquierda -->
-  <div *ngIf="imageUrl"class="left-section">
-    <div class="top-left-overlay" *ngIf="heroName != 'sin nombre'"[ngStyle]="{ 'background-color': heroType !== 'sin tipo' ? heroBackground : '#f9f9f9' }">
-      <h3>{{ heroName }}</h3>
-      <img *ngIf="imageUrl" [src]="this.heroImageUrls[heroType]" alt="Mago"  class="hero-image" />
+  <div *ngIf="!state"class="left-section">
+    <img [src]="this.imageUrls['FONDO']" alt="imageFondo" style="width: 100%; height: 545px;border-radius: 5px;"/>
+  </div>
+  <!--heroDetails-->
+  <div *ngIf="state == 'heroDetails'"class="left-section">
+    <div class="top-left-overlay" *ngIf="state == 'heroDetails'" [ngStyle]="{ 'background-color': hero.type !== 'sin tipo' ? heroBackground : '#f9f9f9' }">
+      <h3>{{ hero.name }}</h3>
+      <img *ngIf="state == 'heroDetails'" [src]="hero.icon" alt="imageHero"  class="hero-image" />
     </div>
-    <div class="big-left-div">
-      <img *ngIf="imageUrl" [src]="this.heroImageUrls[heroType]" alt="Mago" style="width: 500px;"/><!--position: absolute;z-index: 10;-->
-      <!--<img *ngIf="imageUrl" [src]="this.heroImageUrls['FONDO']" alt="Mago" style="width: 500px;"/>-->
+    <div *ngIf="state == 'heroDetails'" class="big-left-div">
+      <img *ngIf="state == 'heroDetails'" [src]="hero.icon" alt="imageHero" style="width: 500px;"/>
     </div>
-    <div class="right-columns">
-      <div class="first-right-column">
-        <div class="full-column-div">
-          <p>Dbrutal: {{ heroDbrutal }}</p>
-          <p>Dletal: {{ heroDletal }}</p>
-          <p>Dmistic: {{ heroDmistic }}</p>
-          <p>Armor: {{ heroArmor }}</p>
-          <p>Resistance: {{ heroResistance }}</p>
-          <p>Accuracy: {{ heroAccuracy }}</p>
-          <p>Evasion: {{ heroEvasion }}</p>
-          <p>Critic: {{ heroCritic }}</p>
-          <p>MaxHealth: {{ heroMaxHealth }}</p>
-          <p>MaxExp: {{ heroMaxExp }}</p>
+    <div *ngIf="state == 'heroDetails'" class="right-columns">
+      <!-- Contenedor para las dos columnas superiores -->
+      <div class="top-columns">
+        <div class="first-right-column">
+          <div class="full-column-div">
+            <p>Dbrutal: {{ hero.Dbrutal }}</p>
+            <p>Dletal: {{ hero.Dletal }}</p>
+            <p>Dmistic: {{ hero.Dmistic }}</p>
+            <p>Armor: {{ hero.armor }}</p>
+            <p>Resistance: {{ hero.resistance }}</p>
+            <p>Accuracy: {{ hero.accuracy }}</p>
+            <p>Evasion: {{ hero.evasion }}</p>
+            <p>Critic: {{ hero.critic }}</p>
+            <p>MaxHealth: {{ hero.maxHealth }}</p>
+            <p>MaxExp: {{ hero.maxExp }}</p>
+          </div>
+        </div>
+        <div class="second-right-column">
+          <div class="half-first-column-div">
+            <h3>Level: {{ hero.level }}</h3>
+            <p>Vida: {{ hero.actualLife }}</p>
+            <p>Exp: {{ hero.actualExp }}</p>
+          </div>
+          <div class="half-second-column-div">
+            <p>skill1: {{ hero.skill1 }}</p>
+            <p>skill2: {{ hero.skill2 }}</p>
+            <p>skill3: {{ hero.skill3 }}</p>
+            <p>skill4: {{ hero.skill4 }}</p>
+            <p>skill5: {{ hero.skill5 }}</p>
+          </div>
         </div>
       </div>
-      <div class="second-right-column">
-        <div class="half-first-column-div">
-          <h3>Level: {{ heroLevel }}</h3>
-          <p>Vida: {{ heroActualLife }}</p>
-          <p>Exp: {{ heroActualExp }}</p>
-        </div>
-        <div class="half-second-column-div">
-          <p>skill1: {{ heroSkill1 }}</p>
-          <p>skill2: {{ heroSkill2 }}</p>
-          <p>skill3: {{ heroSkill3 }}</p>
-          <p>skill4: {{ heroSkill4 }}</p>
-          <p>skill5: {{ heroSkill5 }}</p>
-        </div>
+    
+      <!-- Nueva fila para el botón centrado -->
+      <div class="full-width-row">
+        <button class="normal-button" (click)="changeHero('prev')"> 
+          <div class="image-container">
+            <img style="max-height: 80px;" [src]="this.imageUrls['BOTON_alargado_izq']" alt="left"/>
+          </div>
+        </button>
+        <button class="normal-button" (click)="onBattleClick(hero)"> 
+          <div class="image-container">
+            <img class="background-image" style="max-width: 300px;" [src]="this.imageUrls['BOTON_alargado']" alt="start"/>
+            <div class="overlay-text">START BATTLE</div>
+          </div>
+        </button>
+        <button class="normal-button" (click)="changeHero('next')"> 
+          <div class="image-container">
+            <img style="max-height: 80px;" [src]="this.imageUrls['BOTON_alargado_der']" alt="right"/>
+          </div>
+        </button>
       </div>
     </div>
   </div>
-  <div *ngIf="!imageUrl"class="left-section">
-    <img [src]="this.heroImageUrls['FONDO']" alt="Mago" style="width: 100%; height: 545px;border-radius: 5px;"/>
+    
+  
+<!--heroShop-->
+  <div *ngIf="state == 'heroShop'"class="left-section">
+    <div  class="big-left-div-shop">
+      <div class="hero-grid">
+        <button (click)="onHeroShopClick(heroType)" (mouseenter)="onHeroShopHover(heroType) "*ngFor="let heroType of heroTypes" class="hero-button-shop">
+          <img [src]="heroStyles[heroType].icon" alt="{{heroType}}" class="hero-image-shop" />
+        </button>
+      </div>
+    </div>
+    <div  class="right-columns">
+        <div class="second-right-column">
+          <div class="half-first-column-div">
+            <h3>{{ heroType }}</h3>
+            <p>{{ heroDescription }}</p>
+          </div>
+          <div class="half-second-column-div">
+            <p>skill1: </p>
+            <p>skill2: </p>
+            <p>skill3: </p>
+            <p>skill4: </p>
+            <p>skill5: </p>
+        </div>
+      </div>
+   </div>
   </div>
+
+  
 
   <!-- Sección derecha -->
   <div class="right-section">
     <div *ngFor="let hero of heroes" class="button-wrapper">
       <button (click)="onHeroClick(hero)" class="hero-button">
         <div class="button-content">
-          <img [src]="heroImageUrls[hero.type]" alt="{{ hero.name }}" class="hero-image-button" />
+          <img [src]="hero.icon" alt="{{ hero.name }}" class="hero-image-button" />
           <label class="hero-label">{{ hero.name }}</label>
         </div>
       </button>
     </div>
     <div class="button-wrapper">
-    <button class="hero-button" style="justify-content: center;border: 2px solid #5a3e2b;">
+    <button class="hero-button" (click)="onShopClick()"style="justify-content: center;border: 2px solid #5a3e2b;">
       <div class="button-content">
-        <img [src]="heroImageUrls['ADD']" class="hero-image-button" />
+        <img [src]="imageUrls['ADD']" class="hero-image-button" />
       </div>
     </button>
     </div>

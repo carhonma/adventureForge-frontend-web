@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { HeroType, HeroIcono } from '../enum/heroType';
+import { HeroType } from '../enum/heroType';
 import { StorageService } from '../services/storage.service';
 import { ImageService } from '../services/image.service';
 import e from 'express';
@@ -58,27 +58,34 @@ export class LoginComponent implements OnInit {
   getInputsLogin(event: Event) {
     event.preventDefault(); // Previene el comportamiento por defecto del formulario (recargar la página)
   
-    if (event instanceof MouseEvent && (event.target as HTMLElement).id === 'googleButton') {
-      // Este es el caso cuando se ha hecho clic en el botón de Google
-      this.authService.loginWithGoogle().then(() => {
-        
-      }).catch((error) => {
-        alert('Hubo un error con el inicio de sesión con Google: ' + error);
-      });
-    } else if (this.email && this.password) {
+    if (this.email && this.password) {
       // Este es el caso cuando los campos de email y contraseña están completos
       this.authService.login(this.email, this.password)
-        .then(() => {
+      .then((isAuthenticated) => {
+        if (isAuthenticated) {
+          const email = this.email;
           alert('Inicio de sesión exitoso');
-          this.router.navigate(['/dashboard']);
-        }).catch((error) => {
-          alert('Hubo un error con el inicio de sesión: ' + error);
-        });
-    } else {
-      // Si los campos no están completos
-      alert('Por favor, completa todos los campos.');
-    }
+          this.router.navigate(['/dashboard'], { queryParams: { email } }); 
+        }
+      })
+      .catch((error) => {
+        alert('Error al inciar sesión: ' + error.message);
+      });
+
+  } else {
+    alert('Por favor, completa todos los campos.');
   }
+}
+
+googleAuth() {
+  this.authService.loginWithGoogle()
+    .then((email) => {
+      this.router.navigate(['/dashboard'], { queryParams: { email } }); 
+    })
+    .catch((error) => {
+      alert('Hubo un error con el inicio de sesión con Google: ' + error);
+    });
+}
 
   register(currentState: string) {
     if (currentState === 'loginState') {
@@ -87,15 +94,15 @@ export class LoginComponent implements OnInit {
       alert('Vamos a registrarnos');
     } else if (currentState === 'registerState') {
       if (this.email && this.password1 && this.password2) {
-        if(this.password1 == this.password2){this.authService
-          .register(this.email, this.password1) // El correo de verificación ya se envía aquí
-          .then(() => {
-            alert('Registro completado. Revisa tu correo para verificar tu cuenta.');
-          })
-          .catch((error) => {
-            console.error('Error en el registro:', error);
-            alert('Hubo un error en el registro.');
-          });
+        if(this.password1 == this.password2){
+          this.authService.register(this.email, this.password1)
+    .then(response => {
+      alert("Registro exitoso.");
+    })
+    .catch(error => {
+      console.error("Error en el registro:", error);
+      alert("Hubo un error en el registro.");
+    });
         }
         else{
           alert('Las contraseñas deben coincidir');

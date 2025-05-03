@@ -7,30 +7,16 @@ export enum HeroType {
     CLERIGO = 'CLERIGO',
   }
   
-  // Asignar las imágenes a cada tipo de héroe
-  export const HeroIcono: { [key in HeroType]: string } = {
-    [HeroType.GUERRERO]: 'guerrero.png',
-    [HeroType.PICARO]: 'picaro.png',
-    [HeroType.MAGO]: 'mago.png',
-    [HeroType.PALADIN]: 'paladin.png',
-    [HeroType.CAZADOR]: 'cazador.png',
-    [HeroType.CLERIGO]: 'clerigo.png',
-  };
+  
+  
 
-  export const HeroBackground: { [key in HeroType]: string } = {
-    [HeroType.GUERRERO]: '#7E0602',
-    [HeroType.PICARO]: '#025128',
-    [HeroType.MAGO]: '#02477E',
-    [HeroType.PALADIN]: '#604A13',
-    [HeroType.CAZADOR]: '#532929',
-    [HeroType.CLERIGO]: '#9A9283',
-  };
 
-  export const HeroLongBackground: { [key in HeroType]: string } = {
-    [HeroType.GUERRERO]: '#966E64',
-    [HeroType.PICARO]: '#966E64',//'#0AAE59',
-    [HeroType.MAGO]: '#966E64',//'#3885C1',
-    [HeroType.PALADIN]: '#966E64',//'#F4C347',
-    [HeroType.CAZADOR]: '#966E64',//'#966E64',
-    [HeroType.CLERIGO]: '#966E64',//'#fff',
+
+  export const heroStyles: Record<HeroType, { backgroundColor: string; longBackground: string ; icon: string; description: string; }> = {
+    [HeroType.GUERRERO]: { backgroundColor: '#7E0602',longBackground: '#966E64', icon: 'iconos/guerrero.png',description: 'Robusto combatiente que destaca por su gran defensa física, tambien usa habilidades brutales para atacar o mejorar su defensa'},
+    [HeroType.PICARO]: { backgroundColor: '#025128',longBackground: '#966E64', icon: 'iconos/picaro.png',description: 'Versatil atacante que usa su sigilo y mezcla de habilidades para atacar los puntos débiles del enemigo. Sus defensas son variadas aunque no muy efectivas'},
+    [HeroType.MAGO]: { backgroundColor: '#02477E',longBackground: '#966E64', icon: 'iconos/mago.png',description: 'Potente hechicero que domina las habilidades mágicas y destaca en el ataque mágico.'},
+    [HeroType.PALADIN]: { backgroundColor: '#604A13',longBackground: '#966E64', icon: 'iconos/paladin.png',description: 'Implacable muro mágico que usa habilidades fisicas, destaca por su resistencia mágica y vida.'},
+    [HeroType.CAZADOR]: { backgroundColor: '#532929',longBackground: '#966E64', icon: 'iconos/cazador.png',description: 'Versatil atacante con mucha precisión , habilidades y defensas hibridas. Sus defensas son variadas aunque no muy efectivas'},
+    [HeroType.CLERIGO]: { backgroundColor: '#9A9283',longBackground: '#966E64', icon: 'iconos/clerigo.png',description: 'Curandero capaz tanto de restaurar la salud como potenciar las estadísticas aliadas.'},
   };

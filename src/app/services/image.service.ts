@@ -6,7 +6,7 @@ import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
 })
 export class ImageService {
   private imageCache: { [key: string]: string } = {}; // Caché para almacenar las URLs
-
+  private cachedImages: { [key: string]: string } = {};
   constructor(private storage: Storage) {}
 
   // Obtener la URL de una imagen (usa la caché si está disponible)
@@ -35,5 +35,8 @@ export class ImageService {
   // Obtener una imagen precargada desde la caché
   getCachedImage(path: string): string | null {
     return this.imageCache[path] || null;
+  }
+  getAllCachedImages(): { [key: string]: string } {
+    return this.cachedImages;
   }
 }

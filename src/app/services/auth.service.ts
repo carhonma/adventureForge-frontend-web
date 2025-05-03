@@ -1,15 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, User, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from '@angular/fire/auth';
+import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, User, onAuthStateChanged, signInWithPopup, GoogleAuthProvider,getRedirectResult,signInWithRedirect,fetchSignInMethodsForEmail, EmailAuthProvider, linkWithCredential } from '@angular/fire/auth';
 import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
 import { BehaviorSubject } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { HeroType } from '../enum/heroType';
+import { Hero } from '../domain/hero';
+import { FirebaseService } from './firebase.service';
 
 @Injectable({
   providedIn: 'root',
+  
+
 })
 export class AuthService {
   private userSubject = new BehaviorSubject<any>(null);
-
-  constructor(private auth: Auth, private firestore: Firestore) {
+  private apiUrl = 'http://localhost:8080/api';
+  
+  constructor(private auth: Auth, private firestore: Firestore,private http: HttpClient,private firebaseService: FirebaseService,) {
     // Escuchar cambios en el estado de autenticación
     onAuthStateChanged(this.auth, (user) => {
       this.userSubject.next(user);
@@ -17,99 +25,90 @@ export class AuthService {
   }
 
 // Iniciar sesión solo para usuarios verificados
-async login(email: string, password: string): Promise<any> {
-  
+async login(email: string, password: string): Promise<boolean> {
+  try {
+    // Iniciar sesión en Firebase
     const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
-    const user = userCredential.user;
+    const idToken = await userCredential.user.getIdToken();
 
-    // Comprobar si el correo está verificado
-    if (user.emailVerified) {
-      return user; // Usuario autenticado con éxito
+    // Hacer la petición al backend
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    // Esperar la respuesta del backend
+    const response: any = await this.http.post('http://localhost:8080/api/verifyToken', { idToken }, { headers }).toPromise();
+    
+    // Verificar la respuesta del backend
+    if (response && response.message === "Token válido") {
+      console.log("✅ Usario accede con Password: ", email);
+      return true; // Autenticación exitosa
     } else {
-      // Si el correo no está verificado, cerrar sesión y mostrar un error
-      this.auth.signOut();
-      alert('Por favor, verifica tu correo electrónico antes de iniciar sesión.');
-      throw new Error('Por favor, verifica tu correo electrónico antes de iniciar sesión.');
+      throw new Error("El backend rechazó la autenticación.");
     }
-  
+
+  } catch (error) {
+    console.error('Error en la autenticación del backend:', error);
+    throw new Error("Credenciales incorrectas"); // Lanzar error para capturarlo en el .catch()
+  }
 }
 
   // Registrar usuario
-  async register(email: string, password: string, additionalData: { name?: string; gold?: number; heroSize?: number } = {}) {
+  async register(email: string, password: string): Promise<string> {
     try {
+      // Registrar el usuario con Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
-      const user = userCredential.user;
-
-      if (user) { 
-        // Guardar información adicional del usuario en Firestore
-        const userData = {
-          email: user.email,
-          name: additionalData.name || 'noNamed',
-          heroSize: additionalData.heroSize || 0,
-          gold: additionalData.gold || 100,
-          //createdAt: new Date().toISOString(),// fecha de creación
-        };
-        await this.auth.signOut();//quitar cuando solo se sinicie bajo verificación
-        await setDoc(doc(this.firestore, 'users', email), userData);
-        // Enviar correo de verificación
-        await sendEmailVerification(user);
-        return userData;
-      }
-      else{
-        return null;
-      }
+  
+      // Obtener el ID Token del usuario recién registrado
+      const idToken = await userCredential.user.getIdToken();
+  
+      // Enviar el token al backend para verificar y registrar el usuario
+      await this.http.post('http://localhost:8080/api/register', { idToken }).toPromise();
+  
+      return email;
     } catch (error) {
-      console.error('Error durante el registro:', error);
+      console.error("❌ Error en el registro de usuario:", error);
       throw error;
     }
   }
 // Inicia sesión con Google y registra al usuario en Firestore
-async loginWithGoogle(additionalData: { name?: string; gold?: number; heroSize?: number } = {}) {
-  const provider = new GoogleAuthProvider();
-
+async loginWithGoogle(): Promise<string> {
   try {
+    const provider = new GoogleAuthProvider();
     const userCredential = await signInWithPopup(this.auth, provider);
-    const user = userCredential.user;
 
-    if (user) {
-      // Verificar si el usuario ya existe en Firestore
-      const userDocRef = doc(this.firestore, 'users', user.email as string);
-      const userDocSnap = await getDoc(userDocRef);
+    // Obtener el ID Token y el email del usuario
+    const idToken = await userCredential.user.getIdToken();
+    const email = userCredential.user.email;
 
-      if (!userDocSnap.exists()) {
-        // Registrar al usuario en Firestore si no existe
-        const userData = {
-          email: user.email,
-          name: additionalData.name || 'noNamed',
-          heroSize: additionalData.heroSize || 0,
-          gold: additionalData.gold || 100,
-        };
-        
-        // Guardar los datos en Firestore
-        await setDoc(userDocRef, userData);
-        alert('Registro con google completado con exito');
-        // Enviar correo de verificación
-        /*await sendEmailVerification(user);
-        alert('Por favor, verifica tu correo electrónico antes de iniciar sesión.');
-        return { message: 'Usuario registrado y correo de verificación enviado.' };*/
-      } else { 
-        // El usuario ya existe, no se realiza un nuevo registro, se loguea
-        alert('inicio de sesion con google exitoso');
-        return { message: 'Usuario ya registrado iniciando sesión' };
-      }
+    if (!email) {
+      throw new Error("No se pudo obtener el email del usuario de Google.");
     }
+
+    // Enviar el token al backend para verificar y registrar el usuario
+    await this.http.post('http://localhost:8080/api/google-login', { idToken }).toPromise();
+    console.log("✅ Usario accede con Google: ", email);
+    return email;
   } catch (error) {
-    console.error('Error durante el inicio de sesión con Google:', error);
+    console.error("❌ Error en el inicio de sesión con Google:", error);
     throw error;
   }
 
-  // Añadir un return para manejar rutas que no devuelvan nada
-  return { message: 'No se pudo completar la operación.' };
+}
+
+ensureUserExists(email: string, name: string): Observable<any> {
+  const userData = { email, name, heroSize: 0, gold: 100 };
+  return this.http.post(`${this.apiUrl}/createUserIfNotExists`, userData);
 }
 
   // Obtener el usuario actual
   getCurrentUser(): User | null {
     return this.auth.currentUser;
+  }
+
+  // Método para obtener los datos del usuario desde el backend
+  getUserData(email: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/getUserData/${email}`);
   }
 
   // Obtener el estado de autenticación (usuario)

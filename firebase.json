@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/carhonmaWeb/browser",
+    "public": "dist/carhonmaweb/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
