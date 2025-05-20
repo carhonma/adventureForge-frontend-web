@@ -33,22 +33,22 @@ export class LoginComponent implements OnInit {
       // Precargar las imágenes necesarias
       await this.imageService.preloadImages([
         'iconos/google.png',
-        'iconos/guerrero.png',
-        'iconos/picaro.png',
-        'iconos/mago.png',
-        'iconos/paladin.png',
-        'iconos/cazador.png',
-        'iconos/clerigo.png',
+        'characters/guerrero.png',
+        'characters/picaro.png',
+        'characters/mago.png',
+        'characters/paladin.png',
+        'characters/cazador.png',
+        'characters/clerigo.png',
       ]);
 
       // Obtener las URLs precargadas
       this.otherImageUrls['GOOGLE'] = this.imageService.getCachedImage('iconos/google.png')!;
-      this.heroImageUrls['GUERRERO'] = this.imageService.getCachedImage('iconos/guerrero.png')!;
-      this.heroImageUrls['PICARO'] = this.imageService.getCachedImage('iconos/picaro.png')!;
-      this.heroImageUrls['MAGO'] = this.imageService.getCachedImage('iconos/mago.png')!;
-      this.heroImageUrls['PALADIN'] = this.imageService.getCachedImage('iconos/paladin.png')!;
-      this.heroImageUrls['CAZADOR'] = this.imageService.getCachedImage('iconos/cazador.png')!;
-      this.heroImageUrls['CLERIGO'] = this.imageService.getCachedImage('iconos/clerigo.png')!;
+      this.heroImageUrls['GUERRERO'] = this.imageService.getCachedImage('characters/guerrero.png')!;
+      this.heroImageUrls['PICARO'] = this.imageService.getCachedImage('characters/picaro.png')!;
+      this.heroImageUrls['MAGO'] = this.imageService.getCachedImage('characters/mago.png')!;
+      this.heroImageUrls['PALADIN'] = this.imageService.getCachedImage('characters/paladin.png')!;
+      this.heroImageUrls['CAZADOR'] = this.imageService.getCachedImage('characters/cazador.png')!;
+      this.heroImageUrls['CLERIGO'] = this.imageService.getCachedImage('characters/clerigo.png')!;
     } catch (error) {
       //console.error('Error al precargar las imágenes:', error);
     }

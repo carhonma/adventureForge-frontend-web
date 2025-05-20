@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Data } from '@angular/router';
+import { Hero } from '../domain/hero';
+import { EnemyType } from '../enum/enemyType';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +29,10 @@ export class FirebaseService {
     return this.http.get<any[]>(`${this.apiUrl}/getHerosData/${email}`);
   }
 
+  getItemsData(email: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/getItemsData/${email}`);
+  }
+
   getUserData(email: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/getUserData/${email}`);
   }
@@ -41,5 +47,11 @@ export class FirebaseService {
   addHero(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/addHero`, data);
   }
-  
+  changeHeroName(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/changeHeroName`, data);
+  }
+  battle(hero: Hero, enemy: EnemyType): Observable<any> {
+    const data = { hero, enemy };
+    return this.http.post<any>(`${this.apiUrl}/battle`, data);
+  }
 }

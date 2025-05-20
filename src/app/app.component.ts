@@ -4,8 +4,11 @@ import { Router } from '@angular/router';
 import { StorageService } from './services/storage.service';
 import { FirebaseService } from './services/firebase.service';
 import { ImageService } from './services/image.service';
-import { heroStyles } from './enum/heroType'; // Asegúrate de importar esto
-import { HeroType } from './enum/heroType';
+import { HeroType, heroStyles } from './enum/heroType';
+import { EnemyType, enemyStyles } from './enum/enemyType';
+import { ItemType, itemStyles } from './enum/ItemType';
+
+
 
 @Component({
   selector: 'app-root',
@@ -60,27 +63,112 @@ export class AppComponent implements OnInit {
       await this.imageService.preloadImages([
         'fondos/desierto4.jpg',
         'iconos/add.png',
-        'iconos/boton_alargado.png',
-        'iconos/boton_alargado_izq.png',
-        'iconos/boton_alargado_der.png',
-        'iconos/guerrero.png',
-        'iconos/picaro.png',
-        'iconos/mago.png',
-        'iconos/paladin.png',
-        'iconos/cazador.png',
-        'iconos/clerigo.png',
+        'iconos/gold.png',
+        'iconos/editCheck.png',
+        'iconos/map_1.jpg',
+        'iconos/marco_description.png',
+        'iconos/marco_descripcion2.png',
+        'iconos/boton_madera_1.png',
+        'iconos/boton_madera_4.png',
+        'iconos/boton_madera_5.png',
+        'iconos/boton_madera_8.png',
+        'iconos/boton_madera_9.png',
+
+        'characters/guerrero.png',
+        'characters/picaro.png',
+        'characters/mago.png',
+        'characters/paladin.png',
+        'characters/cazador.png',
+        'characters/clerigo.png',
+
+        'gifs/Y_spring1_defeat.gif',
+        'gifs/Y_spring1_victory.gif',
+        'gifs/Y_ent1_defeat.gif',
+        'gifs/Y_ent1_victory.gif',
+        'gifs/Y_golem1_defeat.gif',
+        'gifs/Y_golem1_victory.gif',
+        'gifs/Y_jabali1_defeat.gif',
+        'gifs/Y_jabali1_victory.gif',
+        'gifs/Y_jabali2_defeat.gif',
+        'gifs/Y_jabali2_victory.gif',
+        'gifs/Y_jabali3_defeat.gif',
+        'gifs/Y_jabali3_victory.gif',
+         'gifs/Y_jabali4_defeat.gif',
+        'gifs/Y_jabali4_victory.gif',
+        'gifs/Y_jabali5_defeat.gif',
+        'gifs/Y_jabali5_victory.gif',
+        'gifs/Y_jabali6_defeat.gif',
+        'gifs/Y_jabali6_victory.gif',
+        'gifs/Y_jabali7_defeat.gif',
+        'gifs/Y_jabali7_victory.gif',
+        
+        'characters/A_jabali1.jpg',
+        'characters/A_jabali2.jpg',
+        'characters/A_jabali3.jpg',
+
+        'items/tinder1.png','items/mushroom1.png','items/log1.png','items/cloth1.png','items/stone1.png','items/metal1.png','items/tooth1.png',
+
+        'items/A_hold_boots.png','items/A_hold_chest.png','items/A_hold_gloves.png','items/A_hold_helmet.png','items/A_hold_jewel.png','items/A_hold_weapon.png',
+        'items/boots1.png','items/boots2.png','items/boots3.png','items/boots4.png','items/boots5.png','items/boots6.png',
+        'items/chest1.png','items/chest2.png','items/chest3.png','items/chest4.png','items/chest5.png',
+        'items/gloves1.png','items/gloves2.png','items/gloves3.png','items/gloves4.png','items/gloves5.png','items/gloves6.png',
+        'items/helmet1.png','items/helmet2.png',
+        'items/jewel1.png','items/jewel2.png',
+        'items/weapon1.png','items/weapon2.png','items/weapon3.png','items/weapon4.png','items/weapon5.png','items/weapon6.png','items/weapon7.png',
+        'items/noItem.png',
       ]);
       
-      heroStyles[HeroType.GUERRERO].icon = this.imageService.getCachedImage('iconos/guerrero.png')!;
-      heroStyles[HeroType.PICARO].icon = this.imageService.getCachedImage('iconos/picaro.png')!;
-      heroStyles[HeroType.MAGO].icon = this.imageService.getCachedImage('iconos/mago.png')!;
-      heroStyles[HeroType.PALADIN].icon = this.imageService.getCachedImage('iconos/paladin.png')!;
-      heroStyles[HeroType.CAZADOR].icon = this.imageService.getCachedImage('iconos/cazador.png')!;
-      heroStyles[HeroType.CLERIGO].icon = this.imageService.getCachedImage('iconos/clerigo.png')!;
+      heroStyles[HeroType.GUERRERO].icon = this.imageService.getCachedImage('characters/guerrero.png')!;
+      heroStyles[HeroType.PICARO].icon = this.imageService.getCachedImage('characters/picaro.png')!;
+      heroStyles[HeroType.MAGO].icon = this.imageService.getCachedImage('characters/mago.png')!;
+      heroStyles[HeroType.PALADIN].icon = this.imageService.getCachedImage('characters/paladin.png')!;
+      heroStyles[HeroType.CAZADOR].icon = this.imageService.getCachedImage('characters/cazador.png')!;
+      heroStyles[HeroType.CLERIGO].icon = this.imageService.getCachedImage('characters/clerigo.png')!;
+
+      heroStyles[HeroType.GUERRERO].gif = this.imageService.getCachedImage('characters/guerrero.png')!;
+      heroStyles[HeroType.PICARO].gif = this.imageService.getCachedImage('characters/picaro.png')!;
+      heroStyles[HeroType.MAGO].gif = this.imageService.getCachedImage('characters/mago.png')!;
+      heroStyles[HeroType.PALADIN].gif = this.imageService.getCachedImage('characters/paladin.png')!;
+      heroStyles[HeroType.CAZADOR].gif = this.imageService.getCachedImage('characters/cazador.png')!;
+      heroStyles[HeroType.CLERIGO].gif = this.imageService.getCachedImage('characters/clerigo.png')!;
+
+      /*heroStyles[HeroType.GUERRERO].gif = this.imageService.getCachedImage('gifs/Y_golem1_victory.gif')!;
+      heroStyles[HeroType.PICARO].gif = this.imageService.getCachedImage('gifs/Y_golem1_victory.gif')!;
+      heroStyles[HeroType.MAGO].gif = this.imageService.getCachedImage('gifs/Y_golem1_victory.gif')!;
+      heroStyles[HeroType.PALADIN].gif = this.imageService.getCachedImage('gifs/Y_golem1_victory.gif')!;
+      heroStyles[HeroType.CAZADOR].gif = this.imageService.getCachedImage('gifs/Y_golem1_victory.gif')!;
+      heroStyles[HeroType.CLERIGO].gif = this.imageService.getCachedImage('gifs/Y_golem1_victory.gif')!;*/
+      //heroStyles[HeroType.GUERRERO].gif = await this.storageService.getImageUrl('gifs', 'Y_ent1_victory.gif');//ejemplo con storageService
+
+      enemyStyles[EnemyType.JABALI1].icon = this.imageService.getCachedImage('characters/A_jabali1.jpg')!;
+      enemyStyles[EnemyType.JABALI2].icon = this.imageService.getCachedImage('characters/A_jabali2.jpg')!;
+      enemyStyles[EnemyType.JABALI3].icon = this.imageService.getCachedImage('characters/A_jabali3.jpg')!;
+
+      enemyStyles[EnemyType.JABALI1].gifVictory = this.imageService.getCachedImage('gifs/Y_jabali1_victory.gif')!;
+      enemyStyles[EnemyType.JABALI1].gifDefeat = this.imageService.getCachedImage('gifs/Y_jabali1_defeat.gif')!;
+
+      itemStyles[ItemType.ITEM_00010].icon = this.imageService.getCachedImage('items/tinder1.png')!;
+      itemStyles[ItemType.ITEM_00020].icon = this.imageService.getCachedImage('items/mushroom1.png')!;
+      itemStyles[ItemType.ITEM_00030].icon = this.imageService.getCachedImage('items/log1.png')!;
+      itemStyles[ItemType.ITEM_00040].icon = this.imageService.getCachedImage('items/cloth1.png')!;
+      itemStyles[ItemType.ITEM_00050].icon = this.imageService.getCachedImage('items/stone1.png')!;
+      itemStyles[ItemType.ITEM_00060].icon = this.imageService.getCachedImage('items/metal1.png')!;
+      itemStyles[ItemType.ITEM_00070].icon = this.imageService.getCachedImage('items/tooth1.png')!;
+
+      itemStyles[ItemType.ITEM_01001].icon = this.imageService.getCachedImage('items/helmet1.png')!;
+      itemStyles[ItemType.ITEM_01002].icon = this.imageService.getCachedImage('items/helmet2.png')!;
+      itemStyles[ItemType.ITEM_01003].icon = this.imageService.getCachedImage('items/helmet2.png')!;
+      itemStyles[ItemType.ITEM_02001].icon = this.imageService.getCachedImage('items/boots1.png')!;
+      itemStyles[ItemType.ITEM_02002].icon = this.imageService.getCachedImage('items/boots2.png')!;
+      itemStyles[ItemType.ITEM_02003].icon = this.imageService.getCachedImage('items/boots3.png')!;
+      itemStyles[ItemType.ITEM_03001].icon = this.imageService.getCachedImage('items/chest1.png')!;
+      itemStyles[ItemType.ITEM_03002].icon = this.imageService.getCachedImage('items/chest2.png')!;
+      itemStyles[ItemType.ITEM_03003].icon = this.imageService.getCachedImage('items/chest3.png')!;
+      itemStyles[ItemType.NULL].icon = this.imageService.getCachedImage('items/noItem.png')!;
 
       console.log('✅ Imágenes precargadas globalmente');
     } catch (error) {
-      console.error('❌ Error precargando imágenes globalmente:', error);
+      console.error('❌ Error precargando imágenes globalmente:', error); 
     }
   }
 

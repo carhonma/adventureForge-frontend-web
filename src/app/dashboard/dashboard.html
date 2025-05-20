@@ -1,20 +1,62 @@
+
 <div class="dashboard">
+  <button  class="normal-button btn-home"(click)="onMainClipClick('clipHo')"style="position: absolute;">
+    <div class="image-container" style="position: relative; display: inline-block;">
+      <img class="background-image" style="max-width: 250px; display: block;"[src]="this.imageUrls['BOTON_madera_8']"alt="start"/>
+      <div class="overlay-text"style="position: absolute;left: 80px;font-weight: bold;">HOME</div>
+    </div>
+  </button>
+  <button  class="normal-button btn-storage"(click)="onMainClipClick('clipSto')"style="position: absolute;">
+    <div class="image-container" style="position: relative; display: inline-block;">
+      <img class="background-image" style="max-width: 250px; display: block;"[src]="this.imageUrls['BOTON_madera_8']"alt="start"/>
+      <div class="overlay-text"style="position: absolute;left:80px;font-weight: bold;">STORAGE</div>
+    </div>
+  </button>
   <div *ngIf="!state"class="left-section">
-    <img [src]="this.imageUrls['FONDO']" alt="imageFondo" style="width: 100%; height: 545px;border-radius: 5px;"/>
+    <img [src]="this.imageUrls['FONDO']" alt="imageFondo" style="width: 100%;border-radius: 5px;"/>
   </div>
   <!--heroDetails-->
   <div *ngIf="state == 'heroDetails'"class="left-section">
-    <div class="top-left-overlay" *ngIf="state == 'heroDetails'" [ngStyle]="{ 'background-color': hero.type !== 'sin tipo' ? heroBackground : '#f9f9f9' }">
-      <h3>{{ hero.name }}</h3>
+    <div class="top-left-overlay" [ngStyle]="{ 'background-color': hero.type !== 'sin tipo' ? heroBackground : '#f9f9f9' }">
       <img *ngIf="state == 'heroDetails'" [src]="hero.icon" alt="imageHero"  class="hero-image" />
     </div>
-    <div *ngIf="state == 'heroDetails'" class="big-left-div">
-      <img *ngIf="state == 'heroDetails'" [src]="hero.icon" alt="imageHero" style="width: 500px;"/>
-    </div>
+    <div class="main-content-row">
+      
+      <div *ngIf="state == 'heroDetails'" class="big-left-div">
+        <div style="width: 300px;transform: translate(60%,30%);border-radius: 12px; padding: 10px; display: flex;align-items: center; justify-content: center;" [ngStyle]="{'border': '10px ridge ' + (hero.type !== 'sin tipo' ? heroBackground : '#f9f9f9'),'background-color': hero.type !== 'sin tipo' ? heroBackground : '#f9f9f9'}">
+          <div [ngClass]="{ 'spark-container': true, 'shine-effect': showShine }" style="width: 100%;background-color: #7066615d;border-radius: 7px;">
+            <input
+              type="text"
+              [placeholder]="hero.name"
+              name="heroName"
+              [(ngModel)]="heroNewname"
+              style="width: 100%; height: 30px; padding: 0 10px; border-radius: 4px; border: 3px solid #cccccc88; background-color: #7066615d; text-align: center; font-weight: bold;"
+            />
+          </div>
+          <button class="glow-button" *ngIf="heroNewname != hero.name" style=" margin-left: 15px;  height: 30px; width: 30px; padding: 0; border: none; background: none; cursor: pointer;"(click)="triggerShineEffect(); changeHeroName()">
+            <img [src]="this.imageUrls['EDIT']" alt="Cancelar" style="height: 100%;background-color: #ffffff7a; border-radius: 4px;border: 1px solid #ccc;" />
+          </button>
+        </div>   
+        <img *ngIf="state == 'heroDetails'" [src]="hero.icon" alt="imageHero" style="width: 500px;padding-top: 30px;" />
+        <div  style="position: absolute;top:20px; width: 500px;height: 600px;background-color: #ffffff44;">
+          <div style="position: absolute;width: 100px;height: 100px; ;background-color: #ffffff44;transform: translate(200px,130px)">
+          </div>
+          <div style="position: absolute;width: 100px;height: 100px; ;background-color: #ffffff44;transform: translate(370px,130px)">
+          </div>
+          <div style="position: absolute;width: 100px;height: 100px; ;background-color: #ffffff44;transform: translate(30px,300px)">
+          </div>
+          <div style="position: absolute;width: 100px;height: 100px; ;background-color: #ffffff44;transform: translate(200px,300px)">
+          </div>
+          <div style="position: absolute;width: 100px;height: 100px; ;background-color: #ffffff44;transform: translate(370px,300px)">
+          </div>
+          <div style="position: absolute;width: 100px;height: 100px; ;background-color: #ffffff44;transform: translate(200px,470px)">
+          </div>
+        </div>
+      </div>
+
     <div *ngIf="state == 'heroDetails'" class="right-columns">
-      <!-- Contenedor para las dos columnas superiores -->
       <div class="top-columns">
-        <div class="first-right-column">
+        <div class="first-right-column" >
           <div class="full-column-div">
             <p>Dbrutal: {{ hero.Dbrutal }}</p>
             <p>Dletal: {{ hero.Dletal }}</p>
@@ -43,74 +85,254 @@
           </div>
         </div>
       </div>
-    
-      <!-- Nueva fila para el botón centrado -->
-      <div class="full-width-row">
-        <button class="normal-button" (click)="changeHero('prev')"> 
+      <!-- BOTONERA -->
+      <div class="botonera1">
+        <button class="normal-button" (click)="changeHero('prev')"style="height: 80px"> 
           <div class="image-container">
-            <img style="max-height: 80px;" [src]="this.imageUrls['BOTON_alargado_izq']" alt="left"/>
+            <img style="max-height: 50px;" [src]="this.imageUrls['BOTON_madera_4']" alt="left"/>
           </div>
         </button>
-        <button class="normal-button" (click)="onBattleClick(hero)"> 
+        <button class="normal-button" (click)="onBattleClick(hero)"style="height: 80px"> 
           <div class="image-container">
-            <img class="background-image" style="max-width: 300px;" [src]="this.imageUrls['BOTON_alargado']" alt="start"/>
+            <img class="background-image" style="max-width: 250px;" [src]="this.imageUrls['BOTON_madera_8']" alt="start"/>
             <div class="overlay-text">START BATTLE</div>
           </div>
         </button>
-        <button class="normal-button" (click)="changeHero('next')"> 
+        <button class="normal-button" (click)="changeHero('next')"style="height: 80px"> 
           <div class="image-container">
-            <img style="max-height: 80px;" [src]="this.imageUrls['BOTON_alargado_der']" alt="right"/>
+            <img style="max-height: 50px;" [src]="this.imageUrls['BOTON_madera_5']" alt="right"/>
           </div>
         </button>
-      </div>
     </div>
+    </div>
+  </div>
+      
   </div>
     
   
 <!--heroShop-->
-  <div *ngIf="state == 'heroShop'"class="left-section">
-    <div  class="big-left-div-shop">
+<div *ngIf="state == 'heroShop'" class="left-section">
+  <!-- Fila con el contenido principal: izquierda y derecha -->
+  <div class="main-content-row">
+    <div class="big-left-div-shop">
       <div class="hero-grid">
-        <button (click)="onHeroShopClick(heroType)" (mouseenter)="onHeroShopHover(heroType) "*ngFor="let heroType of heroTypes" class="hero-button-shop">
+        <button
+          *ngFor="let heroType of heroTypes"
+          (click)="onHeroShopClick(heroType)"
+          (mouseenter)="onHeroShopHover(heroType)"
+          class="hero-button-shop"
+          [disabled]="mostrarHeroGif"
+        >
           <img [src]="heroStyles[heroType].icon" alt="{{heroType}}" class="hero-image-shop" />
         </button>
       </div>
     </div>
-    <div  class="right-columns">
-        <div class="second-right-column">
-          <div class="half-first-column-div">
-            <h3>{{ heroType }}</h3>
-            <p>{{ heroDescription }}</p>
-          </div>
-          <div class="half-second-column-div">
-            <p>skill1: </p>
-            <p>skill2: </p>
-            <p>skill3: </p>
-            <p>skill4: </p>
-            <p>skill5: </p>
+
+    <div class="right-columns">
+      <div class="second-right-column">
+        <div class="half-first-column-div">
+          <h3>{{ heroType }}</h3>
+          <p>{{ heroDescription }}</p>
+        </div>
+        <div class="half-second-column-div">
+          <p>price: <label class="hero-label" style="background-color: #966e64; padding: 5px; padding-left: 10px; border-radius: 6px;">{{heroStyles[heroType].price}}<img [src]="imageUrls['GOLD']" class="hero-image-button" style="width: 30px;margin-left: 10px;vertical-align: bottom;"/></label></p>
+        </div>
+        <div class="half-second-column-div">
+          <p>skill1: STANDARD ATACK </p>
+          <p>skill2: STANDARD ATACK</p>
+          <p>skill3: STANDARD ATACK</p>
+          <p>skill4: STANDARD ATACK</p>
+          <p>skill5: STANDARD ATACK</p>
         </div>
       </div>
-   </div>
+    </div>
   </div>
 
-  
+    
+  <div *ngIf="mostrarHeroGif" [ngClass]="{ 'gif-overlay': true, 'fade-out': desapareciendo }">
+    <div class="gif-center">
+      <img *ngIf="gifHeroUrl" [src]="gifHeroUrl" alt="heroGif" />
+    </div>
+  </div>
+</div>
 
-  <!-- Sección derecha -->
-  <div class="right-section">
-    <div *ngFor="let hero of heroes" class="button-wrapper">
-      <button (click)="onHeroClick(hero)" class="hero-button">
-        <div class="button-content">
-          <img [src]="hero.icon" alt="{{ hero.name }}" class="hero-image-button" />
-          <label class="hero-label">{{ hero.name }}</label>
+
+<!-- MapSection -->
+<div *ngIf="state == 'map'" class="left-section">
+  <div class="main-content-row">
+    <!-- Imagen izquierda -->
+    <div class="background-image-obj"> 
+      <div style="position: relative; width: 500px; height: auto;">
+
+        <!-- Botón debajo -->
+        <button *ngIf="enemyType" class="normal-button btn-stats"(click)="onClipClick('clipSta')"style="position: absolute;">
+          <div class="image-container" style="position: relative; display: inline-block;">
+            <img class="background-image" style="max-width: 250px; display: block;"[src]="this.imageUrls['BOTON_madera_8']"alt="start"/>
+            <div class="overlay-text"style="position: absolute;left: 180px;font-weight: bold;">STATS</div>
+          </div>
+        </button>
+        <button *ngIf="enemyType" class="normal-button btn-desc"(click)="onClipClick('clipDe')"style="position: absolute;">
+          <div class="image-container" style="position: relative; display: inline-block;">
+            <img class="background-image" style="max-width: 250px; display: block;"[src]="this.imageUrls['BOTON_madera_8']"alt="start"/>
+            <div class="overlay-text"style="position: absolute;left: 170px;font-weight: bold;font-size:13px">DESCRIPTION</div>
+          </div>
+        </button>
+        <button *ngIf="enemyType" class="normal-button btn-battle"(click)="onClipClick('clipBa')"style="position: absolute;">
+          <div class="image-container" style="position: relative; display: inline-block;">
+            <img class="background-image" style="max-width: 250px; display: block;"[src]="this.imageUrls['BOTON_madera_8']"alt="start"/>
+            <div class="overlay-text"style="position: absolute;left: 180px;font-weight: bold;">BATTLE</div>
+          </div>
+
+        </button>
+      
+        <!-- Imagen Principal -->
+        
+          <img *ngIf="enemyType == null" class="background-image-obj"  style="width: 500px; position: relative; z-index: 2;"[src]="this.imageUrls['MARCO']"alt="start"/>
+          <div *ngIf="enemyType == null" class="overlay-text" style="position: absolute; width: 300px;font-weight: bold;z-index: 3;">Un gran bosque se extiende detrás de un lago y al fondo puede verse una montaña que rasca el cielo y reina sobre este frondoso paraje. Una forma de vida facóquera parece predominar en estas tierras, explora con cuidado.</div>
+       
+
+        <img class="background-image-obj"
+             *ngIf="enemyType != null && clip == 'clipSta'"
+             [src]="imageUrls['ADD']"
+             alt="imageEnemy"
+             style="width: 500px; position: relative; z-index: 2;" />
+        
+        <img class="background-image-obj"
+             *ngIf="enemyType != null && clip == 'clipDe'"
+             [src]="imageUrls['ADD']"
+             alt="imageEnemy"
+             style="width: 500px; position: relative; z-index: 2;" />
+
+        <img class="background-image-obj"
+             *ngIf="enemyType != null && clip == 'clipBa'"
+             [src]="enemyStyles[enemyType].icon"
+             alt="imageEnemy"
+             style="width: 500px; position: relative; z-index: 2;" />
+      </div>
+
+<!-- BOTONERA -->
+      <div class="botonera1" style="margin-top: 10px;">
+        <button class="normal-button btn-startbattle" (click)="onStartBattleClick()"style="height: 80px"> 
+          <div class="image-container">
+            <img class="background-image" style="max-width: 250px;" [src]="this.imageUrls['BOTON_madera_8']" alt="start"/>
+            <div class="overlay-text" >START BATTLE</div>
+          </div>
+        </button>
+    </div>
+    </div>
+
+
+
+    <div *ngIf="mostrarBattleGif"
+    style="margin-inline-start: 10px;height: fit-content;align-self: self-end;
+           z-index: 1000; padding: 20px; border-radius: 8px; border: 3px solid #0000008c; background-color: #2e0b02;
+           display: flex; align-items: center; flex-direction: column;">
+ 
+      <div *ngIf="gifBattleUrl">
+        <img [src]="gifBattleUrl" alt="battleGif" style="width: 200px;" />
+      </div>
+      <div style="padding: 5px; border-radius: 8px; border: 3px solid #0000008c; background-color: #2e0b02;">
+        <img [src]="itemStyles[item1].icon" alt="reward1" style="width: 50px;background-color: #a17c7371; padding: 2%; border-radius: 8px;" />
+        <img [src]="itemStyles[item2].icon" alt="reward2" style="width: 50px;background-color: #a17c7371; padding: 2px; border-radius: 8px;margin-inline: 20px;" />
+        <img [src]="itemStyles[item3].icon" alt="reward3" style="width: 50px;background-color: #a17c7371; padding: 2px; border-radius: 8px;" />
+      </div>
+      <!-- BOTONERA -->
+    <div class="botonera1" style="margin: 10px;height: 40px;">
+      <button class="normal-button btn-startbattle"> 
+        <div class="image-container">
+          <img class="background-image" style="max-width: 90px;" [src]="this.imageUrls['BOTON_madera_8']" alt="start"/>
+          <div class="overlay-text"style="font-size: 12px;" >LOG</div>
         </div>
       </button>
+      <button class="normal-button btn-startbattle"(click)="exitBattleGif()"> 
+        <div class="image-container">
+          <img class="background-image" style="max-width: 90px;" [src]="this.imageUrls['BOTON_madera_8']" alt="start"/>
+          <div class="overlay-text" style="font-size: 12px;">EXIT</div>
+        </div>
+      </button>
+  </div>
+ 
     </div>
-    <div class="button-wrapper">
-    <button class="hero-button" (click)="onShopClick()"style="justify-content: center;border: 2px solid #5a3e2b;">
-      <div class="button-content">
-        <img [src]="imageUrls['ADD']" class="hero-image-button" />
+
+    <!-- Mapa con scroll -->
+    <div class="right-columns" style="align-items: flex-end;">
+      <div class="scroll-container">
+        
+          <img [src]="this.imageUrls['MAP1']" alt="imageMap" class="map-image"/>
+          <button class="map-button" (click)="onEnemyClick(EnemyType.JABALI1)" style="top: 10%;">Lugar 1</button>
+          <button class="map-button" (click)="onEnemyClick(EnemyType.JABALI2)" style="top: 40%;">Lugar 2</button>
+          <button class="map-button" (click)="onEnemyClick(EnemyType.JABALI3)" style="top: 70%;">Lugar 3</button>
+        
       </div>
-    </button>
     </div>
   </div>
+</div>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <div>
+  <!-- Sección derecha recursos -->
+  <div class="right-section" style="margin: 0 auto 10px auto;width: 357px;background-color: #503028d2;">
+    <div class="button-wrapper">
+        <div class="button-content" style="width: fit-content;">
+          <img [src]="imageUrls['GOLD']" class="hero-image-button" style="width: 30px; vertical-align: bottom; padding-bottom: 1px;"/>
+          <label class="hero-label" style="background-color: #966e64; padding: 5px; margin-right: 10px;width: 64px; border-radius: 6px;">{{gold}}</label>
+          <img [src]="imageUrls['ADD']" class="hero-image-button" style="width: 30px;"/>
+          <label class="hero-label"style="background-color: #966e64; padding: 5px; margin-right: 10px;width: 64px;border-radius: 6px;">100000</label>
+          <img [src]="imageUrls['ADD']" class="hero-image-button" style="width: 30px;"/>
+          <label class="hero-label"style="background-color: #966e64; padding: 5px;width: 64px;border-radius: 6px;">1000</label>
+       </div>
+      </div>
+  </div>
+  <!-- Sección derecha heroes/items-->
+  <div *ngIf="mainClip =='clipHo'" class="right-section">
+      <div *ngFor="let hero of heroes" class="button-wrapper">
+        <button (click)="onHeroClick(hero)" class="hero-button">
+          <div class="button-content">
+            <img [src]="hero.icon" alt="{{ hero.name }}" class="hero-image-button" />
+            <label class="hero-label">{{ hero.name }}</label>
+          </div>
+        </button>
+      </div>
+      <div class="button-wrapper">
+      <button class="hero-button" (click)="onShopClick()"style="justify-content: center;border: 2px solid #5a3e2b;">
+        <div class="button-content">
+          <img [src]="imageUrls['ADD']" class="hero-image-button" />
+        </div>
+      </button>
+      </div>
+    </div>
+<!-- Sección derecha heroes/items-->
+    <div *ngIf="mainClip =='clipSto'" class="right-section" style="grid-template-columns: 1fr 1fr 1fr 1fr;">
+      <div *ngFor="let item of items" class="button-wrapper">
+        <button  class="hero-button"style="width: 90px;">
+          <div class="button-content"style="width: fit-content;">
+            <img [src]="item.icon" alt="{{ item.name }}" class="hero-image-button" />
+            <label class="hero-label">x {{ item.amount }}</label>
+          </div>
+        </button>
+      </div>
+    </div>
+</div>
+
 </div>

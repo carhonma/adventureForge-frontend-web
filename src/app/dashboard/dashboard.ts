@@ -6,12 +6,17 @@ import { FirebaseApp } from '@angular/fire/app';
 import { Firestore } from '@angular/fire/firestore';
 import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
-import { Hero,BaseStats} from '../domain/hero';
+import { Hero} from '../domain/hero';
+import { Enemy} from '../domain/enemy';
+import { Item} from '../domain/item';
 import { HeroType,heroStyles } from '../enum/heroType';
+import { EnemyType,enemyStyles } from '../enum/enemyType';
+import { ItemType,itemStyles } from '../enum/ItemType';
 import { ImageService } from '../services/image.service';
 import { FirebaseService } from '../services/firebase.service';
 import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs';
+
 
 interface User {
   name: string;
@@ -24,20 +29,43 @@ interface User {
 })
 export class DashboardComponent implements OnInit {
   firestore = getFirestore(inject(FirebaseApp));
-  user: any = {};  // Puedes guardar datos del usuario aquí si es necesario
+  user: any = {};
   title ='sin título';
   heroes: Hero[] = [];
+  items: Item[] = [];
   heroTypes = Object.values(HeroType) as HeroType[];
-  userData: User | null = null;
-  heroType = 'sin tipo';
+  userData: any | null = null;//anteriormente no era any era User, pero gold no era propiedad
+  imageUrls: { [key: string]: string } = {};
+  state: string = '';
+  mainClip: string = 'clipHo';
+  clip: string = 'clipBa';
+  showShine = false;
+
   hero: any;
+  item: any;
+  heroType =  HeroType.GUERRERO;
+  enemyType: EnemyType | null = null;
+  EnemyType = EnemyType; //necesario para usarlo en el html
+  HeroType = HeroType;
   heroDescription: string = '';
   heroBackground: string = '#f9f9f9';
   heroLongBackground: string = '#f9f9f9';
-  imageUrls: { [key: string]: string } = {};
-  state: string = ''; 
+  enemyBackground: string = '#f9f9f9';
+  enemyLongBackground: string = '#f9f9f9';
   heroStyles = heroStyles;
-  
+  enemyStyles = enemyStyles;
+  itemStyles = itemStyles;
+  heroNewname:string = '';
+  gold: number = 0;
+  item1 = ItemType.NULL;
+  item2 = ItemType.NULL;
+  item3 = ItemType.NULL;
+
+  gifHeroUrl: string | null = null;
+  gifBattleUrl: string | null = null;
+  mostrarHeroGif= false;
+  mostrarBattleGif= false;
+  desapareciendo = false;
   
   constructor(private authService: AuthService,
      private router: Router,
@@ -50,15 +78,24 @@ export class DashboardComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.user = this.authService.getCurrentUser();
+    
+   
     if (this.user) {
      
       await this.preloadUserData();
       this.reportUserLog();
       this.imageUrls['FONDO'] = this.imageService.getCachedImage('fondos/desierto4.jpg')!;
       this.imageUrls['ADD'] = this.imageService.getCachedImage('iconos/add.png')!;
-      this.imageUrls['BOTON_alargado'] = this.imageService.getCachedImage('iconos/boton_alargado.png')!;
-      this.imageUrls['BOTON_alargado_izq'] = this.imageService.getCachedImage('iconos/boton_alargado_izq.png')!;
-      this.imageUrls['BOTON_alargado_der'] = this.imageService.getCachedImage('iconos/boton_alargado_der.png')!;
+      this.imageUrls['GOLD'] = this.imageService.getCachedImage('iconos/gold.png')!;
+      this.imageUrls['EDIT'] = this.imageService.getCachedImage('iconos/editCheck.png')!;
+      this.imageUrls['MAP1'] = this.imageService.getCachedImage('iconos/map_1.jpg')!;
+      this.imageUrls['MARCO'] = this.imageService.getCachedImage('iconos/marco_description.png')!;
+      this.imageUrls['MARCO2'] = this.imageService.getCachedImage('iconos/marco_descripcion2.png')!;
+      this.imageUrls['BOTON_madera_1'] = this.imageService.getCachedImage('iconos/boton_madera_1.png')!;
+      this.imageUrls['BOTON_madera_4'] = this.imageService.getCachedImage('iconos/boton_madera_4.png')!;
+      this.imageUrls['BOTON_madera_5'] = this.imageService.getCachedImage('iconos/boton_madera_5.png')!;
+      this.imageUrls['BOTON_madera_8'] = this.imageService.getCachedImage('iconos/boton_madera_8.png')!;
+      this.imageUrls['BOTON_madera_9'] = this.imageService.getCachedImage('iconos/boton_madera_9.png')!;
     } else {
       console.error("❌ No hay usuario cargado");
       await this.preloadUserData();
@@ -66,7 +103,8 @@ export class DashboardComponent implements OnInit {
   }
 
   preloadUserData(){ 
-    
+
+    //NO BORRAR sin antes probar a crear usuario
     /*this.activatedRoute.queryParams
     .pipe(first(params => params['email'] !== undefined && params['email'].trim() !== ''))
     .subscribe(params => {
@@ -75,7 +113,7 @@ export class DashboardComponent implements OnInit {
       
     });*/
     this.getUserData(this.user.email);//sin esto no se ven los datos del usuario al recargar pero al quitar lo de arriba puede que existan problemas al crear usuarios
-    this.getHerosData();}
+    this.getHerosData();this.getItemsData();}
     
     getHerosData() { 
       this.firebaseService.getHerosData(this.user.email).subscribe(
@@ -104,7 +142,7 @@ export class DashboardComponent implements OnInit {
             maxHealth: heroData.maxHealth || 0,
             maxExp: heroData.maxExp || 0,
           }));
-          console.log("✅ Heroes encontrados:", this.heroes);
+          console.table(this.heroes);
         },
         
         (error) => {
@@ -112,52 +150,127 @@ export class DashboardComponent implements OnInit {
         }
       );
   }
+  getItemsData() { 
+    this.firebaseService.getItemsData(this.user.email).subscribe(
+      (items) => {
+        this.items = items.map(itemData => ({
+          id: itemData.id,
+          ID: itemData.ID,
+          amount: itemData.amount || 1,
+          grade: itemData.grade || 'F',
+          name: itemData.name || 'item',
+          price: itemData.price || 1,
+          subtype: itemData.subtype || 1,
+          type: itemData.type || 1,
+          icon: itemStyles[itemData.ID as ItemType]?.icon || '❓'
+        }));
+        console.table(this.items);
+      },
+      
+      (error) => {
+        console.error('❌ Error al obtener datos de los items:', error);
+      }
+    );
+  
+}
 
   async onHeroClick(hero: Hero) {
     this.state = "heroDetails";
     this.hero = hero;
+    this.heroNewname = hero.name;
+    this.enemyType = null;
     this.heroBackground = heroStyles[hero.type as HeroType]?.backgroundColor || '#f9f9f9';
     this.heroLongBackground = heroStyles[hero.type as HeroType]?.longBackground || '#f9f9f9';
 
   }
+  async onEnemyClick(type: EnemyType) {
+    this.state = 'map';
+    this.enemyType = type;
+    this.mostrarBattleGif = false;
+    this.enemyBackground = enemyStyles[type]?.backgroundColor || '#f9f9f9';
+    this.enemyLongBackground = enemyStyles[type]?.longBackground || '#f9f9f9';
+  }
   async onBattleClick(hero: Hero) {
-    console.log(hero);
+    this.mostrarBattleGif = false;
+    this.state = "map";
   }
   changeHero(direction: 'next' | 'prev') {
     if (!this.hero || this.heroes.length === 0) return;
-  
     const currentIndex = this.heroes.findIndex(h => h.id === this.hero.id);
     if (currentIndex === -1) return;
-  
     let newIndex: number;
     if (direction === 'next') {
       newIndex = (currentIndex + 1) % this.heroes.length;
     } else {
       newIndex = (currentIndex - 1 + this.heroes.length) % this.heroes.length;
     }
-  
     const newHero = this.heroes[newIndex];
     this.onHeroClick(newHero);
+  }
+  changeHeroName(){
+    const heroReference = `${this.hero.id.toString().padStart(2, '0')}`;
+    const data = {
+      reference:heroReference,
+      newName:this.heroNewname,
+      email:this.user.email
+    }
+    this.firebaseService.changeHeroName(data).subscribe(
+      (response) => {
+        console.log('✅ ', response.message),this.hero.name=this.heroNewname,this.getHerosData();
+      },
+      (error) => {
+        console.error('❌ error al cambiar el nombre:', error);
+      }
+    );
   }
 
   async onShopClick() {
     this.state = "heroShop";
+    this.heroDescription = heroStyles[HeroType.GUERRERO]?.description;
     this.hero = null;
+  }
+  async onHeroShopHover( heroType: HeroType) {
+    this.heroType= heroType;
+    this.heroDescription = heroStyles[heroType as HeroType]?.description || 'No description';
   }
   async onHeroShopClick( heroType: HeroType) {
     this.heroType= heroType;
     this.heroDescription = heroStyles[heroType as HeroType]?.description || 'No description';
     this.addHero();
-    }
-  async onHeroShopHover( heroType: HeroType) {
-    this.heroType= heroType;
-    this.heroDescription = heroStyles[heroType as HeroType]?.description || 'No description';
-    }
-  
+  }
+  async onMainClipClick(clip: string){
+    this.mainClip = clip;
+  }
+  async onClipClick(clip: string){
+    this.clip = clip;
+  }
+  async onStartBattleClick() {
+   this.firebaseService.battle(this.hero,this.enemyType!).subscribe(
+      async (response) => { 
+        console.log('✅ BATTLE',response.message);
+        console.log('REWARD',response.reward);
+        let gifName : string = "";
+        if (response.result==true){
+          this.item1 = response.reward[0];
+          this.item2 = response.reward[1];
+          this.item3 = response.reward[2];
+          gifName = enemyStyles[this.enemyType as EnemyType]?.gifVictory;
+        }
+        else{
+          this.item1 = ItemType.NULL;
+          this.item2 = ItemType.NULL;
+          this.item3 = ItemType.NULL;
+          gifName = enemyStyles[this.enemyType as EnemyType]?.gifDefeat;
+        }
+        this.showBattleGif(gifName);
+        },
+      (error) => {console.error('Error', error);} 
+    )}
 
   addHero() {
     const heroesSize = this.heroes.length+1;
     const heroName = `hero${heroesSize.toString().padStart(2, '0')}`;
+    const gif = heroStyles[this.heroType as HeroType].gif;
     const data = {
       email:this.user.email,
       ID:heroesSize,
@@ -165,7 +278,7 @@ export class DashboardComponent implements OnInit {
       Type:this.heroType,
     }
     this.firebaseService.addHero(data).subscribe(
-      (response) => { console.log('✅ AddHero:',this.heroType+" adquirido por "+this.user.email),this.getHerosData();},
+      async (response) => { console.log('✅ AddHero:',this.heroType+" adquirido por "+this.user.email),this.getUserData(this.user.email),this.showAddHeroGif(gif)},
       (error) => {
         console.error('Error al crear heroe:', error);
       }
@@ -192,11 +305,50 @@ export class DashboardComponent implements OnInit {
   this.authService.getUserData(email).subscribe(
     (data) => {
       this.userData = data.data;
+      this.gold =this.userData.gold;
       console.log('✅ Datos del usuario obtenidos:', this.userData);
     },
     (error) => {
       console.error('❌ Error al obtener datos del usuario:', error);
     }
   );
+}
+triggerShineEffect() {
+  this.showShine = false;
+  setTimeout(() => this.showShine = true, 10);  // fuerza re-aplicación
+  setTimeout(() => this.showShine = false, 1100);  // dura más que la animación
+}
+
+async showAddHeroGif(gifName: string) {
+  if (this.mostrarHeroGif) return; // evitar clics múltiples mientras se muestra
+
+  this.gifHeroUrl = await this.imageService.getImageUrl(gifName);
+  this.mostrarHeroGif = true;
+  this.desapareciendo = false;
+
+  setTimeout(() => {
+    this.desapareciendo = true;
+    setTimeout(() => {
+      this.mostrarHeroGif = false;
+      this.gifHeroUrl = null;
+    }, 500);
+  }, 2500);
+  this.getHerosData();
+}
+async showBattleGif(gifName: string) {
+  this.gifBattleUrl = await this.imageService.getImageUrl(gifName);
+  this.mostrarBattleGif = true;
+  this.desapareciendo = false;
+
+  setTimeout(() => {
+    this.desapareciendo = true;
+    setTimeout(() => {
+    },  1000);
+  }, 2500);
+}
+
+async exitBattleGif() { 
+  this.mostrarBattleGif = false;
+  this.gifBattleUrl = null;
 }
 }
