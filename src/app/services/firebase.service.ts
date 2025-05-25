@@ -47,11 +47,14 @@ export class FirebaseService {
   addHero(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/addHero`, data);
   }
+  sellItem(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/sellItem`, data);
+  }
   changeHeroName(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/changeHeroName`, data);
   }
-  battle(hero: Hero, enemy: EnemyType): Observable<any> {
-    const data = { hero, enemy };
+  battle(hero: Hero, enemy: EnemyType, email: string): Observable<any> {
+    const data = { hero, enemy, email };
     return this.http.post<any>(`${this.apiUrl}/battle`, data);
   }
 }

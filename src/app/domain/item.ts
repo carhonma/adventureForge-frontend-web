@@ -1,12 +1,13 @@
   // Ajusta la importación según donde esté el archivo
 
+import { GradeType } from "../enum/gradeType";
 import {itemStyles, ItemType } from "../enum/ItemType";
 
 
 export class Item {
-  id: string;
+  ID: string;
   amount: number;
-  grade: string;
+  grade: GradeType;
   name: string;
   price: number;
   subtype: string;
@@ -14,15 +15,15 @@ export class Item {
   icon: string;
   
 
-    constructor(id: string, amount: number, grade:string, name: string, price: number, subtype: string, type: string, icon: string) {
-      this.id = id;
+    constructor(ID: string, amount: number, grade:GradeType, name: string, price: number, subtype: string, type: string, icon: string) {
+      this.ID = ID;
       this.grade = grade;
       this.amount = amount;
       this.name = name;
       this.price = price;
       this.subtype= subtype;
       this.type = type;
-      this.icon = itemStyles[id as ItemType]?.icon || '❓'
+      this.icon = itemStyles[ID as ItemType]?.icon || '❓'
       
     }
 }

@@ -103,14 +103,13 @@
   display: grid;
   padding: 10px;
   grid-template-columns: 1fr 1fr;
-  grid-auto-rows: 1fr;
   justify-items: center;
   align-items: center; 
   background-color: #966e64d2;
   border: 3px solid #0000008c;
   border-radius: 8px;
   gap: 10px;  
-  align-self: anchor-center;
+ /*align-self: anchor-center;*/
 }
 
 .button-wrapper {
@@ -188,7 +187,11 @@
   display: flex;
   align-items: center;padding: 2px;
 }
-
+.item-image-button {
+  max-width: 90px;
+  max-height: 90px;
+  margin-right: 90px;
+}
 .hero-image-button {
   max-width: 40px;
   max-height: 40px;
@@ -265,7 +268,7 @@
   display: flex;
   flex-direction: column;
   align-items: center; 
-  align-self: flex-start;
+  /*align-self: flex-start;*/
   width: 100%;
   margin-inline: 10px;
   gap: 20px;
@@ -338,7 +341,7 @@
   justify-content: center;
   width: 100%;
   margin: 20px;
-  margin-right: 10px;
+  /*margin-right: 10px;*/
 }
 
 

@@ -1,6 +1,6 @@
 
 <div class="dashboard">
-  <button  class="normal-button btn-home"(click)="onMainClipClick('clipHo')"style="position: absolute;">
+  <button  class="normal-button btn-home"(click)="onMainClipClick('clipHo')"style="position: absolute">
     <div class="image-container" style="position: relative; display: inline-block;">
       <img class="background-image" style="max-width: 250px; display: block;"[src]="this.imageUrls['BOTON_madera_8']"alt="start"/>
       <div class="overlay-text"style="position: absolute;left: 80px;font-weight: bold;">HOME</div>
@@ -272,7 +272,150 @@
 
 
 
+  <!--ItemDetails-->
+  <div *ngIf="state == 'itemDetails'"class="left-section" style="padding: 10px; gap:0px">
+    <div *ngIf="mainClip == 'clipSto'"
+    style="
+      width: 127%;
+      max-height: 626px;
+      overflow-y: auto;
+      padding: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+      gap: 10px;
+      background-color: #966e64d2;
+      border: 4px solid #5c3a1e;
+      border-radius: 12px;
+      box-shadow: inset 0 0 10px #3b1e0f;
+      align-items: stretch;
+    ">
 
+ <div *ngFor="let item of items"
+      style="
+        position: relative;
+        width: 110px;height: 110px;    
+        aspect-ratio: 1;
+        background-color: #f8d3bd;
+        border: 3px solid #3b1e0f;
+        border-radius: 8px;
+        box-shadow: 2px 2px 5px #00000066;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      "
+      (click)="onItemClick(item)">
+
+   <!-- Icono del ítem -->
+   <img [src]="item.icon"
+        [alt]="item.name"
+        style="width: 60px; height: 60px; z-index: 1;" />
+
+   <!-- Icono del grado -->
+   <img [src]="gradeStyles[item.grade].icon"
+        [alt]="item.grade"
+        style="
+         z-index: 9999;
+          position: absolute;
+          width: 30px;
+          height: 30px;
+          bottom: 5px;
+          left: 5px;
+          background-color: #e7a78a;
+          border-radius: 50%;
+          border: 2px solid #2e0b02;
+        " />
+
+   <!-- Cantidad -->
+   <p style="
+        position: absolute;
+        top: 3px;
+        right: 5px;
+        background-color: #e7a78a;
+        color: #2e0b02;
+        font-weight: bold;
+        border: 2px solid #2e0b02;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'MedievalSharp', serif;
+      ">
+     {{ item.amount }}
+   </p>
+
+ </div>
+
+</div>
+
+
+    
+    <div class="right-section"
+    style="
+      width: 100%;
+      height: 626px;
+      gap: 0px;
+      margin-left: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* Centra verticalmente */
+      align-items: center;     /* Centra horizontalmente */
+    ">
+ 
+ <!-- Imagen del ítem -->
+ <img *ngIf="item == null"[src]="imageUrls['GOLD']" alt="a" style="height: 50%; margin-bottom: 40px;" />
+ <img *ngIf="item != null"[src]="item.icon" alt="a" style="height: 50%; margin-bottom: 40px;" />
+
+ <!-- Barra de cantidad medieval -->
+ <div *ngIf="item != null"style="position: relative; width: 60%; margin-bottom: 15px;">
+   <!-- Marco de pergamino o madera -->
+   <div style="
+         position: absolute;
+         top: -20px;
+         left: 0;
+         right: 0;
+         text-align: center;
+         font-family: 'MedievalSharp', serif;
+         color: #3b1e0f;
+         font-weight: bold;">
+     Quantity: {{ selectedAmount }}
+     Total: {{ selectedAmount*item.price }}
+     <img [src]="imageUrls['GOLD']" class="hero-image-button" style="width: 30px; vertical-align: bottom; padding-bottom: 1px;"/>
+   </div>
+
+   <input type="range"
+          min="1"
+          [max]="item.amount"
+          [(ngModel)]="selectedAmount"
+          style="
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(to right, #a0522d, #8b4513);
+            border: 2px solid #3b1e0f;
+            border-radius: 8px;
+            outline: none;
+            accent-color: #5c3a1e;
+            box-shadow: 0 0 5px #3b1e0f;
+          " />
+ </div>
+
+ <!-- Botón de venta con fondo medieval -->
+ <button *ngIf="item != null" class="normal-button" style="width: 200px; height: 80px;" (click)="onSellItemClick(item)">
+   <div class="image-container" style="width: 200px;">
+     <img class="background-image"
+          [src]="this.imageUrls['BOTON_madera_8']"
+          alt="start"
+          style="width: 180px;" />
+     <div class="overlay-text">SELL</div>
+   </div>
+ </button>
+</div>
+    
+     
+  </div>
 
 
 
@@ -304,10 +447,10 @@
        </div>
       </div>
   </div>
-  <!-- Sección derecha heroes/items-->
-  <div *ngIf="mainClip =='clipHo'" class="right-section">
+  <!-- Sección derecha heroes*ngIf="mainClip =='clipHo'"-->
+  <div  class="right-section">
       <div *ngFor="let hero of heroes" class="button-wrapper">
-        <button (click)="onHeroClick(hero)" class="hero-button">
+        <button (click)="onHeroClick(hero)" class="hero-button" style=" box-shadow: 2px 2px 5px #00000066;">
           <div class="button-content">
             <img [src]="hero.icon" alt="{{ hero.name }}" class="hero-image-button" />
             <label class="hero-label">{{ hero.name }}</label>
@@ -322,7 +465,7 @@
       </button>
       </div>
     </div>
-<!-- Sección derecha heroes/items-->
+<!-- Sección derecha items
     <div *ngIf="mainClip =='clipSto'" class="right-section" style="grid-template-columns: 1fr 1fr 1fr 1fr;">
       <div *ngFor="let item of items" class="button-wrapper">
         <button  class="hero-button"style="width: 90px;">
@@ -332,7 +475,7 @@
           </div>
         </button>
       </div>
-    </div>
+    </div>-->
 </div>
 
 </div>

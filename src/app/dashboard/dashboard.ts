@@ -12,6 +12,7 @@ import { Item} from '../domain/item';
 import { HeroType,heroStyles } from '../enum/heroType';
 import { EnemyType,enemyStyles } from '../enum/enemyType';
 import { ItemType,itemStyles } from '../enum/ItemType';
+import { GradeType, gradeStyles } from '../enum/gradeType';
 import { ImageService } from '../services/image.service';
 import { FirebaseService } from '../services/firebase.service';
 import { ActivatedRoute } from '@angular/router';
@@ -43,10 +44,12 @@ export class DashboardComponent implements OnInit {
 
   hero: any;
   item: any;
+  grade: any;
   heroType =  HeroType.GUERRERO;
   enemyType: EnemyType | null = null;
   EnemyType = EnemyType; //necesario para usarlo en el html
   HeroType = HeroType;
+  GradeType = GradeType;
   heroDescription: string = '';
   heroBackground: string = '#f9f9f9';
   heroLongBackground: string = '#f9f9f9';
@@ -55,8 +58,12 @@ export class DashboardComponent implements OnInit {
   heroStyles = heroStyles;
   enemyStyles = enemyStyles;
   itemStyles = itemStyles;
+  gradeStyles = gradeStyles;
   heroNewname:string = '';
   gold: number = 0;
+  selectedAmount = 1;
+  selectedTotal = 0;
+  
   item1 = ItemType.NULL;
   item2 = ItemType.NULL;
   item3 = ItemType.NULL;
@@ -150,13 +157,13 @@ export class DashboardComponent implements OnInit {
         }
       );
   }
-  getItemsData() { 
+    getItemsData() { 
     this.firebaseService.getItemsData(this.user.email).subscribe(
       (items) => {
         this.items = items.map(itemData => ({
           id: itemData.id,
           ID: itemData.ID,
-          amount: itemData.amount || 1,
+          amount: itemData.amount || 0,
           grade: itemData.grade || 'F',
           name: itemData.name || 'item',
           price: itemData.price || 1,
@@ -181,7 +188,10 @@ export class DashboardComponent implements OnInit {
     this.enemyType = null;
     this.heroBackground = heroStyles[hero.type as HeroType]?.backgroundColor || '#f9f9f9';
     this.heroLongBackground = heroStyles[hero.type as HeroType]?.longBackground || '#f9f9f9';
-
+  }
+  async onItemClick(item: Item) {
+    this.selectedAmount = 1;
+    this.item = item; 
   }
   async onEnemyClick(type: EnemyType) {
     this.state = 'map';
@@ -194,6 +204,25 @@ export class DashboardComponent implements OnInit {
     this.mostrarBattleGif = false;
     this.state = "map";
   }
+  async onSellItemClick(item: Item) {
+    this.selectedTotal = this.selectedAmount*item.price;
+    console.log ("se han vendido: ", this.selectedAmount + " del item: ",item.ID);
+    console.log ("ganancia de dinero: ",this.selectedTotal);
+    const data = {
+      email:this.user.email,
+      itemID:item.ID,
+      amountSell: this.selectedAmount,
+    }
+   
+    this.firebaseService.sellItem(data).subscribe(
+      (response) => { console.log('Response:', response.message);this.getItemsData();this.onMainClipClick("clipSto")},
+      (error) => {
+        console.error('Error al modificar items:', error);
+      }
+    ); 
+    
+  }
+  
   changeHero(direction: 'next' | 'prev') {
     if (!this.hero || this.heroes.length === 0) return;
     const currentIndex = this.heroes.findIndex(h => h.id === this.hero.id);
@@ -239,28 +268,36 @@ export class DashboardComponent implements OnInit {
     this.addHero();
   }
   async onMainClipClick(clip: string){
+    this.state = "";
     this.mainClip = clip;
+    if(clip=="clipSto"){
+      this.state = "itemDetails";
+      this.item = null;
+      this.getItemsData();
+    }
   }
   async onClipClick(clip: string){
     this.clip = clip;
   }
   async onStartBattleClick() {
-   this.firebaseService.battle(this.hero,this.enemyType!).subscribe(
+    console.log( "ENEMY: "+this.enemyType);
+   this.firebaseService.battle(this.hero,this.enemyType!,this.user.email).subscribe(
       async (response) => { 
         console.log('✅ BATTLE',response.message);
         console.log('REWARD',response.reward);
         let gifName : string = "";
         if (response.result==true){
+          gifName = enemyStyles[this.enemyType as EnemyType]?.gifVictory;
           this.item1 = response.reward[0];
           this.item2 = response.reward[1];
           this.item3 = response.reward[2];
-          gifName = enemyStyles[this.enemyType as EnemyType]?.gifVictory;
+          this.getItemsData();
         }
         else{
+          gifName = enemyStyles[this.enemyType as EnemyType]?.gifDefeat;
           this.item1 = ItemType.NULL;
           this.item2 = ItemType.NULL;
           this.item3 = ItemType.NULL;
-          gifName = enemyStyles[this.enemyType as EnemyType]?.gifDefeat;
         }
         this.showBattleGif(gifName);
         },
