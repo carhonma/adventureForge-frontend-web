@@ -25,16 +25,28 @@ export class FirebaseService {
     return this.http.post(`${this.apiUrl}/addUserLog`, data);
 }
 
-  getHerosData(email: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/getHerosData/${email}`);
+getHerosData(email: string, heroId?: string): Observable<any[]> {
+  let url = `${this.apiUrl}/getHerosData/${email}`;
+  if (heroId) {
+    url += `?heroId=${heroId}`;
+  }
+  return this.http.get<any[]>(url);
+}
+
+ getItemsData(email: string, type: string): Observable<any[]> {
+  let url = `${this.apiUrl}/getItemsData/${email}`;
+  if (type) {
+    url += `?type=${encodeURIComponent(type)}`;
+  }
+  return this.http.get<any[]>(url);
+}
+
+  getUserData(email: string): Observable<string> {
+    return this.http.get<string>(`${this.apiUrl}/getUserData/${email}`);
   }
 
-  getItemsData(email: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/getItemsData/${email}`);
-  }
-
-  getUserData(email: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/getUserData/${email}`);
+  getEnemyData(enemyType: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/getEnemyData/${enemyType}`);
   }
 
   login(email: string, password: string): Observable<any> {
@@ -50,11 +62,17 @@ export class FirebaseService {
   sellItem(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/sellItem`, data);
   }
+  equipHero(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/equipHero`, data);
+  }
   changeHeroName(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/changeHeroName`, data);
   }
-  battle(hero: Hero, enemy: EnemyType, email: string): Observable<any> {
-    const data = { hero, enemy, email };
+  battle(hero: Hero, enemy: EnemyType, email: string,heroReference:string): Observable<any> {
+    const data = { hero, enemy, email,heroReference };
     return this.http.post<any>(`${this.apiUrl}/battle`, data);
+  }
+  updateHeroState(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/updateHeroState`, data);
   }
 }

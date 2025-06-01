@@ -6,7 +6,7 @@ import { FirebaseService } from './services/firebase.service';
 import { ImageService } from './services/image.service';
 import { HeroType, heroStyles } from './enum/heroType';
 import { EnemyType, enemyStyles } from './enum/enemyType';
-import { ItemType, itemStyles } from './enum/ItemType';
+import { ItemType, itemStyles } from './enum/itemType';
 import { GradeType, gradeStyles } from './enum/gradeType';
 
 
@@ -166,11 +166,18 @@ export class AppComponent implements OnInit {
       itemStyles[ItemType.ITEM_00060].icon = this.imageService.getCachedImage('items/metal1.png')!;
       itemStyles[ItemType.ITEM_00070].icon = this.imageService.getCachedImage('items/tooth1.png')!;
 
+      itemStyles[ItemType.ITEM_01000].icon = this.imageService.getCachedImage('items/A_hold_helmet.png')!;
+      itemStyles[ItemType.ITEM_02000].icon = this.imageService.getCachedImage('items/A_hold_gloves.png')!;
+      itemStyles[ItemType.ITEM_03000].icon = this.imageService.getCachedImage('items/A_hold_chest.png')!;
+      itemStyles[ItemType.ITEM_04000].icon = this.imageService.getCachedImage('items/A_hold_weapon.png')!;
+      itemStyles[ItemType.ITEM_05000].icon = this.imageService.getCachedImage('items/A_hold_boots.png')!;
+      itemStyles[ItemType.ITEM_06000].icon = this.imageService.getCachedImage('items/A_hold_jewel.png')!;
+
       itemStyles[ItemType.ITEM_01011].icon = itemStyles[ItemType.ITEM_01012].icon = itemStyles[ItemType.ITEM_01013].icon = itemStyles[ItemType.ITEM_01014].icon = itemStyles[ItemType.ITEM_01015].icon = this.imageService.getCachedImage('items/helmet1.png')!;
       itemStyles[ItemType.ITEM_01021].icon = itemStyles[ItemType.ITEM_01022].icon = itemStyles[ItemType.ITEM_01023].icon = itemStyles[ItemType.ITEM_01024].icon = itemStyles[ItemType.ITEM_01025].icon = this.imageService.getCachedImage('items/helmet2.png')!;
      
       itemStyles[ItemType.ITEM_02011].icon = itemStyles[ItemType.ITEM_02012].icon = itemStyles[ItemType.ITEM_02013].icon = itemStyles[ItemType.ITEM_02014].icon = itemStyles[ItemType.ITEM_02015].icon = this.imageService.getCachedImage('items/gloves1.png')!;
-      itemStyles[ItemType.ITEM_02011].icon = itemStyles[ItemType.ITEM_02012].icon = itemStyles[ItemType.ITEM_02013].icon = itemStyles[ItemType.ITEM_02014].icon = itemStyles[ItemType.ITEM_02015].icon = this.imageService.getCachedImage('items/gloves2.png')!;
+      itemStyles[ItemType.ITEM_02021].icon = itemStyles[ItemType.ITEM_02022].icon = itemStyles[ItemType.ITEM_02023].icon = itemStyles[ItemType.ITEM_02024].icon = itemStyles[ItemType.ITEM_02025].icon = this.imageService.getCachedImage('items/gloves2.png')!;
       itemStyles[ItemType.ITEM_02031].icon = itemStyles[ItemType.ITEM_02032].icon = itemStyles[ItemType.ITEM_02033].icon = itemStyles[ItemType.ITEM_02034].icon = itemStyles[ItemType.ITEM_02035].icon = this.imageService.getCachedImage('items/gloves3.png')!;
       itemStyles[ItemType.ITEM_02041].icon = itemStyles[ItemType.ITEM_02042].icon = itemStyles[ItemType.ITEM_02043].icon = itemStyles[ItemType.ITEM_02044].icon = itemStyles[ItemType.ITEM_02045].icon = this.imageService.getCachedImage('items/gloves4.png')!;
       itemStyles[ItemType.ITEM_02051].icon = itemStyles[ItemType.ITEM_02052].icon = itemStyles[ItemType.ITEM_02053].icon = itemStyles[ItemType.ITEM_02054].icon = itemStyles[ItemType.ITEM_02055].icon = this.imageService.getCachedImage('items/gloves5.png')!;
