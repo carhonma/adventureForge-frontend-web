@@ -6,8 +6,10 @@ import { FirebaseService } from './services/firebase.service';
 import { ImageService } from './services/image.service';
 import { HeroType, heroStyles } from './enum/heroType';
 import { EnemyType, enemyStyles } from './enum/enemyType';
+import { CrafterType, crafterStyles } from './enum/crafterType';
 import { ItemType, itemStyles } from './enum/itemType';
 import { GradeType, gradeStyles } from './enum/gradeType';
+import { TurnActionType,turnActionStyles } from './enum/turnActionType';
 
 
 
@@ -74,6 +76,15 @@ export class AppComponent implements OnInit {
         'iconos/boton_madera_5.png',
         'iconos/boton_madera_8.png',
         'iconos/boton_madera_9.png',
+        'iconos/boton_madera_10.png',
+        'iconos/boton_madera_11.png',
+
+        'crafters/alchemist.png',
+        'crafters/armorsmith.png',
+        'crafters/carpenter.png',
+        'crafters/enchanter.png',
+        'crafters/tailor.png',
+        'crafters/weaponsmith.png',
 
         'characters/guerrero.png',
         'characters/picaro.png',
@@ -82,8 +93,15 @@ export class AppComponent implements OnInit {
         'characters/cazador.png',
         'characters/clerigo.png',
 
-        'gifs/Y_spring1_defeat.gif',
-        'gifs/Y_spring1_victory.gif',
+        'skills/STANDARD_ATTACK.png',
+        'skills/HARD_STRIKE.png',
+        'skills/HARD_SHOT.png',
+        'skills/HARD_SPELL.png',
+        'skills/BUFF_ARMOR.png',
+        'skills/DEBUFF_ARMOR.png',
+
+        'gifs/Y_forest1_defeat.gif',
+        'gifs/Y_forest1_victory.gif',
         'gifs/Y_ent1_defeat.gif',
         'gifs/Y_ent1_victory.gif',
         'gifs/Y_golem1_defeat.gif',
@@ -103,9 +121,27 @@ export class AppComponent implements OnInit {
         'gifs/Y_jabali7_defeat.gif',
         'gifs/Y_jabali7_victory.gif',
         
+        'characters/A_forest1.jpg',
+        'characters/A_golem1.jpg',
+        'characters/A_ent1.jpg',
         'characters/A_jabali1.jpg',
         'characters/A_jabali2.jpg',
         'characters/A_jabali3.jpg',
+        'characters/A_jabali4.jpg',
+        'characters/A_jabali5.jpg',
+        'characters/A_jabali6.jpg',
+        'characters/A_jabali7.jpg',
+        
+        'missions/C_forest1.png',
+        'missions/C_golem1.png',
+        'missions/C_ent1.png',
+        'missions/C_jabali1.png',
+        'missions/C_jabali2.png',
+        'missions/C_jabali3.png',
+        'missions/C_jabali4.png',
+        'missions/C_jabali5.png',
+        'missions/C_jabali6.png',
+        'missions/C_jabali7.png',
 
         'grade/grade_a.png','grade/grade_b.png','grade/grade_c.png','grade/grade_d.png','grade/grade_s.png',
 
@@ -121,7 +157,14 @@ export class AppComponent implements OnInit {
 
         'items/noItem.png',
       ]);
-      
+
+      crafterStyles[CrafterType.Alchemist].icon = this.imageService.getCachedImage('crafters/alchemist.png')!;
+      crafterStyles[CrafterType.Armorsmith].icon = this.imageService.getCachedImage('crafters/armorsmith.png')!;
+      crafterStyles[CrafterType.Carpenter].icon = this.imageService.getCachedImage('crafters/carpenter.png')!;
+      crafterStyles[CrafterType.Enchanter].icon = this.imageService.getCachedImage('crafters/enchanter.png')!;
+      crafterStyles[CrafterType.Tailor].icon = this.imageService.getCachedImage('crafters/tailor.png')!;
+      crafterStyles[CrafterType.WeaponSmith].icon = this.imageService.getCachedImage('crafters/weaponsmith.png')!;
+
       heroStyles[HeroType.GUERRERO].icon = this.imageService.getCachedImage('characters/guerrero.png')!;
       heroStyles[HeroType.PICARO].icon = this.imageService.getCachedImage('characters/picaro.png')!;
       heroStyles[HeroType.MAGO].icon = this.imageService.getCachedImage('characters/mago.png')!;
@@ -144,12 +187,24 @@ export class AppComponent implements OnInit {
       heroStyles[HeroType.CLERIGO].gif = this.imageService.getCachedImage('gifs/Y_golem1_victory.gif')!;*/
       //heroStyles[HeroType.GUERRERO].gif = await this.storageService.getImageUrl('gifs', 'Y_ent1_victory.gif');//ejemplo con storageService
 
-      enemyStyles[EnemyType.JABALI1].icon = this.imageService.getCachedImage('characters/A_jabali1.jpg')!;
-      enemyStyles[EnemyType.JABALI2].icon = this.imageService.getCachedImage('characters/A_jabali2.jpg')!;
-      enemyStyles[EnemyType.JABALI3].icon = this.imageService.getCachedImage('characters/A_jabali3.jpg')!;
+      turnActionStyles[TurnActionType.STANDARD_ATTACK].icon = this.imageService.getCachedImage('skills/STANDARD_ATTACK.png')!;
+      turnActionStyles[TurnActionType.HARD_STRIKE].icon = this.imageService.getCachedImage('skills/HARD_STRIKE.png')!;
+      turnActionStyles[TurnActionType.HARD_SPELL].icon = this.imageService.getCachedImage('skills/HARD_SPELL.png')!;
+      turnActionStyles[TurnActionType.HARD_SHOT].icon = this.imageService.getCachedImage('skills/HARD_SHOT.png')!;
+      turnActionStyles[TurnActionType.BUFF_ARMOR].icon = this.imageService.getCachedImage('skills/BUFF_ARMOR.png')!;
+      turnActionStyles[TurnActionType.DEBUFF_ARMOR].icon = this.imageService.getCachedImage('skills/DEBUFF_ARMOR.png')!;
+      turnActionStyles[TurnActionType.NOACTION].icon = this.imageService.getCachedImage('skills/STANDARD_ATTACK.png')!;
 
-      enemyStyles[EnemyType.JABALI1].gifVictory = this.imageService.getCachedImage('gifs/Y_jabali1_victory.gif')!;
-      enemyStyles[EnemyType.JABALI1].gifDefeat = this.imageService.getCachedImage('gifs/Y_jabali1_defeat.gif')!;
+      enemyStyles[EnemyType.FOREST1].icon = this.imageService.getCachedImage('characters/A_forest1.jpg')!;enemyStyles[EnemyType.FOREST1].missionIcon = this.imageService.getCachedImage('missions/C_forest1.png')!;
+      enemyStyles[EnemyType.GOLEM1].icon = this.imageService.getCachedImage('characters/A_golem1.jpg')!;enemyStyles[EnemyType.GOLEM1].missionIcon = this.imageService.getCachedImage('missions/C_golem1.png')!;
+      enemyStyles[EnemyType.ENT1].icon = this.imageService.getCachedImage('characters/A_ent1.jpg')!;enemyStyles[EnemyType.ENT1].missionIcon = this.imageService.getCachedImage('missions/C_ent1.png')!;
+      enemyStyles[EnemyType.JABALI1].icon = this.imageService.getCachedImage('characters/A_jabali1.jpg')!;enemyStyles[EnemyType.JABALI1].missionIcon = this.imageService.getCachedImage('missions/C_jabali1.png')!;
+      enemyStyles[EnemyType.JABALI2].icon = this.imageService.getCachedImage('characters/A_jabali2.jpg')!;enemyStyles[EnemyType.JABALI2].missionIcon = this.imageService.getCachedImage('missions/C_jabali2.png')!;
+      enemyStyles[EnemyType.JABALI3].icon = this.imageService.getCachedImage('characters/A_jabali3.jpg')!;enemyStyles[EnemyType.JABALI3].missionIcon = this.imageService.getCachedImage('missions/C_jabali3.png')!;
+      enemyStyles[EnemyType.JABALI4].icon = this.imageService.getCachedImage('characters/A_jabali4.jpg')!;enemyStyles[EnemyType.JABALI4].missionIcon = this.imageService.getCachedImage('missions/C_jabali4.png')!;
+      enemyStyles[EnemyType.JABALI5].icon = this.imageService.getCachedImage('characters/A_jabali5.jpg')!;enemyStyles[EnemyType.JABALI5].missionIcon = this.imageService.getCachedImage('missions/C_jabali5.png')!;
+      enemyStyles[EnemyType.JABALI6].icon = this.imageService.getCachedImage('characters/A_jabali6.jpg')!;enemyStyles[EnemyType.JABALI6].missionIcon = this.imageService.getCachedImage('missions/C_jabali6.png')!;
+      enemyStyles[EnemyType.JABALI7].icon = this.imageService.getCachedImage('characters/A_jabali7.jpg')!;enemyStyles[EnemyType.JABALI7].missionIcon = this.imageService.getCachedImage('missions/C_jabali7.png')!;
 
       gradeStyles[GradeType.F].icon = this.imageService.getCachedImage('grade/grade_d.png')!;
       gradeStyles[GradeType.A].icon = this.imageService.getCachedImage('grade/grade_a.png')!;
@@ -158,13 +213,13 @@ export class AppComponent implements OnInit {
       gradeStyles[GradeType.D].icon = this.imageService.getCachedImage('grade/grade_d.png')!;
       gradeStyles[GradeType.S].icon = this.imageService.getCachedImage('grade/grade_s.png')!;
 
-      itemStyles[ItemType.ITEM_00010].icon = this.imageService.getCachedImage('items/tinder1.png')!;
-      itemStyles[ItemType.ITEM_00020].icon = this.imageService.getCachedImage('items/mushroom1.png')!;
-      itemStyles[ItemType.ITEM_00030].icon = this.imageService.getCachedImage('items/log1.png')!;
-      itemStyles[ItemType.ITEM_00040].icon = this.imageService.getCachedImage('items/cloth1.png')!;
-      itemStyles[ItemType.ITEM_00050].icon = this.imageService.getCachedImage('items/stone1.png')!;
-      itemStyles[ItemType.ITEM_00060].icon = this.imageService.getCachedImage('items/metal1.png')!;
-      itemStyles[ItemType.ITEM_00070].icon = this.imageService.getCachedImage('items/tooth1.png')!;
+      itemStyles[ItemType.ITEM_00011].icon = itemStyles[ItemType.ITEM_00012].icon = itemStyles[ItemType.ITEM_00013].icon = itemStyles[ItemType.ITEM_00014].icon = itemStyles[ItemType.ITEM_00015].icon = this.imageService.getCachedImage('items/tinder1.png')!;
+      itemStyles[ItemType.ITEM_00021].icon = itemStyles[ItemType.ITEM_00022].icon = itemStyles[ItemType.ITEM_00023].icon = itemStyles[ItemType.ITEM_00024].icon = itemStyles[ItemType.ITEM_00025].icon = this.imageService.getCachedImage('items/mushroom1.png')!;
+      itemStyles[ItemType.ITEM_00031].icon = itemStyles[ItemType.ITEM_00032].icon = itemStyles[ItemType.ITEM_00033].icon = itemStyles[ItemType.ITEM_00034].icon = itemStyles[ItemType.ITEM_00035].icon = this.imageService.getCachedImage('items/log1.png')!;
+      itemStyles[ItemType.ITEM_00041].icon = itemStyles[ItemType.ITEM_00042].icon = itemStyles[ItemType.ITEM_00043].icon = itemStyles[ItemType.ITEM_00044].icon = itemStyles[ItemType.ITEM_00045].icon = this.imageService.getCachedImage('items/cloth1.png')!;
+      itemStyles[ItemType.ITEM_00051].icon = itemStyles[ItemType.ITEM_00052].icon = itemStyles[ItemType.ITEM_00053].icon = itemStyles[ItemType.ITEM_00054].icon = itemStyles[ItemType.ITEM_00055].icon = this.imageService.getCachedImage('items/stone1.png')!;
+      itemStyles[ItemType.ITEM_00061].icon = itemStyles[ItemType.ITEM_00062].icon = itemStyles[ItemType.ITEM_00063].icon = itemStyles[ItemType.ITEM_00064].icon = itemStyles[ItemType.ITEM_00065].icon = this.imageService.getCachedImage('items/metal1.png')!;
+      itemStyles[ItemType.ITEM_00071].icon = itemStyles[ItemType.ITEM_00072].icon = itemStyles[ItemType.ITEM_00073].icon = itemStyles[ItemType.ITEM_00074].icon = itemStyles[ItemType.ITEM_00075].icon = this.imageService.getCachedImage('items/tooth1.png')!;
 
       itemStyles[ItemType.ITEM_01000].icon = this.imageService.getCachedImage('items/A_hold_helmet.png')!;
       itemStyles[ItemType.ITEM_02000].icon = this.imageService.getCachedImage('items/A_hold_gloves.png')!;

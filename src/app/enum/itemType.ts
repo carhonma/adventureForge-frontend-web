@@ -2,7 +2,13 @@ import { GradeType } from "./gradeType";
 
 export enum ItemType {
 
-  ITEM_00010 = 'ITEM_00010', ITEM_00020 = 'ITEM_00020', ITEM_00030 = 'ITEM_00030', ITEM_00040 = 'ITEM_00040', ITEM_00050 = 'ITEM_00050', ITEM_00060 = 'ITEM_00060',ITEM_00070 = 'ITEM_00070',
+  ITEM_00011 = 'ITEM_00011', ITEM_00012 = 'ITEM_00012', ITEM_00013 = 'ITEM_00013', ITEM_00014 = 'ITEM_00014', ITEM_00015 = 'ITEM_00015',
+  ITEM_00021 = 'ITEM_00021', ITEM_00022 = 'ITEM_00022', ITEM_00023 = 'ITEM_00023', ITEM_00024 = 'ITEM_00024', ITEM_00025 = 'ITEM_00025',
+  ITEM_00031 = 'ITEM_00031', ITEM_00032 = 'ITEM_00032', ITEM_00033 = 'ITEM_00033', ITEM_00034 = 'ITEM_00034', ITEM_00035 = 'ITEM_00035', 
+  ITEM_00041 = 'ITEM_00041', ITEM_00042 = 'ITEM_00042', ITEM_00043 = 'ITEM_00043', ITEM_00044 = 'ITEM_00044', ITEM_00045 = 'ITEM_00045',
+  ITEM_00051 = 'ITEM_00051', ITEM_00052 = 'ITEM_00052', ITEM_00053 = 'ITEM_00053', ITEM_00054 = 'ITEM_00054', ITEM_00055 = 'ITEM_00055',
+  ITEM_00061 = 'ITEM_00061', ITEM_00062 = 'ITEM_00062', ITEM_00063 = 'ITEM_00063', ITEM_00064 = 'ITEM_00064', ITEM_00065 = 'ITEM_00065',
+  ITEM_00071 = 'ITEM_00071', ITEM_00072 = 'ITEM_00072', ITEM_00073 = 'ITEM_00073', ITEM_00074 = 'ITEM_00074', ITEM_00075 = 'ITEM_00075',
 
   ITEM_01000 = 'ITEM_01000', ITEM_02000 = 'ITEM_02000', ITEM_03000 = 'ITEM_03000',ITEM_04000 = 'ITEM_04000',ITEM_05000 = 'ITEM_05000',ITEM_06000 = 'ITEM_06000',
   
@@ -42,14 +48,14 @@ export enum ItemType {
   export const itemStyles: Record<ItemType, { icon: string; description: string; grade: GradeType }> = {
 
     //raw
-    [ItemType.ITEM_00010]: { icon: 'items/tinder1.png', grade: GradeType.D, description: 'tinder1 D' },
-    [ItemType.ITEM_00020]: { icon: 'items/mushroom1.png', grade: GradeType.D, description: 'mushroom1 D' },
-    [ItemType.ITEM_00030]: { icon: 'items/log1.png', grade: GradeType.D, description: 'log1 D' },
-    [ItemType.ITEM_00040]: { icon: 'items/cloth1.png', grade: GradeType.D, description: 'cloth1 D' },
-    [ItemType.ITEM_00050]: { icon: 'items/stone1.png', grade: GradeType.D, description: 'stone1 D' },
-    [ItemType.ITEM_00060]: { icon: 'items/metal1.png', grade: GradeType.D, description: 'metal1 D' },
-    [ItemType.ITEM_00070]: { icon: 'items/tooth1.png', grade: GradeType.D, description: 'tooth1 D' },
-
+    [ItemType.ITEM_00011]: { icon: 'items/tinder1.png', grade: GradeType.D, description: 'Item' },[ItemType.ITEM_00012]: { icon: 'items/tinder1.png', grade: GradeType.C, description: 'Item' },[ItemType.ITEM_00013]: { icon: 'items/tinder1.png', grade: GradeType.B, description: 'Item' },[ItemType.ITEM_00014]: { icon: 'items/tinder1.png', grade: GradeType.A, description: 'Item' },[ItemType.ITEM_00015]: { icon: 'items/tinder1.png', grade: GradeType.S, description: 'Item' },
+    [ItemType.ITEM_00021]: { icon: 'items/mushroom1.png', grade: GradeType.D, description: 'Item' },[ItemType.ITEM_00022]: { icon: 'items/mushroom1.png', grade: GradeType.C, description: 'Item' },[ItemType.ITEM_00023]: { icon: 'items/mushroom1.png', grade: GradeType.B, description: 'Item' },[ItemType.ITEM_00024]: { icon: 'items/mushroom1.png', grade: GradeType.A, description: 'Item' },[ItemType.ITEM_00025]: { icon: 'items/mushroom1.png', grade: GradeType.S, description: 'Item' },
+    [ItemType.ITEM_00031]: { icon: 'items/log1.png', grade: GradeType.D, description: 'Item' },[ItemType.ITEM_00032]: { icon: 'items/log1.png', grade: GradeType.C, description: 'Item' },[ItemType.ITEM_00033]: { icon: 'items/log1.png', grade: GradeType.B, description: 'Item' },[ItemType.ITEM_00034]: { icon: 'items/log1.png', grade: GradeType.A, description: 'Item' },[ItemType.ITEM_00035]: { icon: 'items/log1.png', grade: GradeType.S, description: 'Item' },
+    [ItemType.ITEM_00041]: { icon: 'items/cloth1.png', grade: GradeType.D, description: 'Item' },[ItemType.ITEM_00042]: { icon: 'items/cloth1.png', grade: GradeType.C, description: 'Item' },[ItemType.ITEM_00043]: { icon: 'items/cloth1.png', grade: GradeType.B, description: 'Item' },[ItemType.ITEM_00044]: { icon: 'items/cloth1.png', grade: GradeType.A, description: 'Item' },[ItemType.ITEM_00045]: { icon: 'items/cloth1.png', grade: GradeType.S, description: 'Item' },
+    [ItemType.ITEM_00051]: { icon: 'items/stone1.png', grade: GradeType.D, description: 'Item' },[ItemType.ITEM_00052]: { icon: 'items/stone1.png', grade: GradeType.C, description: 'Item' },[ItemType.ITEM_00053]: { icon: 'items/stone1.png', grade: GradeType.B, description: 'Item' },[ItemType.ITEM_00054]: { icon: 'items/stone1.png', grade: GradeType.A, description: 'Item' },[ItemType.ITEM_00055]: { icon: 'items/stone1.png', grade: GradeType.S, description: 'Item' },
+    [ItemType.ITEM_00061]: { icon: 'items/metal1.png', grade: GradeType.D, description: 'Item' },[ItemType.ITEM_00062]: { icon: 'items/metal1.png', grade: GradeType.C, description: 'Item' },[ItemType.ITEM_00063]: { icon: 'items/metal1.png', grade: GradeType.B, description: 'Item' },[ItemType.ITEM_00064]: { icon: 'items/metal1.png', grade: GradeType.A, description: 'Item' },[ItemType.ITEM_00065]: { icon: 'items/metal1.png', grade: GradeType.S, description: 'Item' },
+    [ItemType.ITEM_00071]: { icon: 'items/tooth1.png', grade: GradeType.D, description: 'Item' },[ItemType.ITEM_00072]: { icon: 'items/tooth1.png', grade: GradeType.C, description: 'Item' },[ItemType.ITEM_00073]: { icon: 'items/tooth1.png', grade: GradeType.B, description: 'Item' },[ItemType.ITEM_00074]: { icon: 'items/tooth1.png', grade: GradeType.A, description: 'Item' },[ItemType.ITEM_00075]: { icon: 'items/tooth1.png', grade: GradeType.S, description: 'Item' },
+    
     //equipement
     [ItemType.ITEM_01000]: { icon: 'items/A_hold_helmet.png', grade: GradeType.F, description: 'Item' },
     [ItemType.ITEM_01011]: { icon: 'items/helmet1.png', grade: GradeType.D, description: 'Item' },[ItemType.ITEM_01012]: { icon: 'items/helmet1.png', grade: GradeType.C, description: 'Item' },[ItemType.ITEM_01013]: { icon: 'items/helmet1.png', grade: GradeType.B, description: 'Item' },[ItemType.ITEM_01014]: { icon: 'items/helmet1.png', grade: GradeType.A, description: 'Item' },[ItemType.ITEM_01015]: { icon: 'items/helmet1.png', grade: GradeType.S, description: 'Item' },

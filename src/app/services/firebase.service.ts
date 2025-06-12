@@ -40,6 +40,14 @@ getHerosData(email: string, heroId?: string): Observable<any[]> {
   }
   return this.http.get<any[]>(url);
 }
+getItemsCraftData(email: string, subtypes: string[]): Observable<any[]> {
+  let url = `${this.apiUrl}/getItemsCraftData/${email}`;
+  if (subtypes && subtypes.length > 0) {
+    const params = subtypes.map(s => `subtype=${encodeURIComponent(s)}`).join('&');
+    url += `?${params}`;
+  }
+  return this.http.get<any[]>(url);
+}
 
   getUserData(email: string): Observable<string> {
     return this.http.get<string>(`${this.apiUrl}/getUserData/${email}`);
@@ -62,11 +70,17 @@ getHerosData(email: string, heroId?: string): Observable<any[]> {
   sellItem(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/sellItem`, data);
   }
+  craftItem(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/craftItem`, data);
+  }
   equipHero(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/equipHero`, data);
   }
   changeHeroName(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/changeHeroName`, data);
+  }
+  changeHeroSkill(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/changeHeroSkill`, data);
   }
   battle(hero: Hero, enemy: EnemyType, email: string,heroReference:string): Observable<any> {
     const data = { hero, enemy, email,heroReference };

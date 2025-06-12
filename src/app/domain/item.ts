@@ -14,9 +14,11 @@ export class Item {
   type: string;
   icon: string;
   attributes: number[];
+  ItemsNeeds: ItemType[];
+  ItemsAmountsNeeds: number[];
   
 
-    constructor(ID: string, amount: number, name: string, price: number, subtype: string, type: string, attributes: number[]) {
+    constructor(ID: string, amount: number, name: string, price: number, subtype: string, type: string, attributes: number[],ItemsNeeds: ItemType[],ItemsAmountsNeeds: number[]) {
       this.ID = ID;
       this.grade = itemStyles[ID as ItemType]?.grade || GradeType.F;
       this.amount = amount;
@@ -26,6 +28,8 @@ export class Item {
       this.type = type;
       this.icon = itemStyles[ID as ItemType]?.icon || '❓'
       this.attributes = attributes;
+      this.ItemsNeeds = ItemsNeeds;
+      this.ItemsAmountsNeeds = ItemsAmountsNeeds;
     }
 }
 
