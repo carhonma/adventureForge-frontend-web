@@ -30,6 +30,8 @@ export class Hero {
   critic: number;
   maxHealth: number;
   maxExp: number;
+  bonus: string[];
+  collateral: string[];
   state: any[];
   x_boots: Item;
   x_chest: Item;
@@ -41,7 +43,7 @@ export class Hero {
   
 
   constructor(ID: number,id: string, name: string, type: HeroType, level: number, actualLife: number, actualExp: number, skill1: string, skill2: string, skill3: string, skill4: string, skill5: string, 
-    Dbrutal: number, Dletal: number, Dmistic: number, armor: number, resistance: number, accuracy: number, evasion: number, critic: number, maxHealth: number, maxExp: number, state: any[], x_boots: Item, x_chest: Item, x_gloves: Item, x_helmet: Item, x_jewel: Item, x_weapon: Item) {
+    Dbrutal: number, Dletal: number, Dmistic: number, armor: number, resistance: number, accuracy: number, evasion: number, critic: number, maxHealth: number, maxExp: number, bonus: string[], collateral: string[], state: any[], x_boots: Item, x_chest: Item, x_gloves: Item, x_helmet: Item, x_jewel: Item, x_weapon: Item) {
     this.ID = ID;
     this.id = id;
     this.name = name;
@@ -66,14 +68,16 @@ export class Hero {
     this.maxHealth = maxHealth;
     this.maxExp = maxExp;
     this.state = state;
+    this.bonus = bonus;
+    this.collateral = collateral;
     
   
-    this.x_boots = new Item("ITEM_05000", 1,"chest",0,"SUBTYPE","TYPE",[0,0,0,0,0,0,0,0],[ItemType.NULL,ItemType.NULL,ItemType.NULL],[0,0,0]);
-    this.x_chest = new Item("ITEM_03000", 1,"chest",0,"SUBTYPE","TYPE",[0,0,0,0,0,0,0,0],[ItemType.NULL,ItemType.NULL,ItemType.NULL],[0,0,0]);
-    this.x_gloves = new Item("ITEM_02000", 1,"chest",0,"SUBTYPE","TYPE",[0,0,0,0,0,0,0,0],[ItemType.NULL,ItemType.NULL,ItemType.NULL],[0,0,0]);
-    this.x_helmet = new Item("ITEM_01000", 1,"chest",0,"SUBTYPE","TYPE",[0,0,0,0,0,0,0,0],[ItemType.NULL,ItemType.NULL,ItemType.NULL],[0,0,0]);
-    this.x_jewel = new Item("ITEM_06000", 1,"chest",0,"SUBTYPE","TYPE",[0,0,0,0,0,0,0,0],[ItemType.NULL,ItemType.NULL,ItemType.NULL],[0,0,0]);
-    this.x_weapon = new Item("ITEM_04000", 1,"chest",0,"SUBTYPE","TYPE",[0,0,0,0,0,0,0,0],[ItemType.NULL,ItemType.NULL,ItemType.NULL],[0,0,0]);
+    this.x_boots = new Item("ITEM_05000", 1,"chest",0,"SUBTYPE","TYPE",[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[ItemType.NULL,ItemType.NULL,ItemType.NULL],[0,0,0]);
+    this.x_chest = new Item("ITEM_03000", 1,"chest",0,"SUBTYPE","TYPE",[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[ItemType.NULL,ItemType.NULL,ItemType.NULL],[0,0,0]);
+    this.x_gloves = new Item("ITEM_02000", 1,"chest",0,"SUBTYPE","TYPE",[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[ItemType.NULL,ItemType.NULL,ItemType.NULL],[0,0,0]);
+    this.x_helmet = new Item("ITEM_01000", 1,"chest",0,"SUBTYPE","TYPE",[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[ItemType.NULL,ItemType.NULL,ItemType.NULL],[0,0,0]);
+    this.x_jewel = new Item("ITEM_06000", 1,"chest",0,"SUBTYPE","TYPE",[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[ItemType.NULL,ItemType.NULL,ItemType.NULL],[0,0,0]);
+    this.x_weapon = new Item("ITEM_04000", 1,"chest",0,"SUBTYPE","TYPE",[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[ItemType.NULL,ItemType.NULL,ItemType.NULL],[0,0,0]);
   }
 }
 export interface BaseStats {

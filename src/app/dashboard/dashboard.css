@@ -293,7 +293,7 @@
 /*IMAGEN MAPA*/
 .scroll-container {
   height: 600px;
-  width: 350px;
+  width: 300px;
   overflow-y: scroll;
   border: 2px solid #444; 
   box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.5);
@@ -335,6 +335,73 @@
 .map-button:hover img {
   transform: scale(1.2);
 }
+.map-button-up1 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  border-radius: 0;
+  cursor: pointer;
+  overflow: visible; /* Asegura que la sombra no se recorte */
+}
+
+.map-button-up1 img {
+  display: block;
+  width: 80px;
+  height: 80px;
+  transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+  filter: 
+    drop-shadow(0 0 8px rgb(195, 230, 255))
+    drop-shadow(0 0 16px rgba(81, 182, 255, 0.9))
+    drop-shadow(0 0 32px rgba(0, 150, 255, 0.6));
+  border-radius: 50%;
+}
+
+.map-button-up1:hover img {
+  transform: scale(1.2);
+  filter: 
+    drop-shadow(0 0 8px rgb(195, 230, 255))
+    drop-shadow(0 0 16px rgba(81, 182, 255, 0.9))
+    drop-shadow(0 0 32px rgba(49, 168, 253, 0.6));
+}
+.map-button-up2 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  border-radius: 0;
+  cursor: pointer;
+  overflow: visible; /* Asegura que la sombra no se recorte */
+}
+
+.map-button-up2 img {
+  display: block;
+  width: 80px;
+  height: 80px;
+  transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+  filter: 
+    drop-shadow(0 0 8px rgb(255, 230, 195))
+    drop-shadow(0 0 16px rgba(255, 184, 118, 0.9))
+    drop-shadow(0 0 32px rgba(253, 136, 27, 0.6));
+  border-radius: 50%;
+}
+
+.map-button-up2:hover img {
+  transform: scale(1.2);
+  filter: 
+    drop-shadow(0 0 8px rgb(255, 230, 195))
+    drop-shadow(0 0 16px rgba(255, 184, 118, 0.9))
+    drop-shadow(0 0 32px rgba(253, 136, 27, 0.6));
+}
+
+
+
 
 .map-container {
   display: flex;
@@ -880,14 +947,19 @@
 
 
 .bg-green {
-  background-color: #c8f7c5; /* verde claro */
+  background-color: #63f35a; /* verde claro */
 }
 
 .bg-red {
-  background-color: #fa9d8d; /* rojo claro */
+  background-color: #f55b41; /* rojo claro */
 }
 .normal-button:disabled {
   opacity: 0.5;
+  filter: grayscale(100%);
+  cursor:default;
+}
+.map-button:disabled {
+  opacity: 0.75;
   filter: grayscale(100%);
   cursor:default;
 }
@@ -1000,4 +1072,139 @@
     transform: translate(var(--tx), var(--ty)) scale(1);
     opacity: 1;
   }
+
+
+
+
+
+
+
+
+
 }
+
+
+
+
+
+.life-bar-container {
+  position: relative;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.life-bar-image {
+  width: 100%;
+  display: block;
+}
+
+.life-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px black;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.life-bar-container:hover .life-overlay {
+  opacity: 1;
+}
+
+
+.medieval-frame {
+  display: inline-block;
+  padding: 10px;
+  border-radius: 20%;
+  background: linear-gradient(135deg, #5e4522, #a37c4f);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.medieval-frame img {
+  display: block;
+  width: 330px;
+  height: auto;
+  border-radius: 20%;
+}
+
+
+
+
+
+
+
+
+.item-title-container {
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.item-title {
+  display: inline-block;
+  position: relative;
+  padding: 12px 40px;
+  font-size: 24px;
+  font-family: 'MedievalSharp', serif;
+  color: #3b1e0f;
+  background: linear-gradient(145deg, #f8f1e5, #e2d4b7);
+  border: 2px solid #3b1e0f;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
+  z-index: 1;
+}
+
+/* Laterales decorativos */
+.item-title::before,
+.item-title::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  background: radial-gradient(circle at center, #3b1e0f 40%, transparent 42%);
+  border: 2px solid #3b1e0f;
+  border-radius: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  box-shadow: 0 0 6px rgba(59, 30, 15, 0.6);
+  z-index: -1;
+}
+
+.item-title::before {
+  left: -30px;
+}
+
+.item-title::after {
+  right: -30px;
+}
+
+/* Opcional: líneas curvas decorativas estilo grabado */
+.item-title-container::before,
+.item-title-container::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 60px;
+  height: 20px;
+  border-top: 2px solid #3b1e0f;
+  border-bottom: 2px solid #3b1e0f;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  opacity: 0.5;
+}
+
+.item-title-container::before {
+  left: 0;
+}
+
+.item-title-container::after {
+  right: 0;
+}
+
