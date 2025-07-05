@@ -9,7 +9,9 @@ import { EnemyType } from '../enum/enemyType';
   providedIn: 'root'
 })
 export class FirebaseService {
-  private apiUrl = 'http://localhost:8080/api'; // Ajusta la URL si tu backend está en otro puerto o servidor
+  //private apiUrl = 'http://localhost:8080/api'; // Ajusta la URL si tu backend está en otro puerto o servidor
+  private apiUrl = 'https://adventureforge-backend-web.onrender.com/api'
+
 
   constructor(private http: HttpClient) {}
 

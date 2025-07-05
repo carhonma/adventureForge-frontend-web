@@ -15,7 +15,8 @@ import { FirebaseService } from './firebase.service';
 })
 export class AuthService {
   private userSubject = new BehaviorSubject<any>(null);
-  private apiUrl = 'http://localhost:8080/api';
+  //private apiUrl = 'http://localhost:8080/api';
+  private apiUrl = 'https://adventureforge-backend-web.onrender.com/api';
   
   constructor(private auth: Auth, private firestore: Firestore,private http: HttpClient,private firebaseService: FirebaseService,) {
     // Escuchar cambios en el estado de autenticación
@@ -37,7 +38,7 @@ async login(email: string, password: string): Promise<boolean> {
     });
 
     // Esperar la respuesta del backend
-    const response: any = await this.http.post('http://localhost:8080/api/verifyToken', { idToken }, { headers }).toPromise();
+    const response: any = await this.http.post(this.apiUrl+'/verifyToken', { idToken }, { headers }).toPromise();
     
     // Verificar la respuesta del backend
     if (response && response.message === "Token válido") {
@@ -63,7 +64,7 @@ async login(email: string, password: string): Promise<boolean> {
       const idToken = await userCredential.user.getIdToken();
   
       // Enviar el token al backend para verificar y registrar el usuario
-      await this.http.post('http://localhost:8080/api/register', { idToken }).toPromise();
+      await this.http.post(this.apiUrl+'/register', { idToken }).toPromise();
   
       return email;
     } catch (error) {
@@ -86,7 +87,7 @@ async loginWithGoogle(): Promise<string> {
     }
 
     // Enviar el token al backend para verificar y registrar el usuario
-    await this.http.post('http://localhost:8080/api/google-login', { idToken }).toPromise();
+    await this.http.post(this.apiUrl+'/google-login', { idToken }).toPromise();
     console.log("✅ Usario accede con Google: ", email);
     return email;
   } catch (error) {
