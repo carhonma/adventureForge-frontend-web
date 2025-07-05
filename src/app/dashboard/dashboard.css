@@ -129,9 +129,10 @@
   border: 2px solid transparent;
   
 }
-.btn-stats   { transform: translate(150%, 10%);}
-.btn-desc    { transform: translate(150%, 112%);}
-.btn-battle  { transform: translate(150%, 214%);}
+.btn-loot   { transform: translate(150%, 10%);}
+.btn-stats   { transform: translate(150%, 112%);}
+.btn-desc    { transform: translate(150%, 214%);}
+.btn-battle  { transform: translate(150%, 316%);}
 .btn-home    { transform: translate(-50%, 10%);}
 .btn-storage { transform: translate(-50%, 112%);}
 
@@ -139,14 +140,17 @@
 .normal-button.btn-startbattle:hover {
   transform:scale(1.1);
 }
-.normal-button.btn-stats:hover {
+.normal-button.btn-loot:hover {
   transform: translate(158%, 10%)
 }
-.normal-button.btn-desc:hover {
+.normal-button.btn-stats:hover {
   transform: translate(158%, 112%)
 }
-.normal-button.btn-battle:hover {
+.normal-button.btn-desc:hover {
   transform: translate(158%, 214%)
+}
+.normal-button.btn-battle:hover {
+  transform: translate(158%, 316%)
 }
 .normal-button.btn-home:hover {
   transform: translate(-58%, 10%)

@@ -187,7 +187,7 @@
             <div style="position: relative; width: 100%; margin-top: 10px;">
               <div style="position: relative; width: 100%; margin-top: 10px;">
                 <div class="life-bar-container">
-                  <img [src]="getLifeBarImage()" alt="Barra de vida" class="life-bar-image" />
+                  <img [src]="hero.lifeBarIcon" alt="Barra de vida" class="life-bar-image" />
                   <div class="life-overlay"style="color: #fa9d8d;margin-top: -2px;">
                     {{ hero.actualLife }} / {{ hero.maxHealth }}
                   </div>
@@ -198,7 +198,7 @@
             <div style="position: relative; width: 100%; margin-top: 10px;">
               <div style="position: relative; width: 100%; margin-top: 10px;">
                 <div class="life-bar-container">
-                  <img [src]="getExpBarImage('hero')" alt="Barra de exp" class="life-bar-image" />
+                  <img [src]="hero.expBarIcon" alt="Barra de exp" class="life-bar-image" />
                   <div class="life-overlay"style="font-size: 8px; color: #fad78d; margin: inherit;">
                     {{ hero.actualExp }} / {{ hero.maxExp }}
                   </div>
@@ -395,7 +395,47 @@
           <img *ngIf="enemyType == null" class="background-image-obj"  style="width: 100%;height: 596px; position: relative; z-index: 2;"[src]="this.imageUrls['MARCO']"alt="start"/>
           <div *ngIf="enemyType == null" class="overlay-text" style="position: absolute; width: 300px;margin-top: 25px; font-weight: bold;z-index: 3;">Un gran bosque se extiende detrás de un lago y al fondo puede verse una montaña que rasca el cielo y reina sobre este frondoso paraje. Una forma de vida facóquera parece predominar en estas tierras, explora con cuidado.</div>
        
+<div *ngIf="enemyType != null && clip == 'clipLoo'"style="width: 100%;height: 510px;">
+<table style="width: 100%; height: 100%;">
+  <tr>
+    <!-- Primer bloque: imagen -->
+    <td style="width: 200px; padding-top: 10px; padding-left: 10px;">
+      <img class="background-image-obj"
+           [src]="enemyStyles[enemyType].icon"
+           alt="imageEnemy"
+           style="width: 200px; position: relative; z-index: 2;" />
+    </td>
 
+    <!-- Segundo bloque: descripción -->
+    <td style="padding-inline: 10px; padding-top: 10px;">
+      <div class="background-image-obj" style="background-color: #f7d9c4bd; padding: 10px; height: 200px;">
+        <h3 style="text-align: center; padding: 10px; background-color: #966e64; border: 2px solid #444; border-radius: 8px; margin-bottom: 10px;">{{enemyData.name}}</h3>
+        <p>{{enemyStyles[enemyType].description}}</p>
+      </div>
+    </td>
+  </tr>
+
+  <!-- Segunda fila: loot ocupando todo el ancho -->
+  <tr>
+  <td colspan="2" style="padding: 10px;height: 100%;">
+    <div class="background-image-obj" style="background-color: #f7d9c4bd; padding: 10px;height: 100%">
+      <h3 style="text-align: center; padding: 10px; background-color: #966e64; border: 2px solid #444; border-radius: 8px; margin-bottom: 10px;">Posible loot</h3>
+      <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+      <div *ngFor="let item of loot; let i = index"
+           style="display: flex; flex-direction: column; align-items: center;">
+        <img [src]="itemStyles[item].icon" alt="posibleLoot"
+             style="width: 130px; height: 130px; background-color: #a17c7371; padding: 2%; border-radius: 8px;" />
+        <span style="margin-top: 5px;font-size: larger;font-weight: bold;color: #3e1e1e;">{{lootProb[i]}}</span>
+      </div>
+    </div>
+    </div>
+    
+  </td>
+</tr>
+
+</table>
+
+</div>
 <div *ngIf="enemyType != null && clip == 'clipSta'"style="width: 100%;height: 510px;">
   <table style="width: 100%;height: 100%;">
     <tr>
@@ -535,7 +575,7 @@
     <div class="right-columns"style="margin-left: inherit;margin-right: auto;">
   <div class="map-wrapper"style="margin-left: 9px;margin-right: -11px;">
     <button [disabled]="map==1" class="normal-button"(click)="changeMap('prev')">
-      <img class="background-image" [src]="this.imageUrls['BOTON_madera_4']" alt="botón izquierdo"style="width: 120px;" />
+      <img class="background-image" [src]="this.imageUrls['BOTON_madera_4']" alt="botón izquierdo"style="width: 120px;margin-top: 150px;" />
     </button>
     <!-- Mapa 1 -->
     <div *ngIf="map == 1"class="scroll-container">
@@ -633,10 +673,16 @@
           </button>
       </div>
       <button [disabled]="map==2" class="normal-button"(click)="changeMap('next')">
-        <img class="background-image" [src]="this.imageUrls['BOTON_madera_5']" alt="botón izquierdo"style="width: 120px;" />
+        <img class="background-image" [src]="this.imageUrls['BOTON_madera_5']" alt="botón izquierdo"style="width: 120px;margin-top: 150px;" />
       </button>
 
       <!-- Botón debajo -->
+       <button *ngIf="enemyType" class="normal-button btn-loot"(click)="onClipClick('clipLoo')"style="position: absolute; top: 20px; left: 0;">
+          <div class="image-container" style="position: relative; display: inline-block;">
+            <img class="background-image" style="max-width: 250px; display: block;"[src]="this.imageUrls['BOTON_madera_8']"alt="start"/>
+            <div class="overlay-text"style="position: absolute;left: 180px;font-weight: bold;">LOOT</div>
+          </div>
+        </button>
         <button *ngIf="enemyType" class="normal-button btn-stats"(click)="onClipClick('clipSta')"style="position: absolute; top: 20px; left: 0;">
           <div class="image-container" style="position: relative; display: inline-block;">
             <img class="background-image" style="max-width: 250px; display: block;"[src]="this.imageUrls['BOTON_madera_8']"alt="start"/>
@@ -981,7 +1027,7 @@
         position: absolute;
         top: 5px;
         right: 5px;
-        background-color: aquamarine;
+        background-color: #b98d56a6;
         padding: 4px 8px;
         border-radius: 6px;
         font-size: 14px;
@@ -989,7 +1035,7 @@
         font-weight: bold;
         box-shadow: 0 0 4px #00000080;
       ">
-        Level
+        Level {{crafter.level}}
       </div>
 
       <!-- Contenido: imagen + nombre + barra -->
@@ -1012,9 +1058,9 @@
 <div style="margin: 10px auto 0 auto; width: 50%; display: flex; justify-content: center;">
   <div style="position: relative;">
     <div class="life-bar-container">
-      <img [src]="getExpBarImage('crafter')" alt="Barra de exp" class="life-bar-image" />
+      <img [src]="crafter.expBarIcon" alt="Barra de exp" class="life-bar-image" />
       <div class="life-overlay" style="font-size: 8px; color: #fad78d; margin: inherit;">
-        a / b
+        {{ crafter.actualExp }} / {{ crafter.maxExp }}
       </div>
     </div>
   </div>

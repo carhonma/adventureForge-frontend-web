@@ -19,7 +19,7 @@ import { ImageService } from '../services/image.service';
 import { FirebaseService } from '../services/firebase.service';
 import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs';
-import { CrafterType } from '../enum/crafterType';
+import { CrafterType,crafterStyles } from '../enum/crafterType';
 
 
 interface User {
@@ -46,6 +46,8 @@ export class DashboardComponent implements OnInit {
   heroTypes = Object.values(HeroType) as HeroType[];
   userData: any | null = null;//anteriormente no era any era User, pero gold no era propiedad
   enemyData: any | null = null;
+  loot: ItemType[] =[];
+  lootProb: string[] =[];
   imageUrls: { [key: string]: string } = {};
   state: string = '';
   mainClip: string = 'clipHo';
@@ -171,7 +173,7 @@ export class DashboardComponent implements OnInit {
 
   preloadUserData(){ 
 
-    //NO BORRAR sin antes probar a crear usuario
+    //NO BORRAR sin antes probar a crear usuario //crear los crafters cuando se cree el user
     /*this.activatedRoute.queryParams
     .pipe(first(params => params['email'] !== undefined && params['email'].trim() !== ''))
     .subscribe(params => {
@@ -192,6 +194,8 @@ export class DashboardComponent implements OnInit {
             name: heroData.Name || 'Nombre Desconocido',
             type: heroData.Type || 'Tipo Desconocido',
             icon: heroStyles[heroData.Type as HeroType]?.icon || '❓',
+            lifeBarIcon:this.getLifeBarImage(heroData.o0_life,heroData.maxHealth+heroData.Items_maxHealth),
+            expBarIcon: this.getExpBarImage(heroData.o1_exp,heroData.maxExp),
             level: heroData.Level,
             actualLife: heroData.o0_life || 0,
             actualExp: heroData.o1_exp || 0,
@@ -288,9 +292,9 @@ export class DashboardComponent implements OnInit {
         }
       ); 
     }
-    getItemsCraftData(showInfo: Boolean, subtype : string[]) { 
+    getItemsCraftData(showInfo: Boolean, subtype : string[], crafterLevel: number) { 
       this.itemsToCraft=[];
-      this.firebaseService.getItemsCraftData(this.user.email,subtype).subscribe(
+      this.firebaseService.getItemsCraftData(this.user.email,subtype,crafterLevel).subscribe(
         (items) => {
           this.itemsToCraft = items.map(itemData => ({
           ID: itemData.ID,
@@ -316,16 +320,32 @@ export class DashboardComponent implements OnInit {
     }
 
     getCraftersData() { 
-       
-      this.crafters = [new Crafter("1", "WEAPONSMITH",CrafterType.WeaponSmith,["SWORD","AXE","DAGE"]), new Crafter("2", "CARPENTER",CrafterType.Carpenter,["BOW","CROSIER","WAND"]),
-                       new Crafter("3", "ARMORSMITH",CrafterType.Armorsmith,["HEAVYARMOR"]), new Crafter("4", "TAILOR",CrafterType.Tailor,["MEDIUMARMOR","LIGHTARMOR"]),
-                       new Crafter("5", "ALCHEMIST",CrafterType.Alchemist,[""]), new Crafter("6", "ENCHANTER",CrafterType.Enchanter,[""])]
+        this.firebaseService.getCraftersData(this.user.email).subscribe(
+    (crafters) => {
+      this.crafters = crafters.map(crafterData => ({
+        ID: crafterData.ID|| "crafter",
+        name: crafterData.type|| "crafter",
+        type: crafterData.type as CrafterType,
+        level: crafterData.level|| 0,
+        icon: crafterStyles[crafterData.type as CrafterType]?.icon || '❓',
+        expBarIcon: this.getExpBarImage(crafterData.exp,crafterData.maxExp),
+        ableToCraft: crafterStyles[crafterData.type as CrafterType]?.ableToCraft || [""],
+        actualExp:crafterData.exp|| 0,
+        maxExp:crafterData.maxExp|| 0,          
+      })); 
+    },
+    (error) => {
+      console.error('❌ Error al obtener datos del crafter:', error);
+    }
+  );
     }
 
     getEnemyData() { 
         this.firebaseService.getEnemyData(this.enemyType!).subscribe(
     (response) => {
       this.enemyData = response.enemy;
+      this.loot = [response.Item1||"null" as ItemType ,response.Item2||"null" as ItemType,response.Item3 as ItemType||"null"];
+      this.lootProb = [response.probItem1||"0%" ,response.probItem2||"0%",response.probItem3||"0%"];
       this.enemySkills = [response.enemy.skill1 as TurnActionType,response.enemy.skill2 as TurnActionType, response.enemy.skill3 as TurnActionType,response.enemy.skill4 as TurnActionType,response.enemy.skill5 as TurnActionType,];
       //console.log('✅ Datos del enemigo obtenidos:', response.enemy);
     },
@@ -346,7 +366,6 @@ export class DashboardComponent implements OnInit {
     this.heroLongBackground = heroStyles[hero.type as HeroType]?.longBackground || '#f9f9f9';
     this.heroSkills = [hero.skill1 as TurnActionType,hero.skill2 as TurnActionType, hero.skill3 as TurnActionType,hero.skill4 as TurnActionType,hero.skill5 as TurnActionType,];
     this.isVisible = [false,false,false,false,false];  
-    console.log("aaaaaaaaaaaa"+hero.x_helmet.ID);
   }
   async onItemClick(item: Item) {
     this.selectedAmount = 1;
@@ -382,7 +401,7 @@ export class DashboardComponent implements OnInit {
     this.state = "crafterDetails";
     this.crafter = crafter;
     this.item = null;
-    this.getItemsCraftData(false,crafter.ableToCraft);
+    this.getItemsCraftData(false,crafter.ableToCraft,crafter.level);
   }
   async onEnemyClick(type: EnemyType) {
     this.state = 'map';
@@ -650,6 +669,7 @@ equipHero(ranure: string, itemOld: string, itemNew: Item) {
 craftItem(itemAmount:number){
     const data = {
     email: this.user.email,
+    crafterID: this.crafter.ID,
     itemAmount: itemAmount,
     itemID: this.item.ID,
     item1GradeRef:this.item.ItemsNeeds[0].slice(-1),
@@ -661,15 +681,19 @@ craftItem(itemAmount:number){
       console.log("crafted: ",response.message);
       console.log("crafted: ",response.itemsCrafted);
       this.showCraftedItems(response.itemsCrafted);
-      this.soldEffect = true;this.getUserData(this.user.email);this.item=null;this.getItemsData(false);
+      this.soldEffect = true;this.getUserData(this.user.email);this.item=null;this.getItemsData(false);this.getCraftersData();
     },
     (error) => {
       console.error('Error al craftear item:', error);
     }
   );
+  
   setTimeout(() => {
     this.soldEffect = false;
   }, 1000);
+  setTimeout(() => {
+    this.onMainClipClick("clipSto");
+  }, 2000);
 }
 
 
@@ -808,37 +832,35 @@ getStyle(index: number, total: number): { [key: string]: string } {
     '--ty': `${y}px`
   };
 }
-getLifeBarImage(): string {
-  const percent = (this.hero.actualLife / this.hero.maxHealth) * 100;
+getLifeBarImage(actualLife:number, maxLife:number): string {
+  const percent = (actualLife / maxLife) * 100;
   if (percent <= 0) return this.imageUrls['BARRA_life_0'];
-  if (percent <= 5) return this.imageUrls['BARRA_life_5'];
-  if (percent <= 10) return this.imageUrls['BARRA_life_10'];
-  if (percent <= 12.5) return this.imageUrls['BARRA_life_12.5'];
-  if (percent <= 25) return this.imageUrls['BARRA_life_25'];
-  if (percent <= 37.5) return this.imageUrls['BARRA_life_37.5'];
-  if (percent <= 50) return this.imageUrls['BARRA_life_50'];
-  if (percent <= 62.5) return this.imageUrls['BARRA_life_62.5'];
-  if (percent <= 75) return this.imageUrls['BARRA_life_75'];
-  if (percent <= 87.5) return this.imageUrls['BARRA_life_87.5'];
-  if (percent <= 90) return this.imageUrls['BARRA_life_90'];
-  return this.imageUrls['BARRA_life_100'];
+  else if (percent <= 5) return this.imageUrls['BARRA_life_5'];
+  else if (percent <= 10) return this.imageUrls['BARRA_life_10'];
+  else if (percent <= 12.5) return this.imageUrls['BARRA_life_12.5'];
+  else if (percent <= 25) return this.imageUrls['BARRA_life_25'];
+  else if (percent <= 37.5) return this.imageUrls['BARRA_life_37.5'];
+  else if (percent <= 50) return this.imageUrls['BARRA_life_50'];
+  else if (percent <= 62.5) return this.imageUrls['BARRA_life_62.5'];
+  else if (percent <= 75) return this.imageUrls['BARRA_life_75'];
+  else if (percent <= 87.5) return this.imageUrls['BARRA_life_87.5'];
+  else if (percent <= 90) return this.imageUrls['BARRA_life_90'];
+  else {return this.imageUrls['BARRA_life_100'];}
 }
-getExpBarImage(objetive:string): string {
-  let percent=0;
-  if(objetive =="hero")percent=(this.hero.actualExp / this.hero.maxExp) * 100;
-  if(objetive =="crafter"){percent=75}
+getExpBarImage(actualExp:number, maxExp:number): string {
+  const percent=(actualExp/maxExp) * 100;
   if (percent <= 0) return this.imageUrls['BARRA_exp_0'];
-  if (percent <= 5) return this.imageUrls['BARRA_exp_5'];
-  if (percent <= 10) return this.imageUrls['BARRA_exp_10'];
-  if (percent <= 12.5) return this.imageUrls['BARRA_exp_12.5'];
-  if (percent <= 25) return this.imageUrls['BARRA_exp_25'];
-  if (percent <= 37.5) return this.imageUrls['BARRA_exp_37.5'];
-  if (percent <= 50) return this.imageUrls['BARRA_exp_50'];
-  if (percent <= 62.5) return this.imageUrls['BARRA_exp_62.5'];
-  if (percent <= 75) return this.imageUrls['BARRA_exp_75'];
-  if (percent <= 87.5) return this.imageUrls['BARRA_exp_87.5'];
-  if (percent <= 90) return this.imageUrls['BARRA_exp_90'];
-  return this.imageUrls['BARRA_exp_100'];
+  else if (percent <= 5) return this.imageUrls['BARRA_exp_5'];
+  else if (percent <= 10) return this.imageUrls['BARRA_exp_12.5'];//la de 10 es muy parecida a la de 5 por eso pongo esa
+  else if (percent <= 12.5) return this.imageUrls['BARRA_exp_12.5'];
+  else if (percent <= 25) return this.imageUrls['BARRA_exp_25'];
+  else if (percent <= 37.5) return this.imageUrls['BARRA_exp_37.5'];
+  else if (percent <= 50) return this.imageUrls['BARRA_exp_50'];
+  else if (percent <= 62.5) return this.imageUrls['BARRA_exp_62.5'];
+  else if (percent <= 75) return this.imageUrls['BARRA_exp_75'];
+  else if (percent <= 87.5) return this.imageUrls['BARRA_exp_87.5'];
+  else if (percent <= 90) return this.imageUrls['BARRA_exp_90'];
+  else {return this.imageUrls['BARRA_exp_100'];}
 }
 checkBonus(item: Item){
   console.log("se ha seleccionado un "+ item.subtype +" con un "+this.hero.type);

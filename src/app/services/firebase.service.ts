@@ -32,6 +32,10 @@ getHerosData(email: string, heroId?: string): Observable<any[]> {
   }
   return this.http.get<any[]>(url);
 }
+getCraftersData(email: string): Observable<any[]> {
+  let url = `${this.apiUrl}/getCraftersData/${email}`;
+  return this.http.get<any[]>(url);
+}
 
  getItemsData(email: string, type: string): Observable<any[]> {
   let url = `${this.apiUrl}/getItemsData/${email}`;
@@ -40,14 +44,25 @@ getHerosData(email: string, heroId?: string): Observable<any[]> {
   }
   return this.http.get<any[]>(url);
 }
-getItemsCraftData(email: string, subtypes: string[]): Observable<any[]> {
+getItemsCraftData(email: string, subtypes: string[], crafterLevel: number): Observable<any[]> {
   let url = `${this.apiUrl}/getItemsCraftData/${email}`;
+  const params: string[] = [];
+
   if (subtypes && subtypes.length > 0) {
-    const params = subtypes.map(s => `subtype=${encodeURIComponent(s)}`).join('&');
-    url += `?${params}`;
+    params.push(...subtypes.map(s => `subtype=${encodeURIComponent(s)}`));
   }
+
+  if (crafterLevel !== undefined && crafterLevel !== null) {
+    params.push(`crafterLevel=${crafterLevel}`);
+  }
+
+  if (params.length > 0) {
+    url += `?${params.join('&')}`;
+  }
+
   return this.http.get<any[]>(url);
 }
+
 
   getUserData(email: string): Observable<string> {
     return this.http.get<string>(`${this.apiUrl}/getUserData/${email}`);

@@ -154,14 +154,27 @@ export class AppComponent implements OnInit {
         'items/tinder1.png','items/mushroom1.png','items/log1.png','items/cloth1.png','items/stone1.png','items/metal1.png','items/tooth1.png',
         'items/splinter1.png','items/splinter2.png','items/block1.png','items/block2.png','items/scrap1.png','items/scrap2.png','items/tooth2.png','items/tooth3.png','items/hoof1.png','items/wing1.png',
         'items/shadowbark1.png','items/holybark1.png',
+        'items/leather1.png','items/leather2.png',
+        'items/forestfragment1.png','items/hellfragment1.png',
 
         'items/A_hold_boots.png','items/A_hold_chest.png','items/A_hold_gloves.png','items/A_hold_helmet.png','items/A_hold_jewel.png','items/A_hold_weapon.png',
-        'items/boots1.png','items/boots2.png','items/boots3.png','items/boots4.png','items/boots5.png','items/boots6.png',
-        'items/chest1.png','items/chest2.png','items/chest3.png','items/chest4.png','items/chest5.png',
-        'items/gloves1.png','items/gloves2.png','items/gloves3.png','items/gloves4.png','items/gloves5.png','items/gloves6.png',
-        'items/helmet1.png','items/helmet2.png','items/holyhelmet1.jpg',
         'items/jewel1.png','items/jewel2.png',
-        'items/weapon1.png','items/weapon2.png','items/weapon3.png','items/weapon4.png','items/weapon5.png','items/weapon6.png','items/weapon7.png',
+
+        'items/ironhelmet1.png','items/blunthelmet1.png','items/guardhelmet1.png',
+        'items/leatherhood1.png','items/studdedhood1.png','items/furhood1.png',
+        'items/novicehat1.png','items/renegadehat1.png','items/guildhat1.png',
+        'items/foresthelmet1.png',
+        'items/holyhelmet1.jpg',
+
+        'items/irongloves1.png','items/bluntgloves1.png','items/guardgloves1.png',
+        'items/leathergloves1.png','items/studdedgloves1.png','items/furgloves1.png',
+        'items/novicegloves1.png','items/renegadegloves1.png','items/guildgloves1.png',
+        'items/forestgloves1.png',
+
+        'items/ironchest1.png','items/bluntchest1.png','items/guardchest1.png',
+        'items/leatherjacket1.png','items/studdedjacket1.png','items/furjacket1.png',
+        'items/novicehabit1.png','items/renegadehabit1.png','items/guildhabit1.png',
+        'items/forestchest1.png',
 
         'items/sword_1.1.png','items/sword_1.2.png','items/sword_1.3.png',
         'items/axe_1.1.png','items/axe_1.2.png','items/axe_1.3.png',
@@ -169,6 +182,11 @@ export class AppComponent implements OnInit {
         'items/bow_1.1.png','items/bow_1.2.png','items/bow_1.3.png',
         'items/crosier_1.1.png','items/crosier_1.2.png','items/crosier_1.3.png',
         'items/wand_1.1.png','items/wand_1.2.png','items/wand_1.3.png',
+
+        'items/ironboots1.png','items/bluntboots1.png','items/guardboots1.png',
+        'items/leatherboots1.png','items/studdedboots1.png','items/furboots1.png',
+        'items/noviceshoes1.png','items/renegadeshoes1.png','items/guildshoes1.png',
+        'items/forestboots1.png',
 
 
         'items/noItem.png',
@@ -257,6 +275,10 @@ export class AppComponent implements OnInit {
       itemStyles[ItemType.ITEM_00171].icon = itemStyles[ItemType.ITEM_00172].icon = itemStyles[ItemType.ITEM_00173].icon = itemStyles[ItemType.ITEM_00174].icon = itemStyles[ItemType.ITEM_00175].icon = this.imageService.getCachedImage('items/wing1.png')!;
       itemStyles[ItemType.ITEM_00181].icon = itemStyles[ItemType.ITEM_00182].icon = itemStyles[ItemType.ITEM_00183].icon = itemStyles[ItemType.ITEM_00184].icon = itemStyles[ItemType.ITEM_00185].icon = this.imageService.getCachedImage('items/shadowbark1.png')!;
       itemStyles[ItemType.ITEM_00191].icon = itemStyles[ItemType.ITEM_00192].icon = itemStyles[ItemType.ITEM_00193].icon = itemStyles[ItemType.ITEM_00194].icon = itemStyles[ItemType.ITEM_00195].icon = this.imageService.getCachedImage('items/holybark1.png')!;
+      itemStyles[ItemType.ITEM_00201].icon = itemStyles[ItemType.ITEM_00202].icon = itemStyles[ItemType.ITEM_00203].icon = itemStyles[ItemType.ITEM_00204].icon = itemStyles[ItemType.ITEM_00205].icon = this.imageService.getCachedImage('items/leather1.png')!;
+      itemStyles[ItemType.ITEM_00211].icon = itemStyles[ItemType.ITEM_00212].icon = itemStyles[ItemType.ITEM_00213].icon = itemStyles[ItemType.ITEM_00214].icon = itemStyles[ItemType.ITEM_00215].icon = this.imageService.getCachedImage('items/leather2.png')!;
+      itemStyles[ItemType.ITEM_00221].icon = itemStyles[ItemType.ITEM_00222].icon = itemStyles[ItemType.ITEM_00223].icon = itemStyles[ItemType.ITEM_00224].icon = itemStyles[ItemType.ITEM_00225].icon = this.imageService.getCachedImage('items/forestfragment1.png')!;
+      itemStyles[ItemType.ITEM_00231].icon = itemStyles[ItemType.ITEM_00232].icon = itemStyles[ItemType.ITEM_00233].icon = itemStyles[ItemType.ITEM_00234].icon = itemStyles[ItemType.ITEM_00235].icon = this.imageService.getCachedImage('items/hellfragment1.png')!;
 
       itemStyles[ItemType.ITEM_01000].icon = this.imageService.getCachedImage('items/A_hold_helmet.png')!;
       itemStyles[ItemType.ITEM_02000].icon = this.imageService.getCachedImage('items/A_hold_gloves.png')!;
@@ -265,22 +287,39 @@ export class AppComponent implements OnInit {
       itemStyles[ItemType.ITEM_05000].icon = this.imageService.getCachedImage('items/A_hold_boots.png')!;
       itemStyles[ItemType.ITEM_06000].icon = this.imageService.getCachedImage('items/A_hold_jewel.png')!;
 
-      itemStyles[ItemType.ITEM_01011].icon = itemStyles[ItemType.ITEM_01012].icon = itemStyles[ItemType.ITEM_01013].icon = itemStyles[ItemType.ITEM_01014].icon = itemStyles[ItemType.ITEM_01015].icon = this.imageService.getCachedImage('items/helmet1.png')!;
-      itemStyles[ItemType.ITEM_01021].icon = itemStyles[ItemType.ITEM_01022].icon = itemStyles[ItemType.ITEM_01023].icon = itemStyles[ItemType.ITEM_01024].icon = itemStyles[ItemType.ITEM_01025].icon = this.imageService.getCachedImage('items/helmet2.png')!;
-      itemStyles[ItemType.ITEM_01031].icon = itemStyles[ItemType.ITEM_01032].icon = itemStyles[ItemType.ITEM_01033].icon = itemStyles[ItemType.ITEM_01034].icon = itemStyles[ItemType.ITEM_01035].icon = this.imageService.getCachedImage('items/holyhelmet1.jpg')!;
+      itemStyles[ItemType.ITEM_01011].icon = itemStyles[ItemType.ITEM_01012].icon = itemStyles[ItemType.ITEM_01013].icon = itemStyles[ItemType.ITEM_01014].icon = itemStyles[ItemType.ITEM_01015].icon = this.imageService.getCachedImage('items/ironhelmet1.png')!;
+      itemStyles[ItemType.ITEM_01021].icon = itemStyles[ItemType.ITEM_01022].icon = itemStyles[ItemType.ITEM_01023].icon = itemStyles[ItemType.ITEM_01024].icon = itemStyles[ItemType.ITEM_01025].icon = this.imageService.getCachedImage('items/blunthelmet1.png')!;
+      itemStyles[ItemType.ITEM_01031].icon = itemStyles[ItemType.ITEM_01032].icon = itemStyles[ItemType.ITEM_01033].icon = itemStyles[ItemType.ITEM_01034].icon = itemStyles[ItemType.ITEM_01035].icon = this.imageService.getCachedImage('items/guardhelmet1.png')!;
+      itemStyles[ItemType.ITEM_01041].icon = itemStyles[ItemType.ITEM_01042].icon = itemStyles[ItemType.ITEM_01043].icon = itemStyles[ItemType.ITEM_01044].icon = itemStyles[ItemType.ITEM_01045].icon = this.imageService.getCachedImage('items/leatherhood1.png')!;
+      itemStyles[ItemType.ITEM_01051].icon = itemStyles[ItemType.ITEM_01052].icon = itemStyles[ItemType.ITEM_01053].icon = itemStyles[ItemType.ITEM_01054].icon = itemStyles[ItemType.ITEM_01055].icon = this.imageService.getCachedImage('items/studdedhood1.png')!;
+      itemStyles[ItemType.ITEM_01061].icon = itemStyles[ItemType.ITEM_01062].icon = itemStyles[ItemType.ITEM_01063].icon = itemStyles[ItemType.ITEM_01064].icon = itemStyles[ItemType.ITEM_01065].icon = this.imageService.getCachedImage('items/furhood1.png')!;
+      itemStyles[ItemType.ITEM_01071].icon = itemStyles[ItemType.ITEM_01072].icon = itemStyles[ItemType.ITEM_01073].icon = itemStyles[ItemType.ITEM_01074].icon = itemStyles[ItemType.ITEM_01075].icon = this.imageService.getCachedImage('items/novicehat1.png')!;
+      itemStyles[ItemType.ITEM_01081].icon = itemStyles[ItemType.ITEM_01082].icon = itemStyles[ItemType.ITEM_01083].icon = itemStyles[ItemType.ITEM_01084].icon = itemStyles[ItemType.ITEM_01085].icon = this.imageService.getCachedImage('items/renegadehat1.png')!;
+      itemStyles[ItemType.ITEM_01091].icon = itemStyles[ItemType.ITEM_01092].icon = itemStyles[ItemType.ITEM_01093].icon = itemStyles[ItemType.ITEM_01094].icon = itemStyles[ItemType.ITEM_01095].icon = this.imageService.getCachedImage('items/guildhat1.png')!;
+      itemStyles[ItemType.ITEM_01101].icon = itemStyles[ItemType.ITEM_01102].icon = itemStyles[ItemType.ITEM_01103].icon = itemStyles[ItemType.ITEM_01104].icon = itemStyles[ItemType.ITEM_01105].icon = this.imageService.getCachedImage('items/foresthelmet1.png')!;
+      itemStyles[ItemType.ITEM_01111].icon = itemStyles[ItemType.ITEM_01112].icon = itemStyles[ItemType.ITEM_01113].icon = itemStyles[ItemType.ITEM_01114].icon = itemStyles[ItemType.ITEM_01115].icon = this.imageService.getCachedImage('items/holyhelmet1.jpg')!;
 
-      itemStyles[ItemType.ITEM_02011].icon = itemStyles[ItemType.ITEM_02012].icon = itemStyles[ItemType.ITEM_02013].icon = itemStyles[ItemType.ITEM_02014].icon = itemStyles[ItemType.ITEM_02015].icon = this.imageService.getCachedImage('items/gloves1.png')!;
-      itemStyles[ItemType.ITEM_02021].icon = itemStyles[ItemType.ITEM_02022].icon = itemStyles[ItemType.ITEM_02023].icon = itemStyles[ItemType.ITEM_02024].icon = itemStyles[ItemType.ITEM_02025].icon = this.imageService.getCachedImage('items/gloves2.png')!;
-      itemStyles[ItemType.ITEM_02031].icon = itemStyles[ItemType.ITEM_02032].icon = itemStyles[ItemType.ITEM_02033].icon = itemStyles[ItemType.ITEM_02034].icon = itemStyles[ItemType.ITEM_02035].icon = this.imageService.getCachedImage('items/gloves3.png')!;
-      itemStyles[ItemType.ITEM_02041].icon = itemStyles[ItemType.ITEM_02042].icon = itemStyles[ItemType.ITEM_02043].icon = itemStyles[ItemType.ITEM_02044].icon = itemStyles[ItemType.ITEM_02045].icon = this.imageService.getCachedImage('items/gloves4.png')!;
-      itemStyles[ItemType.ITEM_02051].icon = itemStyles[ItemType.ITEM_02052].icon = itemStyles[ItemType.ITEM_02053].icon = itemStyles[ItemType.ITEM_02054].icon = itemStyles[ItemType.ITEM_02055].icon = this.imageService.getCachedImage('items/gloves5.png')!;
-      itemStyles[ItemType.ITEM_02061].icon = itemStyles[ItemType.ITEM_02062].icon = itemStyles[ItemType.ITEM_02063].icon = itemStyles[ItemType.ITEM_02064].icon = itemStyles[ItemType.ITEM_02065].icon = this.imageService.getCachedImage('items/gloves6.png')!;
-
-      itemStyles[ItemType.ITEM_03011].icon = itemStyles[ItemType.ITEM_03012].icon = itemStyles[ItemType.ITEM_03013].icon = itemStyles[ItemType.ITEM_03014].icon = itemStyles[ItemType.ITEM_03015].icon = this.imageService.getCachedImage('items/chest1.png')!;
-      itemStyles[ItemType.ITEM_03021].icon = itemStyles[ItemType.ITEM_03022].icon = itemStyles[ItemType.ITEM_03023].icon = itemStyles[ItemType.ITEM_03024].icon = itemStyles[ItemType.ITEM_03025].icon = this.imageService.getCachedImage('items/chest2.png')!;
-      itemStyles[ItemType.ITEM_03031].icon = itemStyles[ItemType.ITEM_03032].icon = itemStyles[ItemType.ITEM_03033].icon = itemStyles[ItemType.ITEM_03034].icon = itemStyles[ItemType.ITEM_03035].icon = this.imageService.getCachedImage('items/chest3.png')!;
-      itemStyles[ItemType.ITEM_03041].icon = itemStyles[ItemType.ITEM_03042].icon = itemStyles[ItemType.ITEM_03043].icon = itemStyles[ItemType.ITEM_03044].icon = itemStyles[ItemType.ITEM_03045].icon = this.imageService.getCachedImage('items/chest4.png')!;
-      itemStyles[ItemType.ITEM_03051].icon = itemStyles[ItemType.ITEM_03052].icon = itemStyles[ItemType.ITEM_03053].icon = itemStyles[ItemType.ITEM_03054].icon = itemStyles[ItemType.ITEM_03055].icon = this.imageService.getCachedImage('items/chest5.png')!;
+      itemStyles[ItemType.ITEM_02011].icon = itemStyles[ItemType.ITEM_02012].icon = itemStyles[ItemType.ITEM_02013].icon = itemStyles[ItemType.ITEM_02014].icon = itemStyles[ItemType.ITEM_02015].icon = this.imageService.getCachedImage('items/irongloves1.png')!;
+      itemStyles[ItemType.ITEM_02021].icon = itemStyles[ItemType.ITEM_02022].icon = itemStyles[ItemType.ITEM_02023].icon = itemStyles[ItemType.ITEM_02024].icon = itemStyles[ItemType.ITEM_02025].icon = this.imageService.getCachedImage('items/bluntgloves1.png')!;
+      itemStyles[ItemType.ITEM_02031].icon = itemStyles[ItemType.ITEM_02032].icon = itemStyles[ItemType.ITEM_02033].icon = itemStyles[ItemType.ITEM_02034].icon = itemStyles[ItemType.ITEM_02035].icon = this.imageService.getCachedImage('items/guardgloves1.png')!;
+      itemStyles[ItemType.ITEM_02041].icon = itemStyles[ItemType.ITEM_02042].icon = itemStyles[ItemType.ITEM_02043].icon = itemStyles[ItemType.ITEM_02044].icon = itemStyles[ItemType.ITEM_02045].icon = this.imageService.getCachedImage('items/leathergloves1.png')!;
+      itemStyles[ItemType.ITEM_02051].icon = itemStyles[ItemType.ITEM_02052].icon = itemStyles[ItemType.ITEM_02053].icon = itemStyles[ItemType.ITEM_02054].icon = itemStyles[ItemType.ITEM_02055].icon = this.imageService.getCachedImage('items/studdedgloves1.png')!;
+      itemStyles[ItemType.ITEM_02061].icon = itemStyles[ItemType.ITEM_02062].icon = itemStyles[ItemType.ITEM_02063].icon = itemStyles[ItemType.ITEM_02064].icon = itemStyles[ItemType.ITEM_02065].icon = this.imageService.getCachedImage('items/furgloves1.png')!;
+      itemStyles[ItemType.ITEM_02071].icon = itemStyles[ItemType.ITEM_02072].icon = itemStyles[ItemType.ITEM_02073].icon = itemStyles[ItemType.ITEM_02074].icon = itemStyles[ItemType.ITEM_02075].icon = this.imageService.getCachedImage('items/novicegloves1.png')!;
+      itemStyles[ItemType.ITEM_02081].icon = itemStyles[ItemType.ITEM_02082].icon = itemStyles[ItemType.ITEM_02083].icon = itemStyles[ItemType.ITEM_02084].icon = itemStyles[ItemType.ITEM_02085].icon = this.imageService.getCachedImage('items/renegadegloves1.png')!;
+      itemStyles[ItemType.ITEM_02091].icon = itemStyles[ItemType.ITEM_02092].icon = itemStyles[ItemType.ITEM_02093].icon = itemStyles[ItemType.ITEM_02094].icon = itemStyles[ItemType.ITEM_02095].icon = this.imageService.getCachedImage('items/guildgloves1.png')!;
+      itemStyles[ItemType.ITEM_02101].icon = itemStyles[ItemType.ITEM_02102].icon = itemStyles[ItemType.ITEM_02103].icon = itemStyles[ItemType.ITEM_02104].icon = itemStyles[ItemType.ITEM_02105].icon = this.imageService.getCachedImage('items/forestgloves1.png')!;
+      
+      itemStyles[ItemType.ITEM_03011].icon = itemStyles[ItemType.ITEM_03012].icon = itemStyles[ItemType.ITEM_03013].icon = itemStyles[ItemType.ITEM_03014].icon = itemStyles[ItemType.ITEM_03015].icon = this.imageService.getCachedImage('items/ironchest1.png')!;
+      itemStyles[ItemType.ITEM_03021].icon = itemStyles[ItemType.ITEM_03022].icon = itemStyles[ItemType.ITEM_03023].icon = itemStyles[ItemType.ITEM_03024].icon = itemStyles[ItemType.ITEM_03025].icon = this.imageService.getCachedImage('items/bluntchest1.png')!;
+      itemStyles[ItemType.ITEM_03031].icon = itemStyles[ItemType.ITEM_03032].icon = itemStyles[ItemType.ITEM_03033].icon = itemStyles[ItemType.ITEM_03034].icon = itemStyles[ItemType.ITEM_03035].icon = this.imageService.getCachedImage('items/guardchest1.png')!;
+      itemStyles[ItemType.ITEM_03041].icon = itemStyles[ItemType.ITEM_03042].icon = itemStyles[ItemType.ITEM_03043].icon = itemStyles[ItemType.ITEM_03044].icon = itemStyles[ItemType.ITEM_03045].icon = this.imageService.getCachedImage('items/leatherjacket1.png')!;
+      itemStyles[ItemType.ITEM_03051].icon = itemStyles[ItemType.ITEM_03052].icon = itemStyles[ItemType.ITEM_03053].icon = itemStyles[ItemType.ITEM_03054].icon = itemStyles[ItemType.ITEM_03055].icon = this.imageService.getCachedImage('items/studdedjacket1.png')!;
+      itemStyles[ItemType.ITEM_03061].icon = itemStyles[ItemType.ITEM_03062].icon = itemStyles[ItemType.ITEM_03063].icon = itemStyles[ItemType.ITEM_03064].icon = itemStyles[ItemType.ITEM_03065].icon = this.imageService.getCachedImage('items/furjacket1.png')!;
+      itemStyles[ItemType.ITEM_03071].icon = itemStyles[ItemType.ITEM_03072].icon = itemStyles[ItemType.ITEM_03073].icon = itemStyles[ItemType.ITEM_03074].icon = itemStyles[ItemType.ITEM_03075].icon = this.imageService.getCachedImage('items/novicehabit1.png')!;
+      itemStyles[ItemType.ITEM_03081].icon = itemStyles[ItemType.ITEM_03082].icon = itemStyles[ItemType.ITEM_03083].icon = itemStyles[ItemType.ITEM_03084].icon = itemStyles[ItemType.ITEM_03085].icon = this.imageService.getCachedImage('items/renegadehabit1.png')!;
+      itemStyles[ItemType.ITEM_03091].icon = itemStyles[ItemType.ITEM_03092].icon = itemStyles[ItemType.ITEM_03093].icon = itemStyles[ItemType.ITEM_03094].icon = itemStyles[ItemType.ITEM_03095].icon = this.imageService.getCachedImage('items/guildhabit1.png')!;
+      itemStyles[ItemType.ITEM_03101].icon = itemStyles[ItemType.ITEM_03102].icon = itemStyles[ItemType.ITEM_03103].icon = itemStyles[ItemType.ITEM_03104].icon = itemStyles[ItemType.ITEM_03105].icon = this.imageService.getCachedImage('items/forestchest1.png')!;
 
       itemStyles[ItemType.ITEM_04011].icon = itemStyles[ItemType.ITEM_04012].icon = itemStyles[ItemType.ITEM_04013].icon = itemStyles[ItemType.ITEM_04014].icon = itemStyles[ItemType.ITEM_04015].icon = this.imageService.getCachedImage('items/sword_1.1.png')!;
       itemStyles[ItemType.ITEM_04021].icon = itemStyles[ItemType.ITEM_04022].icon = itemStyles[ItemType.ITEM_04023].icon = itemStyles[ItemType.ITEM_04024].icon = itemStyles[ItemType.ITEM_04025].icon = this.imageService.getCachedImage('items/sword_1.2.png')!;
@@ -301,12 +340,16 @@ export class AppComponent implements OnInit {
       itemStyles[ItemType.ITEM_04171].icon = itemStyles[ItemType.ITEM_04172].icon = itemStyles[ItemType.ITEM_04173].icon = itemStyles[ItemType.ITEM_04174].icon = itemStyles[ItemType.ITEM_04175].icon =this.imageService.getCachedImage('items/wand_1.2.png')!;
       itemStyles[ItemType.ITEM_04181].icon = itemStyles[ItemType.ITEM_04182].icon = itemStyles[ItemType.ITEM_04183].icon = itemStyles[ItemType.ITEM_04184].icon = itemStyles[ItemType.ITEM_04185].icon =this.imageService.getCachedImage('items/wand_1.3.png')!;
 
-      itemStyles[ItemType.ITEM_05011].icon = itemStyles[ItemType.ITEM_05012].icon = itemStyles[ItemType.ITEM_05013].icon = itemStyles[ItemType.ITEM_05014].icon = itemStyles[ItemType.ITEM_05015].icon = this.imageService.getCachedImage('items/boots1.png')!;
-      itemStyles[ItemType.ITEM_05021].icon = itemStyles[ItemType.ITEM_05022].icon = itemStyles[ItemType.ITEM_05023].icon = itemStyles[ItemType.ITEM_05024].icon = itemStyles[ItemType.ITEM_05025].icon = this.imageService.getCachedImage('items/boots2.png')!;
-      itemStyles[ItemType.ITEM_05031].icon = itemStyles[ItemType.ITEM_05032].icon = itemStyles[ItemType.ITEM_05033].icon = itemStyles[ItemType.ITEM_05034].icon = itemStyles[ItemType.ITEM_05035].icon = this.imageService.getCachedImage('items/boots3.png')!;
-      itemStyles[ItemType.ITEM_05041].icon = itemStyles[ItemType.ITEM_05042].icon = itemStyles[ItemType.ITEM_05043].icon = itemStyles[ItemType.ITEM_05044].icon = itemStyles[ItemType.ITEM_05045].icon = this.imageService.getCachedImage('items/boots4.png')!;
-      itemStyles[ItemType.ITEM_05051].icon = itemStyles[ItemType.ITEM_05052].icon = itemStyles[ItemType.ITEM_05053].icon = itemStyles[ItemType.ITEM_05054].icon = itemStyles[ItemType.ITEM_05055].icon = this.imageService.getCachedImage('items/boots5.png')!;
-      itemStyles[ItemType.ITEM_05061].icon = itemStyles[ItemType.ITEM_05062].icon = itemStyles[ItemType.ITEM_05063].icon = itemStyles[ItemType.ITEM_05064].icon = itemStyles[ItemType.ITEM_05065].icon = this.imageService.getCachedImage('items/boots6.png')!;
+      itemStyles[ItemType.ITEM_05011].icon = itemStyles[ItemType.ITEM_05012].icon = itemStyles[ItemType.ITEM_05013].icon = itemStyles[ItemType.ITEM_05014].icon = itemStyles[ItemType.ITEM_05015].icon = this.imageService.getCachedImage('items/ironboots1.png')!;
+      itemStyles[ItemType.ITEM_05021].icon = itemStyles[ItemType.ITEM_05022].icon = itemStyles[ItemType.ITEM_05023].icon = itemStyles[ItemType.ITEM_05024].icon = itemStyles[ItemType.ITEM_05025].icon = this.imageService.getCachedImage('items/bluntboots1.png')!;
+      itemStyles[ItemType.ITEM_05031].icon = itemStyles[ItemType.ITEM_05032].icon = itemStyles[ItemType.ITEM_05033].icon = itemStyles[ItemType.ITEM_05034].icon = itemStyles[ItemType.ITEM_05035].icon = this.imageService.getCachedImage('items/guardboots1.png')!;
+      itemStyles[ItemType.ITEM_05041].icon = itemStyles[ItemType.ITEM_05042].icon = itemStyles[ItemType.ITEM_05043].icon = itemStyles[ItemType.ITEM_05044].icon = itemStyles[ItemType.ITEM_05045].icon = this.imageService.getCachedImage('items/leatherboots1.png')!;
+      itemStyles[ItemType.ITEM_05051].icon = itemStyles[ItemType.ITEM_05052].icon = itemStyles[ItemType.ITEM_05053].icon = itemStyles[ItemType.ITEM_05054].icon = itemStyles[ItemType.ITEM_05055].icon = this.imageService.getCachedImage('items/studdedboots1.png')!;
+      itemStyles[ItemType.ITEM_05061].icon = itemStyles[ItemType.ITEM_05062].icon = itemStyles[ItemType.ITEM_05063].icon = itemStyles[ItemType.ITEM_05064].icon = itemStyles[ItemType.ITEM_05065].icon = this.imageService.getCachedImage('items/furboots1.png')!;
+      itemStyles[ItemType.ITEM_05071].icon = itemStyles[ItemType.ITEM_05072].icon = itemStyles[ItemType.ITEM_05073].icon = itemStyles[ItemType.ITEM_05074].icon = itemStyles[ItemType.ITEM_05075].icon = this.imageService.getCachedImage('items/noviceshoes1.png')!;
+      itemStyles[ItemType.ITEM_05081].icon = itemStyles[ItemType.ITEM_05082].icon = itemStyles[ItemType.ITEM_05083].icon = itemStyles[ItemType.ITEM_05084].icon = itemStyles[ItemType.ITEM_05085].icon = this.imageService.getCachedImage('items/renegadeshoes1.png')!;
+      itemStyles[ItemType.ITEM_05091].icon = itemStyles[ItemType.ITEM_05092].icon = itemStyles[ItemType.ITEM_05093].icon = itemStyles[ItemType.ITEM_05094].icon = itemStyles[ItemType.ITEM_05095].icon = this.imageService.getCachedImage('items/guildshoes1.png')!;
+      itemStyles[ItemType.ITEM_05101].icon = itemStyles[ItemType.ITEM_05102].icon = itemStyles[ItemType.ITEM_05103].icon = itemStyles[ItemType.ITEM_05104].icon = itemStyles[ItemType.ITEM_05105].icon = this.imageService.getCachedImage('items/forestboots1.png')!;
       
       itemStyles[ItemType.NULL].icon = this.imageService.getCachedImage('items/noItem.png')!;
 

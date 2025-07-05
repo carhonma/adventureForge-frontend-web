@@ -9,14 +9,14 @@ export enum CrafterType {
   WeaponSmith = 'WEAPONSMITH',
   }
  
-  export const crafterStyles: Record<CrafterType, { icon: string}> = {
+  export const crafterStyles: Record<CrafterType, { icon: string , ableToCraft: string[]}> = {
 
     
-    [CrafterType.Alchemist]: { icon: 'crafter/alchemist.png'},
-    [CrafterType.Armorsmith]: { icon: 'crafter/armorsmith.png'},
-    [CrafterType.Carpenter]: { icon: 'crafter/carpenter.png'},
-    [CrafterType.Enchanter]: { icon: 'crafter/enchanter.png'},
-    [CrafterType.Tailor]: { icon: 'crafter/tailor.png'},
-    [CrafterType.WeaponSmith]: { icon: 'crafter/weaponsmith.png'},
+    [CrafterType.Alchemist]: { icon: 'crafter/alchemist.png',ableToCraft:[""]},
+    [CrafterType.Armorsmith]: { icon: 'crafter/armorsmith.png',ableToCraft:["HEAVYARMOR"]},
+    [CrafterType.Carpenter]: { icon: 'crafter/carpenter.png',ableToCraft:["BOW","CROSIER","WAND"]},
+    [CrafterType.Enchanter]: { icon: 'crafter/enchanter.png',ableToCraft:[""]},
+    [CrafterType.Tailor]: { icon: 'crafter/tailor.png',ableToCraft:["MEDIUMARMOR","LIGHTARMOR"]},
+    [CrafterType.WeaponSmith]: { icon: 'crafter/weaponsmith.png',ableToCraft:["SWORD","AXE","DAGE"]},
 
   };
