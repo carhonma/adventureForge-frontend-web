@@ -94,6 +94,9 @@ export enum ItemType {
   ITEM_05091 = 'ITEM_05091', ITEM_05092 = 'ITEM_05092', ITEM_05093 = 'ITEM_05093', ITEM_05094 = 'ITEM_05094', ITEM_05095 = 'ITEM_05095',
   ITEM_05101 = 'ITEM_05101', ITEM_05102 = 'ITEM_05102', ITEM_05103 = 'ITEM_05103', ITEM_05104 = 'ITEM_05104', ITEM_05105 = 'ITEM_05105',
 
+  ITEM_07011 = 'ITEM_07011', ITEM_07012 = 'ITEM_07012', ITEM_07013 = 'ITEM_07013', ITEM_07014 = 'ITEM_07014', ITEM_07015 = 'ITEM_07015',
+  ITEM_07021 = 'ITEM_07021', ITEM_07022 = 'ITEM_07022', ITEM_07023 = 'ITEM_07023', ITEM_07024 = 'ITEM_07024', ITEM_07025 = 'ITEM_07025',
+
                               
                              
                               
@@ -201,6 +204,10 @@ export enum ItemType {
     [ItemType.ITEM_05101]: { icon: 'items/forestboots1.png', grade: GradeType.D, description: 'Item' },[ItemType.ITEM_05102]: { icon: 'items/forestboots1.png', grade: GradeType.C, description: 'Item' },[ItemType.ITEM_05103]: { icon: 'items/forestboots1.png', grade: GradeType.B, description: 'Item' },[ItemType.ITEM_05104]: { icon: 'items/forestboots1.png', grade: GradeType.A, description: 'Item' },[ItemType.ITEM_05105]: { icon: 'items/forestboots1.png', grade: GradeType.S, description: 'Item' },
 
     [ItemType.ITEM_06000]: { icon: 'items/A_hold_jewel.png', grade: GradeType.F, description: 'Item' },
+    
+    [ItemType.ITEM_07011]: { icon: 'items/potion1.png', grade: GradeType.D, description: 'Item' },[ItemType.ITEM_07012]: { icon: 'items/potion1.png', grade: GradeType.C, description: 'Item' },[ItemType.ITEM_07013]: { icon: 'items/potion1.png', grade: GradeType.B, description: 'Item' },[ItemType.ITEM_07014]: { icon: 'items/potion1.png', grade: GradeType.A, description: 'Item' },[ItemType.ITEM_07015]: { icon: 'items/potion1.png', grade: GradeType.S, description: 'Item' },
+    [ItemType.ITEM_07021]: { icon: 'items/potion2.png', grade: GradeType.D, description: 'Item' },[ItemType.ITEM_07022]: { icon: 'items/potion2.png', grade: GradeType.C, description: 'Item' },[ItemType.ITEM_07023]: { icon: 'items/potion2.png', grade: GradeType.B, description: 'Item' },[ItemType.ITEM_07024]: { icon: 'items/potion2.png', grade: GradeType.A, description: 'Item' },[ItemType.ITEM_07025]: { icon: 'items/potion2.png', grade: GradeType.S, description: 'Item' },
+
 
     [ItemType.NULL]: { icon: 'items/noItem.png', grade: GradeType.F, description: 'Item' },
   };

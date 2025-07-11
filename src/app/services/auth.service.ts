@@ -15,8 +15,8 @@ import { FirebaseService } from './firebase.service';
 })
 export class AuthService {
   private userSubject = new BehaviorSubject<any>(null);
-  //private apiUrl = 'http://localhost:8080/api';
-  private apiUrl = 'https://adventureforge-backend-web.onrender.com/api';
+  private apiUrl = 'http://localhost:8080/api';
+  //private apiUrl = 'https://adventureforge-backend-web.onrender.com/api';
   
   constructor(private auth: Auth, private firestore: Firestore,private http: HttpClient,private firebaseService: FirebaseService,) {
     // Escuchar cambios en el estado de autenticación

@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2, Inject, PLATFORM_ID } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
 import { StorageService } from './services/storage.service';
@@ -10,7 +10,7 @@ import { CrafterType, crafterStyles } from './enum/crafterType';
 import { ItemType, itemStyles } from './enum/itemType';
 import { GradeType, gradeStyles } from './enum/gradeType';
 import { TurnActionType,turnActionStyles } from './enum/turnActionType';
-
+import { isPlatformBrowser } from '@angular/common';
 
 
 @Component({
@@ -20,11 +20,13 @@ import { TurnActionType,turnActionStyles } from './enum/turnActionType';
 })
 export class AppComponent implements OnInit {
   title = 'app';
+  informe = 'Informar';
   user: any = null;
   isAuthenticated: boolean = false;
   imageUrl: string = '';
   firebaseStatus: string = '';
   imageUrls: { [key: string]: string } = {};
+  private readonly isBrowser: boolean;
 
   constructor(
     private authService: AuthService,
@@ -32,10 +34,15 @@ export class AppComponent implements OnInit {
     private storageService: StorageService,
     private renderer: Renderer2,
     private firebaseService: FirebaseService,
-    private imageService: ImageService // Importante inyectarlo
-  ) {}
+    private imageService: ImageService,
+    @Inject(PLATFORM_ID) platformId: object          // ←‑ inyecta platformId
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);  // ←‑ calcula una vez
+  }
+ 
 
-  async ngOnInit() {
+  ngOnInit() {
+    
     this.firebaseService.testConnection().subscribe(
       (response) => {
         this.firebaseStatus = response;
@@ -49,15 +56,12 @@ export class AppComponent implements OnInit {
     this.authService.getAuthState().subscribe(async (user) => {
       this.isAuthenticated = !!user;
       this.user = user;
-
-      // Solo cargamos las imágenes y fondo si hay usuario
-      if (user) {
+      if (this.isBrowser) {
         await this.preloadGlobalImages();
         await this.loadImage();
-        this.router.navigate(['/dashboard']);
-      } else {
-        this.router.navigate(['/login']);
       }
+      
+     this.router.navigate([user ? '/dashboard' : '/login']);
     });
   }
 
@@ -65,14 +69,15 @@ export class AppComponent implements OnInit {
     try {
       await this.imageService.preloadImages([
         'fondos/desierto4.jpg',
+        'fondos/desierto3.jpg',
         'iconos/add.png',
+        'iconos/marco_pocion.png',
         'iconos/gold.png',
         'iconos/editCheck.png',
         'iconos/map_1.jpg',
         'iconos/map_2.jpg',
         'iconos/marco_item.png',
         'iconos/marco_description.png',
-        'iconos/marco_descripcion2.png',
         'iconos/boton_madera_1.png',
         'iconos/boton_madera_4.png',
         'iconos/boton_madera_5.png',
@@ -104,10 +109,10 @@ export class AppComponent implements OnInit {
 
         'gifs/Y_forest1_defeat.gif',
         'gifs/Y_forest1_victory.gif',
-        'gifs/Y_ent1_defeat.gif',
-        'gifs/Y_ent1_victory.gif',
-        'gifs/Y_golem1_defeat.gif',
-        'gifs/Y_golem1_victory.gif',
+        'gifs/Y_ent1_defeat.gif','gifs/Y_ent1_up1_defeat.gif','gifs/Y_ent1_up2_defeat.gif',
+        'gifs/Y_ent1_victory.gif','gifs/Y_ent1_up1_victory.gif','gifs/Y_ent1_up2_victory.gif',
+        'gifs/Y_golem1_defeat.gif','gifs/Y_golem1_up1_defeat.gif','gifs/Y_golem1_up2_defeat.gif',
+        'gifs/Y_golem1_victory.gif','gifs/Y_golem1_up1_victory.gif','gifs/Y_golem1_up2_victory.gif',
         'gifs/Y_jabali1_defeat.gif',
         'gifs/Y_jabali1_victory.gif',
         'gifs/Y_jabali2_defeat.gif',
@@ -124,7 +129,7 @@ export class AppComponent implements OnInit {
         'gifs/Y_jabali7_victory.gif',
         
         'characters/A_forest1.jpg',
-        'characters/A_golem1.jpg',
+        'characters/A_golem1.jpg','characters/A_golem1_up1.jpg','characters/A_golem1_up2.jpg',
         'characters/A_ent1.jpg','characters/A_ent1_up1.jpg','characters/A_ent1_up2.jpg',
         'characters/A_jabali1.jpg',
         'characters/A_jabali2.jpg',
@@ -137,7 +142,7 @@ export class AppComponent implements OnInit {
         'characters/A_pez2.jpg','characters/A_pez2_up1.jpg','characters/A_pez2_up2.jpg',
         
         'missions/C_forest1.png',
-        'missions/C_golem1.png',
+        'missions/C_golem1.png','missions/C_golem1_up1.png','missions/C_golem1_up2.png',
         'missions/C_ent1.png','missions/C_ent1_up1.png','missions/C_ent1_up2.png',
         'missions/C_jabali1.png',
         'missions/C_jabali2.png',
@@ -188,6 +193,7 @@ export class AppComponent implements OnInit {
         'items/noviceshoes1.png','items/renegadeshoes1.png','items/guildshoes1.png',
         'items/forestboots1.png',
 
+        'items/potion1.png','items/potion2.png',
 
         'items/noItem.png',
 
@@ -234,6 +240,8 @@ export class AppComponent implements OnInit {
 
       enemyStyles[EnemyType.FOREST1].icon = this.imageService.getCachedImage('characters/A_forest1.jpg')!;enemyStyles[EnemyType.FOREST1].missionIcon = this.imageService.getCachedImage('missions/C_forest1.png')!;
       enemyStyles[EnemyType.GOLEM1].icon = this.imageService.getCachedImage('characters/A_golem1.jpg')!;enemyStyles[EnemyType.GOLEM1].missionIcon = this.imageService.getCachedImage('missions/C_golem1.png')!;
+      enemyStyles[EnemyType.GOLEM1_UP1].icon = this.imageService.getCachedImage('characters/A_golem1_up1.jpg')!;enemyStyles[EnemyType.GOLEM1_UP1].missionIcon = this.imageService.getCachedImage('missions/C_golem1_up1.png')!;
+      enemyStyles[EnemyType.GOLEM1_UP2].icon = this.imageService.getCachedImage('characters/A_golem1_up2.jpg')!;enemyStyles[EnemyType.GOLEM1_UP2].missionIcon = this.imageService.getCachedImage('missions/C_golem1_up2.png')!;
       enemyStyles[EnemyType.ENT1].icon = this.imageService.getCachedImage('characters/A_ent1.jpg')!;enemyStyles[EnemyType.ENT1].missionIcon = this.imageService.getCachedImage('missions/C_ent1.png')!;
       enemyStyles[EnemyType.ENT1_UP1].icon = this.imageService.getCachedImage('characters/A_ent1_up1.jpg')!;enemyStyles[EnemyType.ENT1_UP1].missionIcon = this.imageService.getCachedImage('missions/C_ent1_up1.png')!;
       enemyStyles[EnemyType.ENT1_UP2].icon = this.imageService.getCachedImage('characters/A_ent1_up2.jpg')!;enemyStyles[EnemyType.ENT1_UP2].missionIcon = this.imageService.getCachedImage('missions/C_ent1_up2.png')!;
@@ -351,6 +359,11 @@ export class AppComponent implements OnInit {
       itemStyles[ItemType.ITEM_05091].icon = itemStyles[ItemType.ITEM_05092].icon = itemStyles[ItemType.ITEM_05093].icon = itemStyles[ItemType.ITEM_05094].icon = itemStyles[ItemType.ITEM_05095].icon = this.imageService.getCachedImage('items/guildshoes1.png')!;
       itemStyles[ItemType.ITEM_05101].icon = itemStyles[ItemType.ITEM_05102].icon = itemStyles[ItemType.ITEM_05103].icon = itemStyles[ItemType.ITEM_05104].icon = itemStyles[ItemType.ITEM_05105].icon = this.imageService.getCachedImage('items/forestboots1.png')!;
       
+      
+      itemStyles[ItemType.ITEM_07011].icon = itemStyles[ItemType.ITEM_07012].icon = itemStyles[ItemType.ITEM_07013].icon = itemStyles[ItemType.ITEM_07014].icon = itemStyles[ItemType.ITEM_07015].icon = this.imageService.getCachedImage('items/potion1.png')!;
+      itemStyles[ItemType.ITEM_07021].icon = itemStyles[ItemType.ITEM_07022].icon = itemStyles[ItemType.ITEM_07023].icon = itemStyles[ItemType.ITEM_07024].icon = itemStyles[ItemType.ITEM_07025].icon = this.imageService.getCachedImage('items/potion2.png')!;
+      
+    
       itemStyles[ItemType.NULL].icon = this.imageService.getCachedImage('items/noItem.png')!;
 
       console.log('✅ Imágenes precargadas globalmente');
@@ -364,22 +377,34 @@ export class AppComponent implements OnInit {
       // Usa el StorageService para obtener la URL pública
       this.imageUrl = await this.storageService.getImageUrl('fondos', 'desierto3.jpg');
 
-      // Aplica la imagen como fondo del cuerpo
-      this.renderer.setStyle(document.body, 'background-image', `url(${this.imageUrl})`);
-      this.renderer.setStyle(document.body, 'background-size', 'cover');
-      this.renderer.setStyle(document.body, 'background-repeat', 'repeat');
+     if (this.isBrowser) {
+        this.renderer.setStyle(document.body, 'background-image', `url(${this.imageUrl})`);
+        this.renderer.setStyle(document.body, 'background-size',  'cover');
+        this.renderer.setStyle(document.body, 'background-repeat','repeat');
+      }
     } catch (error) {
       console.error('❌ Error cargando fondo:', error);
     }
   }
 
-  logout() {
-    this.authService.logout().then(() => {
-      alert('Has cerrado sesión exitosamente');
-      this.router.navigate(['/login']);
-    }).catch(error => {
-      console.error(error);
-      alert('Error al cerrar sesión');
-    });
+  logout(): void {
+    this.authService.logout()
+      .then(() => this.router.navigate(['/login']))
+      .catch(err => console.error(err));
   }
+
+  informar(): void {
+  const currentUrl = this.router.url;
+
+  if (currentUrl.includes('/login')) {
+    this.router.navigate(['/informar']);
+  }
+ else if (currentUrl.includes('/dashboard')) {
+    this.informe = "Volver";
+    this.router.navigate(['/informar']);
+  } else if (currentUrl.includes('/informar')) {
+    this.informe = "Informar";
+    this.router.navigate(['/dashboard']);
+  }
+}
 }

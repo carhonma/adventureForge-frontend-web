@@ -37,6 +37,8 @@ export class DashboardComponent implements OnInit {
   user: any = {};
   title ='sin título';
   heroes: Hero[] = [];
+  pociones: Item[] = [];
+  pocion = ItemType.NULL;
   turnActions: TurnActionType[] = [TurnActionType.STANDARD_ATTACK,TurnActionType.HARD_STRIKE,TurnActionType.HARD_SPELL,TurnActionType.HARD_SHOT,TurnActionType.BUFF_ARMOR,TurnActionType.DEBUFF_ARMOR];
   items: Item[] = [];
   crafters: Crafter[] = [];
@@ -55,8 +57,9 @@ export class DashboardComponent implements OnInit {
   showNameShine = false;
   showSkillShine:boolean[] = [false,false,false,false,false];
 
-  preference_storage = 1;
-
+  preference_storage = false;
+  potionIndex = 0;
+  isLoadingPociones = false;
   hero: any;
   item: any;
   crafter: any;
@@ -96,6 +99,7 @@ export class DashboardComponent implements OnInit {
   item1 = ItemType.NULL;
   item2 = ItemType.NULL;
   item3 = ItemType.NULL;
+  
   item1Amount = 0; item1Have = false;
   item2Amount = 0; item2Have = false;
   item3Amount = 0; item3Have = false;
@@ -146,14 +150,55 @@ export class DashboardComponent implements OnInit {
      
       await this.preloadUserData();
       this.reportUserLog();
+      await this.imageService.preloadImages([
+              'iconos/google.png',
+              'fondos/desierto4.jpg',
+              'iconos/add.png',
+              'iconos/marco_pocion.png',
+              'iconos/gold.png',
+              'iconos/editCheck.png',
+              'iconos/map_1.jpg',
+              'iconos/map_2.jpg',
+              'iconos/marco_description.png',
+              'iconos/marco_item.png',
+              'iconos/boton_madera_1.png',
+              'iconos/boton_madera_4.png',
+              'iconos/boton_madera_5.png',
+              'iconos/boton_madera_8.png',
+              'iconos/boton_madera_9.png',
+              'iconos/boton_madera_10.png',
+              'iconos/boton_madera_11.png',
+              'items/potion1.png',
+              'items/potion2.png',
+
+              'characters/guerrero.png',
+              'characters/picaro.png',
+              'characters/mago.png',
+              'characters/paladin.png',
+              'characters/cazador.png',
+              'characters/clerigo.png',
+              
+              
+            ]);
+
+} else {
+      console.error("❌ No hay usuario cargado");
+      //await this.preloadUserData();
+    }
+  }
+
+  preloadUserData(){ 
+
       this.imageUrls['FONDO'] = this.imageService.getCachedImage('fondos/desierto4.jpg')!;
       this.imageUrls['ADD'] = this.imageService.getCachedImage('iconos/add.png')!;
+      this.imageUrls['MARCO_POCION'] = this.imageService.getCachedImage('iconos/marco_pocion.png')!;
+      this.imageUrls['POCION1'] = this.imageService.getCachedImage('items/potion1.png')!;
+      this.imageUrls['POCION2'] = this.imageService.getCachedImage('items/potion2.png')!;
       this.imageUrls['GOLD'] = this.imageService.getCachedImage('iconos/gold.png')!;
       this.imageUrls['EDIT'] = this.imageService.getCachedImage('iconos/editCheck.png')!;
       this.imageUrls['MAP1'] = this.imageService.getCachedImage('iconos/map_1.jpg')!;
       this.imageUrls['MAP2'] = this.imageService.getCachedImage('iconos/map_2.jpg')!;
       this.imageUrls['MARCO'] = this.imageService.getCachedImage('iconos/marco_description.png')!;
-      this.imageUrls['MARCO2'] = this.imageService.getCachedImage('iconos/marco_descripcion2.png')!;
       this.imageUrls['MARCOITEM'] = this.imageService.getCachedImage('iconos/marco_item.png')!;
       this.imageUrls['BOTON_madera_1'] = this.imageService.getCachedImage('iconos/boton_madera_1.png')!;
       this.imageUrls['BOTON_madera_4'] = this.imageService.getCachedImage('iconos/boton_madera_4.png')!;
@@ -165,22 +210,8 @@ export class DashboardComponent implements OnInit {
 
       this.imageUrls['BARRA_life_0'] = this.imageService.getCachedImage('bars/life0.png')!;this.imageUrls['BARRA_life_10'] = this.imageService.getCachedImage('bars/life10.png')!;this.imageUrls['BARRA_life_100'] = this.imageService.getCachedImage('bars/life100.png')!;this.imageUrls['BARRA_life_12.5'] = this.imageService.getCachedImage('bars/life12.5.png')!;this.imageUrls['BARRA_life_25'] = this.imageService.getCachedImage('bars/life25.png')!;this.imageUrls['BARRA_life_37.5'] = this.imageService.getCachedImage('bars/life37.5.png')!;this.imageUrls['BARRA_life_5'] = this.imageService.getCachedImage('bars/life5.png')!;this.imageUrls['BARRA_life_50'] = this.imageService.getCachedImage('bars/life50.png')!;this.imageUrls['BARRA_life_62.5'] = this.imageService.getCachedImage('bars/life62.5.png')!;this.imageUrls['BARRA_life_75'] = this.imageService.getCachedImage('bars/life75.png')!;this.imageUrls['BARRA_life_87.5'] = this.imageService.getCachedImage('bars/life87.5.png')!;this.imageUrls['BARRA_life_90'] = this.imageService.getCachedImage('bars/life90.png')!;
       this.imageUrls['BARRA_exp_0'] = this.imageService.getCachedImage('bars/exp0.png')!;this.imageUrls['BARRA_exp_10'] = this.imageService.getCachedImage('bars/exp10.png')!;this.imageUrls['BARRA_exp_100'] = this.imageService.getCachedImage('bars/exp100.png')!;this.imageUrls['BARRA_exp_12.5'] = this.imageService.getCachedImage('bars/exp12.5.png')!;this.imageUrls['BARRA_exp_25'] = this.imageService.getCachedImage('bars/exp25.png')!;this.imageUrls['BARRA_exp_37.5'] = this.imageService.getCachedImage('bars/exp37.5.png')!;this.imageUrls['BARRA_exp_5'] = this.imageService.getCachedImage('bars/exp5.png')!;this.imageUrls['BARRA_exp_50'] = this.imageService.getCachedImage('bars/exp50.png')!;this.imageUrls['BARRA_exp_62.5'] = this.imageService.getCachedImage('bars/exp62.5.png')!;this.imageUrls['BARRA_exp_75'] = this.imageService.getCachedImage('bars/exp75.png')!;this.imageUrls['BARRA_exp_87.5'] = this.imageService.getCachedImage('bars/exp87.5.png')!;this.imageUrls['BARRA_exp_90'] = this.imageService.getCachedImage('bars/exp90.png')!;
-    } else {
-      console.error("❌ No hay usuario cargado");
-      await this.preloadUserData();
-    }
-  }
+    
 
-  preloadUserData(){ 
-
-    //NO BORRAR sin antes probar a crear usuario //crear los crafters cuando se cree el user
-    /*this.activatedRoute.queryParams
-    .pipe(first(params => params['email'] !== undefined && params['email'].trim() !== ''))
-    .subscribe(params => {
-      const email = params['email'];
-      this.getUserData(email);
-      
-    });*/
     this.getUserData(this.user.email);//sin esto no se ven los datos del usuario al recargar pero al quitar lo de arriba puede que existan problemas al crear usuarios
     this.getHerosData(true);this.getItemsData(false);this.getCraftersData();}
     
@@ -237,33 +268,43 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-    getItemsData(showInfo: Boolean) { 
-      this.firebaseService.getItemsData(this.user.email,"").subscribe(
-        (items) => {
-        
-          this.items = items.map(itemData => ({
-          id: itemData.id,
-          ID: itemData.ID,
-          amount: itemData.amount || 0,
-          grade: itemData.grade || 'F',
-          name: itemData.name || 'item',
-          price: itemData.price || 1,
-          subtype: itemData.subtype || 'NOSUBTYPE',
-          type: itemData.type || 1,
-          icon: itemStyles[itemData.ID as ItemType]?.icon || '❓',
-          attributes: [itemData.Dbrutal|| 0,itemData.Dletal|| 0,itemData.Dmistic|| 0,itemData.armor|| 0,itemData.resistance|| 0,itemData.accuracy|| 0,itemData.evasion|| 0,itemData.critic|| 0,itemData.maxHealth|| 0],
-          bonusBenefits: itemData.itemBonus||[0,0,0,0,0,0,0,0],
-          bonusCollateral: itemData.itemCollateral||[0,0,0,0,0,0,0,0],
-          ItemsNeeds:[ItemType.NULL,ItemType.NULL,ItemType.NULL],
-          ItemsAmountsNeeds:[0,0,0]
-        }));
-        if(showInfo){console.table(this.items);}
-        }, 
-        (error) => {
-        console.error('❌ Error al obtener datos de los items:', error);
-        }
-      ); 
+    getItemsData(showInfo: Boolean, callback?: () => void): void {
+  this.firebaseService.getItemsData(this.user.email, "").subscribe(
+    (items) => {
+      this.items = items.map(itemData => ({
+        id: itemData.id,
+        ID: itemData.ID,
+        amount: itemData.amount || 0,
+        grade: itemData.grade || 'F',
+        name: itemData.name || 'item',
+        price: itemData.price || 1,
+        subtype: itemData.subtype || 'NOSUBTYPE',
+        type: itemData.type || 1,
+        icon: itemStyles[itemData.ID as ItemType]?.icon || '❓',
+        attributes: [
+          itemData.Dbrutal || 0, itemData.Dletal || 0, itemData.Dmistic || 0,
+          itemData.armor || 0, itemData.resistance || 0, itemData.accuracy || 0,
+          itemData.evasion || 0, itemData.critic || 0, itemData.maxHealth || 0
+        ],
+        bonusBenefits: itemData.itemBonus || [0, 0, 0, 0, 0, 0, 0, 0],
+        bonusCollateral: itemData.itemCollateral || [0, 0, 0, 0, 0, 0, 0, 0],
+        ItemsNeeds: [ItemType.NULL, ItemType.NULL, ItemType.NULL],
+        ItemsAmountsNeeds: [0, 0, 0]
+      }));
+
+      this.pociones = this.items.filter(item => item.type === "POTION");
+
+      if (showInfo) console.table(this.items);
+
+      if (callback) callback(); // ← ✅ Se ejecuta si fue pasada
+    },
+    (error) => {
+      console.error('❌ Error al obtener datos de los items:', error);
+      if (callback) callback(); // ← ✅ También en caso de error
     }
+  );
+}
+
     getItemsEqip(showInfo: Boolean, type : string) { 
       this.itemsToEquip=[];
       this.firebaseService.getItemsData(this.user.email,type).subscribe(
@@ -292,6 +333,40 @@ export class DashboardComponent implements OnInit {
         }
       ); 
     }
+    /*getPotions(showInfo: Boolean) { 
+      this.pociones=[];
+      this.firebaseService.getItemsData(this.user.email,"POTION").subscribe(
+        (items) => {
+        
+          this.pociones = items.map(itemData => ({
+          id: itemData.id,
+          ID: itemData.ID,
+          amount: itemData.amount || 0,
+          grade: itemData.grade || 'F',
+          name: itemData.name || 'item',
+          price: itemData.price || 1,
+          subtype: itemData.subtype || 1,
+          type: itemData.type || 1,
+          icon: itemStyles[itemData.ID as ItemType]?.icon || '❓',
+          attributes: [itemData.Dbrutal|| 0,itemData.Dletal|| 0,itemData.Dmistic|| 0,itemData.armor|| 0,itemData.resistance|| 0,itemData.accuracy|| 0,itemData.evasion|| 0,itemData.critic|| 0,itemData.maxHealth|| 0],
+          bonusBenefits: itemData.itemBonus||[0,0,0,0,0,0,0,0],
+          bonusCollateral: itemData.itemCollateral||[0,0,0,0,0,0,0,0],
+          ItemsNeeds:[ItemType.NULL,ItemType.NULL,ItemType.NULL],
+          ItemsAmountsNeeds:[0,0,0]
+        }));
+        if(showInfo){console.table(this.itemsToEquip);}
+        if(this.pociones[0]==null){
+          this.pociones[0] == items[0];
+          this.pociones[1] == items[1];
+        }
+        this.pocion = this.pociones[0].ID as ItemType;
+        console.log("pociones: "+this.pociones[0].ID);
+        }, 
+        (error) => {
+        console.error('❌ Error al obtener datos de los items:', error);
+        }
+      ); 
+    }*/
     getItemsCraftData(showInfo: Boolean, subtype : string[], crafterLevel: number) { 
       this.itemsToCraft=[];
       this.firebaseService.getItemsCraftData(this.user.email,subtype,crafterLevel).subscribe(
@@ -361,6 +436,26 @@ export class DashboardComponent implements OnInit {
     this.hero = hero;
     this.heroType = hero.type;
     this.heroNewname = hero.name;
+    //this.pociones = this.items.filter(item => item.type === "POTION");
+
+/*       this.pociones = [
+  { ID: "ItemType.NULL",amount:1, grade:GradeType.F, name: "No named",price:0, type: "POTION",[0,0,0,0,0,0,0,0,0],  }, // o el objeto adecuado según tu modelo
+  ...this.items.filter(item => item.type === "POTION")
+];*/
+
+
+
+if (this.pociones.length > 0) {
+ this.pocion = ItemType.NULL;
+  this.potionIndex = -1;
+} else {
+  //mostramos asi al principio un item nulo y cuando le de a siguiente sale la primera pocion.(se cargan las pociones)
+  this.pocion = ItemType.NULL;
+  this.potionIndex = -1;
+}
+    //this.getPotions(false);
+    //console.log("pociones: "+this.pociones[0].ID);
+    
     //this.enemyType = null;
     this.heroBackground = heroStyles[hero.type as HeroType]?.backgroundColor || '#f9f9f9';
     this.heroLongBackground = heroStyles[hero.type as HeroType]?.longBackground || '#f9f9f9';
@@ -507,7 +602,7 @@ export class DashboardComponent implements OnInit {
   async onClipClick(clip: string){
     this.clip = clip;
     }
-  async onStartBattleClick(battleHero:Hero) {
+  async onStartBattleClick(battleHero:Hero , index:number) {
     const heroReference = `${battleHero.id.toString().padStart(2, '0')}`;
    this.firebaseService.battle(battleHero,battleHero.state[0] as EnemyType,this.user.email,heroReference).subscribe(
       async (response) => { 
@@ -515,6 +610,7 @@ export class DashboardComponent implements OnInit {
         console.log('REWARD',response.reward);
         
         let gifName : string = "";
+        
         if (response.result==true){
           gifName = enemyStyles[battleHero.state[0] as EnemyType]?.gifVictory;
           this.item1 = response.reward[0];
@@ -532,7 +628,8 @@ export class DashboardComponent implements OnInit {
         this.showBattleGif(gifName);
         battleHero.state[0] = "";
         this.getUserData(this.user.email);
-        this.getHerosData(false);
+        await this.getHerosData(false);
+        this.onHeroClick(this.heroes[index]);
         },
       (error) => {console.error('Error', error);} 
     )}
@@ -618,7 +715,7 @@ async showBattleGif(gifName: string) {
   this.gifBattleUrl = await this.imageService.getImageUrl(gifName);
   this.mostrarBattleGif = true;
   this.desapareciendo = false;
-  if(this.enemyType!=null){this.disabledEnemies.delete(this.enemyType);}
+  if(this.enemyType!=null){this.disabledEnemies.delete(this.enemyType);this.enemyType = null;}
   setTimeout(() => {
     this.desapareciendo = true;
     setTimeout(() => {
@@ -629,6 +726,7 @@ async showBattleGif(gifName: string) {
 async exitBattleGif() { 
   this.mostrarBattleGif = false;
   this.gifBattleUrl = null;
+  this.getHerosData(false);
 }
 
 equipHero(ranure: string, itemOld: string, itemNew: Item) {
@@ -667,6 +765,8 @@ equipHero(ranure: string, itemOld: string, itemNew: Item) {
 }
 
 craftItem(itemAmount:number){
+  //console.log("gold : ",this.gold);
+  //console.log("price : ",this.item.price);
     const data = {
     email: this.user.email,
     crafterID: this.crafter.ID,
@@ -889,5 +989,47 @@ checkBonus(item: Item){
     //console.log("Collateral: "+item.bonusCollateral[0]+item.bonusCollateral[1]);
   }
 
+}
+nextpotion(index: number, increment: number) {
+  if((index + increment) < this.pociones.length && (index + increment) >= 0){
+  const item = this.pociones[index + increment];
+  this.potionIndex = this.potionIndex + increment
+  if (item) {
+    this.pocion = item.ID as ItemType;
+  }}
+}
+usePotion(){
+    if(this.pocion!=ItemType.NULL){
+      console.log ("pocion usada: ", this.pocion);
+      this.isLoadingPociones = true;
+    const heroReference = `${this.hero.id.toString().padStart(2, '0')}`;
+    const data = {
+      email:this.user.email,
+      heroReference:heroReference,
+      itemID:this.pocion,
+    }
+   
+    this.firebaseService.usePotion(data).subscribe(
+      async (response) => { console.log('Response:', response.message);
+        const updatedHeroes = await this.getHerosData(false);
+      const updatedHero = updatedHeroes.find(h => h.id === this.hero.id);
+      if (updatedHero) {
+        this.hero = updatedHero;
+        this.onHeroClick(this.hero);
+      }
+        this.getHerosData(true);
+        this.getItemsData(false, () => {
+  this.pocion = ItemType.NULL;
+  this.potionIndex = -1;
+  this.isLoadingPociones = false;
+  
+});this.isLoadingPociones = false;
+},
+      (error) => {
+        console.error('Error al modificar items:', error);
+      },
+    ); 
+    
+  }
 }
 }

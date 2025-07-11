@@ -12,7 +12,7 @@ export enum CrafterType {
   export const crafterStyles: Record<CrafterType, { icon: string , ableToCraft: string[]}> = {
 
     
-    [CrafterType.Alchemist]: { icon: 'crafters/alchemist.png',ableToCraft:[""]},
+    [CrafterType.Alchemist]: { icon: 'crafters/alchemist.png',ableToCraft:["POTION"]},
     [CrafterType.Armorsmith]: { icon: 'crafters/armorsmith.png',ableToCraft:["HEAVYARMOR"]},
     [CrafterType.Carpenter]: { icon: 'crafters/carpenter.png',ableToCraft:["BOW","CROSIER","WAND"]},
     [CrafterType.Enchanter]: { icon: 'crafters/enchanter.png',ableToCraft:[""]},

@@ -15,8 +15,9 @@
   .dashboard {
     display: flex;
     height: fit-content;
-    width: 180vh;
+    width: 180dvh;
     gap: 10px;
+    margin-left: 130px;
   }
   
   /* Sección izquierda */
@@ -901,8 +902,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
   background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
@@ -967,7 +968,16 @@
   filter: grayscale(100%);
   cursor:default;
 }
-
+.map-button-up1:disabled {
+  opacity: 0.75;
+  filter: grayscale(100%);
+  cursor:default;
+}
+.map-button-up2:disabled {
+  opacity: 0.75;
+  filter: grayscale(100%);
+  cursor:default;
+}
 
 
 
@@ -1211,4 +1221,97 @@
 .item-title-container::after {
   right: 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- Toggle principal --- */
+.toggle-switchy {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  user-select: none;
+  color: #fff;
+}
+.toggle-switchy:hover {
+  cursor: pointer;
+}
+.toggle-switchy > input {
+  position: absolute;
+  opacity: 0;
+}
+.toggle-switchy > input + .toggle {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  width: 65px;
+  height: 30px;
+  border-radius: 50px;
+  background: #db773469;
+  transition: background 200ms linear, box-shadow 200ms linear;
+}
+.toggle-switchy > input + .toggle > .switch {
+  width: 30px;
+  height: 100%;
+  position: absolute;
+  right: calc(100% - 30px);
+  background: #fff;
+  border: 3px solid #db773469;
+  border-radius: 50px;
+  transition: right 200ms linear, border-color 200ms linear;
+  z-index: 3;
+  box-sizing: border-box;
+}
+
+/* Textos ON / OFF */
+.toggle-switchy > input + .toggle:before,
+.toggle-switchy > input + .toggle:after {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  height: 100%;
+  font-size: 0.8rem;
+  z-index: 2;
+  transition: all 200ms linear;
+}
+.toggle-switchy > input + .toggle:before {
+  content: 'ON';
+  right: 50%;
+  opacity: 0;
+}
+.toggle-switchy > input + .toggle:after {
+  content: 'OFF';
+  left: 50%;
+}
+
+/* Cambios al activar el toggle */
+.toggle-switchy > input:checked + .toggle {
+  background: #db7734;
+}
+.toggle-switchy > input:checked + .toggle > .switch {
+  right: 0;
+  border-color: #db7734;
+}
+.toggle-switchy > input:checked + .toggle:before {
+  opacity: 1;
+}
+.toggle-switchy > input:checked + .toggle:after {
+  opacity: 0;
+}
+
+
+
+
+
+
+
 

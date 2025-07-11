@@ -33,6 +33,10 @@ export class LoginComponent implements OnInit {
       // Precargar las imágenes necesarias
       await this.imageService.preloadImages([
         'iconos/google.png',
+        'fondos/desierto4.jpg',
+        'fondos/desierto3.jpg',
+        'iconos/add.png',
+        'iconos/gold.png',
         'characters/guerrero.png',
         'characters/picaro.png',
         'characters/mago.png',
@@ -43,6 +47,12 @@ export class LoginComponent implements OnInit {
 
       // Obtener las URLs precargadas
       this.otherImageUrls['GOOGLE'] = this.imageService.getCachedImage('iconos/google.png')!;
+      this.otherImageUrls['FONDO'] = this.imageService.getCachedImage('fondos/desierto4.jpg')!;
+      this.otherImageUrls['ADD'] = this.imageService.getCachedImage('iconos/add.png')!;
+      this.otherImageUrls['GOLD'] = this.imageService.getCachedImage('iconos/gold.png')!;
+
+
+
       this.heroImageUrls['GUERRERO'] = this.imageService.getCachedImage('characters/guerrero.png')!;
       this.heroImageUrls['PICARO'] = this.imageService.getCachedImage('characters/picaro.png')!;
       this.heroImageUrls['MAGO'] = this.imageService.getCachedImage('characters/mago.png')!;

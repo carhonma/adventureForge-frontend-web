@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
+import { InformarComponent } from './informar/informar';
 import { LoginComponent } from './login/login';
 import { DashboardComponent } from './dashboard/dashboard';
 import { AppRoutingModule } from './app-routing.module';
@@ -10,6 +11,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { HttpClientModule } from '@angular/common/http';
+
 
 // Configuración de Firebase
 const firebaseConfig = {
@@ -25,16 +27,15 @@ const firebaseConfig = {
 @NgModule({
   declarations: [
     AppComponent,
+    InformarComponent,
     LoginComponent,
     DashboardComponent,
-    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    
   ],
   providers: [
     provideFirebaseApp(() => initializeApp(firebaseConfig)), // Mover aquí

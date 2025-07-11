@@ -9,8 +9,8 @@ import { EnemyType } from '../enum/enemyType';
   providedIn: 'root'
 })
 export class FirebaseService {
-  //private apiUrl = 'http://localhost:8080/api'; // Ajusta la URL si tu backend está en otro puerto o servidor
-  private apiUrl = 'https://adventureforge-backend-web.onrender.com/api'
+  private apiUrl = 'http://localhost:8080/api'; // Ajusta la URL si tu backend está en otro puerto o servidor
+ // private apiUrl = 'https://adventureforge-backend-web.onrender.com/api'
 
 
   constructor(private http: HttpClient) {}
@@ -81,8 +81,14 @@ getItemsCraftData(email: string, subtypes: string[], crafterLevel: number): Obse
   register(email: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, { email, password});
   }
+  addTesterReport(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/addTesterReport`, data);
+  }
   addHero(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/addHero`, data);
+  }
+  usePotion(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/usePotion`, data);
   }
   sellItem(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/sellItem`, data);
