@@ -25,6 +25,8 @@ export enum ItemType {
   ITEM_00211 = 'ITEM_00211', ITEM_00212 = 'ITEM_00212', ITEM_00213 = 'ITEM_00213', ITEM_00214 = 'ITEM_00214', ITEM_00215 = 'ITEM_00215',
   ITEM_00221 = 'ITEM_00221', ITEM_00222 = 'ITEM_00222', ITEM_00223 = 'ITEM_00223', ITEM_00224 = 'ITEM_00224', ITEM_00225 = 'ITEM_00225',
   ITEM_00231 = 'ITEM_00231', ITEM_00232 = 'ITEM_00232', ITEM_00233 = 'ITEM_00233', ITEM_00234 = 'ITEM_00234', ITEM_00235 = 'ITEM_00235',
+  ITEM_00241 = 'ITEM_00241', ITEM_00242 = 'ITEM_00242', ITEM_00243 = 'ITEM_00243', ITEM_00244 = 'ITEM_00244', ITEM_00245 = 'ITEM_00245',
+  ITEM_00251 = 'ITEM_00251', ITEM_00252 = 'ITEM_00252', ITEM_00253 = 'ITEM_00253', ITEM_00254 = 'ITEM_00254', ITEM_00255 = 'ITEM_00255',
 
   ITEM_01000 = 'ITEM_01000', ITEM_02000 = 'ITEM_02000', ITEM_03000 = 'ITEM_03000',ITEM_04000 = 'ITEM_04000',ITEM_05000 = 'ITEM_05000',ITEM_06000 = 'ITEM_06000',
   
@@ -96,6 +98,7 @@ export enum ItemType {
 
   ITEM_07011 = 'ITEM_07011', ITEM_07012 = 'ITEM_07012', ITEM_07013 = 'ITEM_07013', ITEM_07014 = 'ITEM_07014', ITEM_07015 = 'ITEM_07015',
   ITEM_07021 = 'ITEM_07021', ITEM_07022 = 'ITEM_07022', ITEM_07023 = 'ITEM_07023', ITEM_07024 = 'ITEM_07024', ITEM_07025 = 'ITEM_07025',
+  ITEM_07031 = 'ITEM_07031', ITEM_07032 = 'ITEM_07032', ITEM_07033 = 'ITEM_07033', ITEM_07034 = 'ITEM_07034', ITEM_07035 = 'ITEM_07035',
 
                               
                              
@@ -131,6 +134,8 @@ export enum ItemType {
     [ItemType.ITEM_00211]: { icon: 'items/leather2.png', grade: GradeType.D, description: 'Item' },[ItemType.ITEM_00212]: { icon: 'items/leather2.png', grade: GradeType.C, description: 'Item' },[ItemType.ITEM_00213]: { icon: 'items/leather2.png', grade: GradeType.B, description: 'Item' },[ItemType.ITEM_00214]: { icon: 'items/leather2.png', grade: GradeType.A, description: 'Item' },[ItemType.ITEM_00215]: { icon: 'items/leather2.png', grade: GradeType.S, description: 'Item' },
     [ItemType.ITEM_00221]: { icon: 'items/forestfragment1.png', grade: GradeType.D, description: 'Item' },[ItemType.ITEM_00222]: { icon: 'items/forestfragment1.png', grade: GradeType.C, description: 'Item' },[ItemType.ITEM_00223]: { icon: 'items/forestfragment1.png', grade: GradeType.B, description: 'Item' },[ItemType.ITEM_00224]: { icon: 'items/forestfragment1.png', grade: GradeType.A, description: 'Item' },[ItemType.ITEM_00225]: { icon: 'items/forestfragment1.png', grade: GradeType.S, description: 'Item' },
     [ItemType.ITEM_00231]: { icon: 'items/hellfragment1.png', grade: GradeType.D, description: 'Item' },[ItemType.ITEM_00232]: { icon: 'items/hellfragment1.png', grade: GradeType.C, description: 'Item' },[ItemType.ITEM_00233]: { icon: 'items/hellfragment1.png', grade: GradeType.B, description: 'Item' },[ItemType.ITEM_00234]: { icon: 'items/hellfragment1.png', grade: GradeType.A, description: 'Item' },[ItemType.ITEM_00235]: { icon: 'items/hellfragment1.png', grade: GradeType.S, description: 'Item' },
+    [ItemType.ITEM_00241]: { icon: 'items/moonmushroom1.png', grade: GradeType.D, description: 'Item' },[ItemType.ITEM_00242]: { icon: 'items/moonmushroom1.png', grade: GradeType.C, description: 'Item' },[ItemType.ITEM_00243]: { icon: 'items/moonmushroom1.png', grade: GradeType.B, description: 'Item' },[ItemType.ITEM_00244]: { icon: 'items/moonmushroom1.png', grade: GradeType.A, description: 'Item' },[ItemType.ITEM_00245]: { icon: 'items/moonmushroom1.png', grade: GradeType.S, description: 'Item' },
+    [ItemType.ITEM_00251]: { icon: 'items/sunsetmushroom1.png', grade: GradeType.D, description: 'Item' },[ItemType.ITEM_00252]: { icon: 'items/sunsetmushroom1.png', grade: GradeType.C, description: 'Item' },[ItemType.ITEM_00253]: { icon: 'items/sunsetmushroom1.png', grade: GradeType.B, description: 'Item' },[ItemType.ITEM_00254]: { icon: 'items/sunsetmushroom1.png', grade: GradeType.A, description: 'Item' },[ItemType.ITEM_00255]: { icon: 'items/sunsetmushroom1.png', grade: GradeType.S, description: 'Item' },
     
     //equipement
     [ItemType.ITEM_01000]: { icon: 'items/A_hold_helmet.png', grade: GradeType.F, description: 'Item' },
@@ -207,6 +212,7 @@ export enum ItemType {
     
     [ItemType.ITEM_07011]: { icon: 'items/potion1.png', grade: GradeType.D, description: 'Item' },[ItemType.ITEM_07012]: { icon: 'items/potion1.png', grade: GradeType.C, description: 'Item' },[ItemType.ITEM_07013]: { icon: 'items/potion1.png', grade: GradeType.B, description: 'Item' },[ItemType.ITEM_07014]: { icon: 'items/potion1.png', grade: GradeType.A, description: 'Item' },[ItemType.ITEM_07015]: { icon: 'items/potion1.png', grade: GradeType.S, description: 'Item' },
     [ItemType.ITEM_07021]: { icon: 'items/potion2.png', grade: GradeType.D, description: 'Item' },[ItemType.ITEM_07022]: { icon: 'items/potion2.png', grade: GradeType.C, description: 'Item' },[ItemType.ITEM_07023]: { icon: 'items/potion2.png', grade: GradeType.B, description: 'Item' },[ItemType.ITEM_07024]: { icon: 'items/potion2.png', grade: GradeType.A, description: 'Item' },[ItemType.ITEM_07025]: { icon: 'items/potion2.png', grade: GradeType.S, description: 'Item' },
+    [ItemType.ITEM_07031]: { icon: 'items/potion3.png', grade: GradeType.D, description: 'Item' },[ItemType.ITEM_07032]: { icon: 'items/potion3.png', grade: GradeType.C, description: 'Item' },[ItemType.ITEM_07033]: { icon: 'items/potion3.png', grade: GradeType.B, description: 'Item' },[ItemType.ITEM_07034]: { icon: 'items/potion3.png', grade: GradeType.A, description: 'Item' },[ItemType.ITEM_07035]: { icon: 'items/potion3.png', grade: GradeType.S, description: 'Item' },
 
 
     [ItemType.NULL]: { icon: 'items/noItem.png', grade: GradeType.F, description: 'Item' },

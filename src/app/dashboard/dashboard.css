@@ -188,6 +188,11 @@
   border-radius: 8px;
   cursor: pointer;
 }
+.hero-button-shop:disabled {
+  opacity: 0.5;
+  filter: grayscale(100%);
+  cursor:default;
+}
 .button-content {
   display: flex;
   align-items: center;padding: 2px;
@@ -582,7 +587,6 @@
 .skillButton {
   cursor: pointer;
   text-align: center;
-  padding: 7px;
   background-color: #966e64;
   border: 2px solid #444;
   border-radius: 8px;
@@ -620,7 +624,9 @@
   opacity: 1;
   transform: translateY(0);
 }
-
+.skillButton:focus .equipmentTooltip {
+ visibility:visible;
+}
 
 .characterName {
   position: absolute;
@@ -1006,6 +1012,7 @@
 .icon-img {
   width: 40px;
   height: 40px;
+  border-radius: 5px;
 }
 
 .actions-container {
@@ -1018,7 +1025,10 @@
 .action-icon-wrapper {
   position: relative;
   display: inline-block;
-  margin-right: 5px;
+}
+.action-icon-wrapper:hover img {
+  box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.8);
+  transition: box-shadow 0.2s ease;
 }
 
 .tooltip-description {
@@ -1167,7 +1177,7 @@
   font-size: 24px;
   font-family: 'MedievalSharp', serif;
   color: #3b1e0f;
-  background: linear-gradient(145deg, #f8f1e5, #e2d4b7);
+  background: linear-gradient(170deg, #874016, #f5cc98);
   border: 2px solid #3b1e0f;
   font-weight: bold;
   box-shadow: 0 4px 10px rgba(0,0,0,0.4);
@@ -1255,6 +1265,7 @@
   position: relative;
   width: 65px;
   height: 30px;
+  margin: 7px;
   border-radius: 50px;
   background: #db773469;
   transition: background 200ms linear, box-shadow 200ms linear;
@@ -1295,11 +1306,11 @@
 
 /* Cambios al activar el toggle */
 .toggle-switchy > input:checked + .toggle {
-  background: #db7734;
+  background: #995d34;
 }
 .toggle-switchy > input:checked + .toggle > .switch {
   right: 0;
-  border-color: #db7734;
+  border-color: #995d34;
 }
 .toggle-switchy > input:checked + .toggle:before {
   opacity: 1;
@@ -1312,6 +1323,42 @@
 
 
 
+.hover-action {
+  position: relative;
+  cursor: pointer;
+  color: green;
+}
 
+.tooltip-description {
+  visibility: hidden;
+  background-color: #fff;
+  color: #333;
+  text-align: left;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  position: absolute;
+  z-index: 10;
+  width: 250px;
+  top: 100%;
+  left: 0;
+  white-space: normal;
+}
 
+.hover-action:hover .tooltip-description {
+  visibility: visible;
+}
 
+.tooltip-log-description {
+  position: absolute;
+  background-color: #966e64;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.5);
+  padding: 8px 12px;
+  white-space: nowrap;
+  font-size: 13px;
+  z-index: 10;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translateY(30px);
+}

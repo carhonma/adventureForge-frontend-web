@@ -20,8 +20,8 @@ import { FirebaseService } from '../services/firebase.service';
 import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs';
 import { CrafterType,crafterStyles } from '../enum/crafterType';
-
-
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ChangeDetectorRef } from '@angular/core';
 interface User {
   name: string;
 }
@@ -36,6 +36,8 @@ export class DashboardComponent implements OnInit {
   admin: Boolean = true; //esto hay que quitarlo para jugar normal
   user: any = {};
   title ='sin título';
+  logDetail ='sin detalles del log';
+  sanitizedLogDetail!: SafeHtml;
   heroes: Hero[] = [];
   pociones: Item[] = [];
   pocion = ItemType.NULL;
@@ -60,7 +62,7 @@ export class DashboardComponent implements OnInit {
   preference_storage = false;
   potionIndex = 0;
   isLoadingPociones = false;
-  hero: any;
+  hero: Hero | null = null;
   item: any;
   crafter: any;
   grade: any;
@@ -106,6 +108,7 @@ export class DashboardComponent implements OnInit {
 
   gifHeroUrl: string | null = null;
   gifBattleUrl: string | null = null;
+  gifState: string | null = null;
   mostrarHeroGif= false;
   mostrarBattleGif= false;
   desapareciendo = false;
@@ -122,6 +125,7 @@ export class DashboardComponent implements OnInit {
   
   isVisible: boolean[] = [false,false,false,false,false];
   hoveredAction: string | null = null;
+  hoveredLogAction: string | null = null;
 
   remainingSeconds:number[] = [];
   timerDisplay: string[] = ["00:00","00:00","00:00"];
@@ -130,6 +134,10 @@ export class DashboardComponent implements OnInit {
   map = 1;
   craftedItems: string[] = [];
   craftedItemsType: ItemType[] = [];
+  TurnActionLog:string | null = null;
+  TurnActionLogDescription:string | null = null;
+  tooltipX: number = 0;
+tooltipY: number = 0;
   private countdownInterval: any;
   
   
@@ -139,12 +147,29 @@ export class DashboardComponent implements OnInit {
      private imageService: ImageService,
      private firebaseService: FirebaseService,
      private activatedRoute: ActivatedRoute,
+     private sanitizer: DomSanitizer,
+     private cdr: ChangeDetectorRef,
     
     ) {}
 
   async ngOnInit(): Promise<void> {
     this.user = this.authService.getCurrentUser();
+    //funcion apra que funcione el moussehover en el log
+(window as any).setHoveredAction = (value: string | null, event?: MouseEvent) => {
+  if (value && turnActionStyles[value as TurnActionType]) {
+    this.TurnActionLog = value;
+    this.TurnActionLogDescription = turnActionStyles[value as TurnActionType].description;
     
+    this.tooltipX = event?.clientX || 0;
+    this.tooltipY = event?.clientY || 0;
+  } else {
+    this.TurnActionLog = null;
+  }
+
+  this.cdr.detectChanges();
+};
+
+
    
     if (this.user) {
      
@@ -156,6 +181,8 @@ export class DashboardComponent implements OnInit {
               'iconos/add.png',
               'iconos/marco_pocion.png',
               'iconos/gold.png',
+              'iconos/diamonds.png',
+              'iconos/orb.png',
               'iconos/editCheck.png',
               'iconos/map_1.jpg',
               'iconos/map_2.jpg',
@@ -195,6 +222,8 @@ export class DashboardComponent implements OnInit {
       this.imageUrls['POCION1'] = this.imageService.getCachedImage('items/potion1.png')!;
       this.imageUrls['POCION2'] = this.imageService.getCachedImage('items/potion2.png')!;
       this.imageUrls['GOLD'] = this.imageService.getCachedImage('iconos/gold.png')!;
+      this.imageUrls['DIAMONDS'] = this.imageService.getCachedImage('iconos/diamonds.png')!;
+      this.imageUrls['ORB'] = this.imageService.getCachedImage('iconos/orb.png')!;
       this.imageUrls['EDIT'] = this.imageService.getCachedImage('iconos/editCheck.png')!;
       this.imageUrls['MAP1'] = this.imageService.getCachedImage('iconos/map_1.jpg')!;
       this.imageUrls['MAP2'] = this.imageService.getCachedImage('iconos/map_2.jpg')!;
@@ -538,7 +567,7 @@ if (this.pociones.length > 0) {
   
   changeHero(direction: 'next' | 'prev') {
     if (!this.hero || this.heroes.length === 0) return;
-    const currentIndex = this.heroes.findIndex(h => h.id === this.hero.id);
+    const currentIndex = this.heroes.findIndex(h => h.id === this.hero!.id);
     if (currentIndex === -1) return;
     let newIndex: number;
     if (direction === 'next') {
@@ -559,7 +588,7 @@ if (this.pociones.length > 0) {
     console.log("MAP: "+this.map)
   }
   changeHeroName(){
-    const heroReference = `${this.hero.id.toString().padStart(2, '0')}`;
+    const heroReference = `${this.hero!.id.toString().padStart(2, '0')}`;
     const data = {
       reference:heroReference,
       newName:this.heroNewname,
@@ -567,7 +596,7 @@ if (this.pociones.length > 0) {
     }
     this.firebaseService.changeHeroName(data).subscribe(
       (response) => {
-        console.log('✅ ', response.message),this.hero.name=this.heroNewname,this.getHerosData(false);
+        console.log('✅ ', response.message),this.hero!.name=this.heroNewname,this.getHerosData(false);
       },
       (error) => {
         console.error('❌ error al cambiar el nombre:', error);
@@ -606,6 +635,29 @@ if (this.pociones.length > 0) {
     const heroReference = `${battleHero.id.toString().padStart(2, '0')}`;
    this.firebaseService.battle(battleHero,battleHero.state[0] as EnemyType,this.user.email,heroReference).subscribe(
       async (response) => { 
+        const enumValues = Object.values(TurnActionType) as string[];
+        const regex = new RegExp(`\\b(${enumValues.join('|')})\\b`, 'g');
+
+        this.sanitizedLogDetail = this.sanitizer.bypassSecurityTrustHtml(
+          response.message
+            .replace(/\n/g, '<br>')
+            .replace(/Critico!!/g, '<span style="color:rgb(255, 76, 76);font-weight: bold;">Critico!!</span>')
+            .replace(/Evade!!/g, '<span style="color:rgb(132, 99, 253);font-weight: bold;">Evadido!!</span>')
+            .replace(regex, (_match: string, action: string) => {
+              return `<span style="color: #3b1e0f;cursor: pointer;background: #edb48b;border-radius: 8px;padding: 1px;font-size: 13px;padding-inline: 10px;" onmouseenter="setHoveredAction('${action}', event)"onmouseleave="setHoveredAction(null)">${action}</span>`;
+            })
+            .replace(/Turno (\d+):/g, (_match: string, turno: string) => {
+              const key = `TURNO ${turno}`;
+              return `<br><div style="text-align: center;"><span alt="Turno ${turno}" style="display: inline-block;position: relative;padding: 5px 100px;font-size: 18px; font-family: 'MedievalSharp', serif;color: #3b1e0f;background: linear-gradient(170deg, #874016, #f5cc98);border: 2px solid #3b1e0f;font-weight: bold;box-shadow: 0 4px 10px rgba(0,0,0,0.4);clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);z-index: 1;">${key}</span></div>`;
+            })  
+              //esto para incluir imagenes segun el turno.
+            /*.replace(/Turno (\d+):/g, (_match: string, turno: string) => {
+              const key = `POCION${turno}`;
+              const imgSrc = this.imageUrls[key] || '';
+              return `<br><img src="${imgSrc}" alt="Turno ${turno}" style="height: 30px;"><br>`;
+            })*/
+        );
+
         console.log('✅ BATTLE',response.message);
         console.log('REWARD',response.reward);
         
@@ -713,6 +765,7 @@ async showAddHeroGif(gifName: string) {
 }
 async showBattleGif(gifName: string) {
   this.gifBattleUrl = await this.imageService.getImageUrl(gifName);
+  this.gifState = this.gifBattleUrl;
   this.mostrarBattleGif = true;
   this.desapareciendo = false;
   if(this.enemyType!=null){this.disabledEnemies.delete(this.enemyType);this.enemyType = null;}
@@ -728,11 +781,19 @@ async exitBattleGif() {
   this.gifBattleUrl = null;
   this.getHerosData(false);
 }
+async logBattleGif() { 
+  this.gifBattleUrl = null;
+  this.getHerosData(false);
+}
+async rewardsBattleGif() { 
+  this.gifBattleUrl = this.gifState;
+  this.getHerosData(false);
+}
 
 equipHero(ranure: string, itemOld: string, itemNew: Item) {
   const data = {
     email: this.user.email,
-    hero: this.hero.id,
+    hero: this.hero!.id,
     ranure: ranure,
     itemOld: itemOld,
     itemNew: itemNew.ID,
@@ -744,7 +805,7 @@ equipHero(ranure: string, itemOld: string, itemNew: Item) {
     async (response) => {
       console.log('✅', response.equip);
       const updatedHeroes = await this.getHerosData(false);
-      const updatedHero = updatedHeroes.find(h => h.id === this.hero.id);
+      const updatedHero = updatedHeroes.find(h => h.id === this.hero!.id);
       if (updatedHero) {
         this.hero = updatedHero;
 
@@ -807,9 +868,9 @@ craftItem(itemAmount:number){
 
 startBattleTimer(enemy:EnemyType) {
   this.disabledEnemies.add(enemy);
-this.heroes[this.hero.ID as number-1].state[1]=100;
+this.heroes[this.hero!.ID as number-1].state[1]=100;
 this.enemyType = null;
- const heroReference = `${this.hero.id.toString().padStart(2, '0')}`;
+ const heroReference = `${this.hero!.id.toString().padStart(2, '0')}`;
  const data = {
       email: this.user.email,
       heroReference: heroReference,
@@ -892,7 +953,7 @@ getCraftTotal(price: number, selectedAmount: number): number {
   return unitPrice * selectedAmount;
 }
 changeHeroSkill(skillKey: 's1_skill1' | 's2_skill2' | 's3_skill3' | 's4_skill4' | 's5_skill5', newSkill: string): void {
-    const heroReference = `${this.hero.id.toString().padStart(2, '0')}`;
+    const heroReference = `${this.hero!.id.toString().padStart(2, '0')}`;
     const data = {
     reference:heroReference,
     email: this.user.email,
@@ -963,30 +1024,22 @@ getExpBarImage(actualExp:number, maxExp:number): string {
   else {return this.imageUrls['BARRA_exp_100'];}
 }
 checkBonus(item: Item){
-  console.log("se ha seleccionado un "+ item.subtype +" con un "+this.hero.type);
-  if (this.hero.bonus.includes(item.subtype)) {
+  console.log("se ha seleccionado un "+ item.subtype +" con un "+this.hero!.type);
+  if (this.hero!.bonus.includes(item.subtype)) {
     this.bonus = true;
-    console.log("SI debe aparecer el bonus");
-    //console.log("Bonus: "+item.bonusBenefits[0]+item.bonusBenefits[1]);
-    //console.log("Collateral: "+item.bonusCollateral[0]+item.bonusCollateral[1]);
+    //console.log("SI debe aparecer el bonus");
   }
   else {
     this.bonus = false;
-    console.log("NO debe aparecer el bonus");
-    //console.log("Bonus: "+item.bonusBenefits[0]+item.bonusBenefits[1]);
-    //console.log("Collateral: "+item.bonusCollateral[0]+item.bonusCollateral[1]);
+    //console.log("NO debe aparecer el bonus");
   }
-  if (this.hero.collateral.includes(item.subtype)) {
+  if (this.hero!.collateral.includes(item.subtype)) {
     this.collateral = true;
-    console.log("SI debe aparecer el collateral");
-    //console.log("Bonus: "+item.bonusBenefits[0]+item.bonusBenefits[1]);
-    //console.log("Collateral: "+item.bonusCollateral[0]+item.bonusCollateral[1]);
+    //console.log("SI debe aparecer el collateral");
   }
   else {
     this.collateral = false;
-    console.log("NO debe aparecer el collateral");
-    //console.log("Bonus: "+item.bonusBenefits[0]+item.bonusBenefits[1]);
-    //console.log("Collateral: "+item.bonusCollateral[0]+item.bonusCollateral[1]);
+    //console.log("NO debe aparecer el collateral");
   }
 
 }
@@ -1002,7 +1055,7 @@ usePotion(){
     if(this.pocion!=ItemType.NULL){
       console.log ("pocion usada: ", this.pocion);
       this.isLoadingPociones = true;
-    const heroReference = `${this.hero.id.toString().padStart(2, '0')}`;
+    const heroReference = `${this.hero!.id.toString().padStart(2, '0')}`;
     const data = {
       email:this.user.email,
       heroReference:heroReference,
@@ -1012,7 +1065,7 @@ usePotion(){
     this.firebaseService.usePotion(data).subscribe(
       async (response) => { console.log('Response:', response.message);
         const updatedHeroes = await this.getHerosData(false);
-      const updatedHero = updatedHeroes.find(h => h.id === this.hero.id);
+      const updatedHero = updatedHeroes.find(h => h.id === this.hero!.id);
       if (updatedHero) {
         this.hero = updatedHero;
         this.onHeroClick(this.hero);
@@ -1032,4 +1085,16 @@ usePotion(){
     
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
 }
