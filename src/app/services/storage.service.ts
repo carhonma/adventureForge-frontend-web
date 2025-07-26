@@ -9,9 +9,12 @@ export class StorageService {
 
   constructor() {}
 
-  // Obtener URL de una imagen específica
   async getImageUrl(folder: string, imageName: string): Promise<string> {
     const imageRef = ref(this.storage, `${folder}/${imageName}`);
     return await getDownloadURL(imageRef);
+  }
+  async getSoundUrl(folder: string, soundName: string): Promise<string> {
+    const audioRef = ref(this.storage,  `${folder}/${soundName}`); // ruta en Firebase Storage
+    return await getDownloadURL(audioRef);
   }
 }

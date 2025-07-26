@@ -1,12 +1,12 @@
 
 <div class="dashboard">
-  <button  class="normal-button btn-home"(click)="onMainClipClick('clipHo')"style="position: absolute">
+  <button  class="normal-button btn-home"(click)="playButtonSound();onMainClipClick('clipHo')"style="position: absolute">
     <div class="image-container" style="position: relative; display: inline-block;">
       <img class="background-image" style="max-width: 250px; display: block;"[src]="this.imageUrls['BOTON_madera_8']"alt="start"/>
       <div class="overlay-text"style="position: absolute;left: 80px;font-weight: bold;">HOME</div>
     </div>
   </button>
-  <button  class="normal-button btn-storage"(click)="onMainClipClick('clipSto')"style="position: absolute;">
+  <button  class="normal-button btn-storage"(click)="playButtonSound();onMainClipClick('clipSto')"style="position: absolute;">
     <div class="image-container" style="position: relative; display: inline-block;">
       <img class="background-image" style="max-width: 250px; display: block;"[src]="this.imageUrls['BOTON_madera_8']"alt="start"/>
       <div class="overlay-text"style="position: absolute;left:80px;font-weight: bold;">STORAGE</div>
@@ -23,7 +23,7 @@
     <div class="main-content-row">
       
       <div *ngIf="state == 'heroDetails'" class="big-left-div">
-        <div class="characterName" style="z-index: 1;">
+        <div class="characterName" style="z-index: 1;"[ngStyle]="{'border': '8px ridge ' + (hero!.type ? heroBackground : '#f9f9f9'), 'background-color': hero!.type ? heroBackground : '#f9f9f9' }">
           <div [ngClass]="{ 'spark-container': true, 'shine-effect': showNameShine }" style="width: 100%;background-color: #7066615d;border-radius: 7px;">
             <input
               type="text"
@@ -605,7 +605,7 @@
             <img style="max-height: 50px;" [src]="this.imageUrls['BOTON_madera_4']" alt="left"/>
           </div>
         </button>
-        <button [disabled]="hero!.actualLife == 0" class="normal-button" (click)="onBattleClick(hero!)"style="height: 80px"> 
+        <button [disabled]="hero!.actualLife == 0" class="normal-button" (click)="playButtonSound();onBattleClick(hero!)"style="height: 80px"> 
           <div class="image-container">
             <img class="background-image" style="max-width: 250px;" [src]="this.imageUrls['BOTON_madera_8']" alt="start"/>
             <div class="overlay-text">START BATTLE</div>
@@ -885,7 +885,7 @@
 
 <!-- BOTONERA -->
       <div *ngIf="enemyType != null" class="botonera1" style="margin-top: 15px;z-index: -1;">
-        <button class="normal-button btn-startbattle" [disabled]="hero!.state[1] !=''" (click)="startBattleTimer(enemyType!)"style="height: 80px"> 
+        <button class="normal-button btn-startbattle" [disabled]="hero!.state[1] !=''" (click)="playButtonSound();startBattleTimer(enemyType!)"style="height: 80px"> 
           <div class="image-container">
             <img class="background-image" style="max-width: 250px;" [src]="this.imageUrls['BOTON_madera_8']" alt="start"/>
             <div class="overlay-text" >START BATTLE</div>
@@ -933,73 +933,73 @@
             <img [src]="enemyStyles[EnemyType.ENT1_UP2].missionIcon"alt="mission ENT1_UP2"style="width: 80px; height: 80px;" />
           </button>
 
-          <button  *ngIf="userMap1[3] % 10 !== 0 || userMap1[3] === 0" class="map-button"(click)="onEnemyClick(EnemyType.JABALI1)"[disabled]="hero!.level<2 || disabledEnemies.has(EnemyType.JABALI1) || disabledEnemies.has(EnemyType.JABALI1) || disabledEnemies.has(EnemyType.JABALI1)"style="top: 52%; left: 50%;z-index: 1;">
+          <button  *ngIf="userMap1[3] % 10 !== 0 || userMap1[3] === 0" class="map-button"(click)="onEnemyClick(EnemyType.JABALI1)"[disabled]="hero!.level<2 || disabledEnemies.has(EnemyType.JABALI1) || disabledEnemies.has(EnemyType.JABALI1_UP1) || disabledEnemies.has(EnemyType.JABALI1_UP2)"style="top: 52%; left: 50%;z-index: 1;">
             <img [src]="enemyStyles[EnemyType.JABALI1].missionIcon"alt="mission JABALI1"style="width: 80px; height: 80px;" />
           </button>
-          <button *ngIf="userMap1[3] !== 0 && userMap1[3] % 50 !== 0 && userMap1[3] % 10 === 0"class="map-button-up1"(click)="onEnemyClick(EnemyType.JABALI1_UP1)"[disabled]="hero!.level<2 || disabledEnemies.has(EnemyType.JABALI1) || disabledEnemies.has(EnemyType.JABALI1) || disabledEnemies.has(EnemyType.JABALI1)"style="top: 52%; left: 50%; z-index: 2;">
+          <button *ngIf="userMap1[3] !== 0 && userMap1[3] % 50 !== 0 && userMap1[3] % 10 === 0"class="map-button-up1"(click)="onEnemyClick(EnemyType.JABALI1_UP1)"[disabled]="hero!.level<2 || disabledEnemies.has(EnemyType.JABALI1) || disabledEnemies.has(EnemyType.JABALI1_UP1) || disabledEnemies.has(EnemyType.JABALI1_UP2)"style="top: 52%; left: 50%; z-index: 2;">
             <img [src]="enemyStyles[EnemyType.JABALI1_UP1].missionIcon"alt="mission JABALI1_UP1"style="width: 80px; height: 80px;" />
           </button>
-          <button *ngIf="userMap1[3] !== 0 && userMap1[3] % 50 === 0"class="map-button-up2"(click)="onEnemyClick(EnemyType.JABALI1_UP2)"[disabled]="hero!.level<2 || disabledEnemies.has(EnemyType.JABALI1) || disabledEnemies.has(EnemyType.JABALI1) || disabledEnemies.has(EnemyType.JABALI1)"style="top: 52%; left: 50%; z-index: 3;">
+          <button *ngIf="userMap1[3] !== 0 && userMap1[3] % 50 === 0"class="map-button-up2"(click)="onEnemyClick(EnemyType.JABALI1_UP2)"[disabled]="hero!.level<2 || disabledEnemies.has(EnemyType.JABALI1) || disabledEnemies.has(EnemyType.JABALI1_UP1) || disabledEnemies.has(EnemyType.JABALI1_UP2)"style="top: 52%; left: 50%; z-index: 3;">
             <img [src]="enemyStyles[EnemyType.JABALI1_UP2].missionIcon"alt="mission JABALI1_UP2"style="width: 80px; height: 80px;" />
           </button>
 
-          <button  *ngIf="userMap1[4] % 10 !== 0 || userMap1[4] === 0" class="map-button"(click)="onEnemyClick(EnemyType.JABALI2)"[disabled]="hero!.level<2 || disabledEnemies.has(EnemyType.JABALI2) || disabledEnemies.has(EnemyType.JABALI2) || disabledEnemies.has(EnemyType.JABALI2)"style="top: 41%; left: 80%;z-index: 1;">
+          <button  *ngIf="userMap1[4] % 10 !== 0 || userMap1[4] === 0" class="map-button"(click)="onEnemyClick(EnemyType.JABALI2)"[disabled]="hero!.level<2 || disabledEnemies.has(EnemyType.JABALI2) || disabledEnemies.has(EnemyType.JABALI2_UP1) || disabledEnemies.has(EnemyType.JABALI2_UP2)"style="top: 41%; left: 80%;z-index: 1;">
             <img [src]="enemyStyles[EnemyType.JABALI2].missionIcon"alt="mission JABALI2"style="width: 80px; height: 80px;" />
           </button>
-          <button *ngIf="userMap1[4] !== 0 && userMap1[4] % 50 !== 0 && userMap1[4] % 10 === 0"class="map-button-up1"(click)="onEnemyClick(EnemyType.JABALI2_UP1)"[disabled]="hero!.level<2 || disabledEnemies.has(EnemyType.JABALI2) || disabledEnemies.has(EnemyType.JABALI2) || disabledEnemies.has(EnemyType.JABALI2)"style="top: 41%; left: 80%; z-index: 2;">
+          <button *ngIf="userMap1[4] !== 0 && userMap1[4] % 50 !== 0 && userMap1[4] % 10 === 0"class="map-button-up1"(click)="onEnemyClick(EnemyType.JABALI2_UP1)"[disabled]="hero!.level<2 || disabledEnemies.has(EnemyType.JABALI2) || disabledEnemies.has(EnemyType.JABALI2_UP1) || disabledEnemies.has(EnemyType.JABALI2_UP2)"style="top: 41%; left: 80%; z-index: 2;">
             <img [src]="enemyStyles[EnemyType.JABALI2_UP1].missionIcon"alt="mission JABALI2_UP1"style="width: 80px; height: 80px;" />
           </button>
-          <button *ngIf="userMap1[4] !== 0 && userMap1[4] % 50 === 0"class="map-button-up2"(click)="onEnemyClick(EnemyType.JABALI2_UP2)"[disabled]="hero!.level<2 || disabledEnemies.has(EnemyType.JABALI2) || disabledEnemies.has(EnemyType.JABALI2) || disabledEnemies.has(EnemyType.JABALI2)"style="top: 41%; left: 80%; z-index: 3;">
+          <button *ngIf="userMap1[4] !== 0 && userMap1[4] % 50 === 0"class="map-button-up2"(click)="onEnemyClick(EnemyType.JABALI2_UP2)"[disabled]="hero!.level<2 || disabledEnemies.has(EnemyType.JABALI2) || disabledEnemies.has(EnemyType.JABALI2_UP1) || disabledEnemies.has(EnemyType.JABALI2_UP2)"style="top: 41%; left: 80%; z-index: 3;">
             <img [src]="enemyStyles[EnemyType.JABALI2_UP2].missionIcon"alt="mission JABALI2_UP2"style="width: 80px; height: 80px;" />
           </button>
 
-          <button  *ngIf="userMap1[5] % 10 !== 0 || userMap1[5] === 0" class="map-button"(click)="onEnemyClick(EnemyType.JABALI3)"[disabled]="hero!.level<3 || disabledEnemies.has(EnemyType.JABALI3) || disabledEnemies.has(EnemyType.JABALI3) || disabledEnemies.has(EnemyType.JABALI3)"style="top: 30%; left: 30%;z-index: 1;">
+          <button  *ngIf="userMap1[5] % 10 !== 0 || userMap1[5] === 0" class="map-button"(click)="onEnemyClick(EnemyType.JABALI3)"[disabled]="hero!.level<3 || disabledEnemies.has(EnemyType.JABALI3) || disabledEnemies.has(EnemyType.JABALI3_UP1) || disabledEnemies.has(EnemyType.JABALI3_UP2)"style="top: 30%; left: 30%;z-index: 1;">
             <img [src]="enemyStyles[EnemyType.JABALI3].missionIcon"alt="mission JABALI3"style="width: 80px; height: 80px;" />
           </button>
-          <button *ngIf="userMap1[5] !== 0 && userMap1[5] % 50 !== 0 && userMap1[5] % 10 === 0"class="map-button-up1"(click)="onEnemyClick(EnemyType.JABALI3_UP1)"[disabled]="hero!.level<3 || disabledEnemies.has(EnemyType.JABALI3) || disabledEnemies.has(EnemyType.JABALI3) || disabledEnemies.has(EnemyType.JABALI3)"style="top: 30%; left: 30%; z-index: 2;">
+          <button *ngIf="userMap1[5] !== 0 && userMap1[5] % 50 !== 0 && userMap1[5] % 10 === 0"class="map-button-up1"(click)="onEnemyClick(EnemyType.JABALI3_UP1)"[disabled]="hero!.level<3 || disabledEnemies.has(EnemyType.JABALI3) || disabledEnemies.has(EnemyType.JABALI3_UP1) || disabledEnemies.has(EnemyType.JABALI3_UP2)"style="top: 30%; left: 30%; z-index: 2;">
             <img [src]="enemyStyles[EnemyType.JABALI3_UP1].missionIcon"alt="mission JABALI3_UP1"style="width: 80px; height: 80px;" />
           </button>
-          <button *ngIf="userMap1[5] !== 0 && userMap1[5] % 50 === 0"class="map-button-up2"(click)="onEnemyClick(EnemyType.JABALI3_UP2)"[disabled]="hero!.level<3 || disabledEnemies.has(EnemyType.JABALI3) || disabledEnemies.has(EnemyType.JABALI3) || disabledEnemies.has(EnemyType.JABALI3)"style="top: 30%; left: 30%; z-index: 3;">
+          <button *ngIf="userMap1[5] !== 0 && userMap1[5] % 50 === 0"class="map-button-up2"(click)="onEnemyClick(EnemyType.JABALI3_UP2)"[disabled]="hero!.level<3 || disabledEnemies.has(EnemyType.JABALI3) || disabledEnemies.has(EnemyType.JABALI3_UP1) || disabledEnemies.has(EnemyType.JABALI3_UP2)"style="top: 30%; left: 30%; z-index: 3;">
             <img [src]="enemyStyles[EnemyType.JABALI3_UP2].missionIcon"alt="mission JABALI3_UP2"style="width: 80px; height: 80px;" />
           </button>
 
-          <button  *ngIf="userMap1[6] % 10 !== 0 || userMap1[6] === 0" class="map-button"(click)="onEnemyClick(EnemyType.JABALI4)"[disabled]="hero!.level<4 || disabledEnemies.has(EnemyType.JABALI4) || disabledEnemies.has(EnemyType.JABALI4) || disabledEnemies.has(EnemyType.JABALI4)"style="top: 19%; left: 70%;z-index: 1;">
+          <button  *ngIf="userMap1[6] % 10 !== 0 || userMap1[6] === 0" class="map-button"(click)="onEnemyClick(EnemyType.JABALI4)"[disabled]="hero!.level<4 || disabledEnemies.has(EnemyType.JABALI4) || disabledEnemies.has(EnemyType.JABALI4_UP1) || disabledEnemies.has(EnemyType.JABALI4_UP2)"style="top: 19%; left: 70%;z-index: 1;">
             <img [src]="enemyStyles[EnemyType.JABALI4].missionIcon"alt="mission JABALI4"style="width: 80px; height: 80px;" />
           </button>
-          <button *ngIf="userMap1[6] !== 0 && userMap1[6] % 50 !== 0 && userMap1[6] % 10 === 0"class="map-button-up1"(click)="onEnemyClick(EnemyType.JABALI4_UP1)"[disabled]="hero!.level<4 || disabledEnemies.has(EnemyType.JABALI4) || disabledEnemies.has(EnemyType.JABALI4) || disabledEnemies.has(EnemyType.JABALI4)"style="top: 19%; left: 70%; z-index: 2;">
+          <button *ngIf="userMap1[6] !== 0 && userMap1[6] % 50 !== 0 && userMap1[6] % 10 === 0"class="map-button-up1"(click)="onEnemyClick(EnemyType.JABALI4_UP1)"[disabled]="hero!.level<4 || disabledEnemies.has(EnemyType.JABALI4) || disabledEnemies.has(EnemyType.JABALI4_UP1) || disabledEnemies.has(EnemyType.JABALI4_UP2)"style="top: 19%; left: 70%; z-index: 2;">
             <img [src]="enemyStyles[EnemyType.JABALI4_UP1].missionIcon"alt="mission JABALI4_UP1"style="width: 80px; height: 80px;" />
           </button>
-          <button *ngIf="userMap1[6] !== 0 && userMap1[6] % 50 === 0"class="map-button-up2"(click)="onEnemyClick(EnemyType.JABALI4_UP2)"[disabled]="hero!.level<4 || disabledEnemies.has(EnemyType.JABALI4) || disabledEnemies.has(EnemyType.JABALI4) || disabledEnemies.has(EnemyType.JABALI4)"style="top: 19%; left: 70%; z-index: 3;">
+          <button *ngIf="userMap1[6] !== 0 && userMap1[6] % 50 === 0"class="map-button-up2"(click)="onEnemyClick(EnemyType.JABALI4_UP2)"[disabled]="hero!.level<4 || disabledEnemies.has(EnemyType.JABALI4) || disabledEnemies.has(EnemyType.JABALI4_UP1) || disabledEnemies.has(EnemyType.JABALI4_UP2)"style="top: 19%; left: 70%; z-index: 3;">
             <img [src]="enemyStyles[EnemyType.JABALI4_UP2].missionIcon"alt="mission JABALI4_UP2"style="width: 80px; height: 80px;" />
           </button>
 
-          <button  *ngIf="userMap1[7] % 10 !== 0 || userMap1[7] === 0" class="map-button"(click)="onEnemyClick(EnemyType.JABALI5)"[disabled]="hero!.level<6 || disabledEnemies.has(EnemyType.JABALI5) || disabledEnemies.has(EnemyType.JABALI5) || disabledEnemies.has(EnemyType.JABALI5)"style="top: 8%; left: 20%;z-index: 1;">
+          <button  *ngIf="userMap1[7] % 10 !== 0 || userMap1[7] === 0" class="map-button"(click)="onEnemyClick(EnemyType.JABALI5)"[disabled]="hero!.level<6 || disabledEnemies.has(EnemyType.JABALI5) || disabledEnemies.has(EnemyType.JABALI5_UP1) || disabledEnemies.has(EnemyType.JABALI5_UP2)"style="top: 8%; left: 20%;z-index: 1;">
             <img [src]="enemyStyles[EnemyType.JABALI5].missionIcon"alt="mission JABALI5"style="width: 80px; height: 80px;" />
           </button>
-          <button *ngIf="userMap1[7] !== 0 && userMap1[7] % 50 !== 0 && userMap1[7] % 10 === 0"class="map-button-up1"(click)="onEnemyClick(EnemyType.JABALI5_UP1)"[disabled]="hero!.level<6 || disabledEnemies.has(EnemyType.JABALI5) || disabledEnemies.has(EnemyType.JABALI5) || disabledEnemies.has(EnemyType.JABALI5)"style="top: 8%; left: 20%; z-index: 2;">
+          <button *ngIf="userMap1[7] !== 0 && userMap1[7] % 50 !== 0 && userMap1[7] % 10 === 0"class="map-button-up1"(click)="onEnemyClick(EnemyType.JABALI5_UP1)"[disabled]="hero!.level<6 || disabledEnemies.has(EnemyType.JABALI5) || disabledEnemies.has(EnemyType.JABALI5_UP1) || disabledEnemies.has(EnemyType.JABALI5_UP2)"style="top: 8%; left: 20%; z-index: 2;">
             <img [src]="enemyStyles[EnemyType.JABALI5_UP1].missionIcon"alt="mission JABALI5_UP1"style="width: 80px; height: 80px;" />
           </button>
-          <button *ngIf="userMap1[7] !== 0 && userMap1[7] % 50 === 0"class="map-button-up2"(click)="onEnemyClick(EnemyType.JABALI5_UP2)"[disabled]="hero!.level<6 || disabledEnemies.has(EnemyType.JABALI5) || disabledEnemies.has(EnemyType.JABALI5) || disabledEnemies.has(EnemyType.JABALI5)"style="top: 8%; left: 20%; z-index: 3;">
+          <button *ngIf="userMap1[7] !== 0 && userMap1[7] % 50 === 0"class="map-button-up2"(click)="onEnemyClick(EnemyType.JABALI5_UP2)"[disabled]="hero!.level<6 || disabledEnemies.has(EnemyType.JABALI5) || disabledEnemies.has(EnemyType.JABALI5_UP1) || disabledEnemies.has(EnemyType.JABALI5_UP2)"style="top: 8%; left: 20%; z-index: 3;">
             <img [src]="enemyStyles[EnemyType.JABALI5_UP2].missionIcon"alt="mission JABALI5_UP2"style="width: 80px; height: 80px;" />
           </button>
 
-          <button  *ngIf="userMap1[8] % 10 !== 0 || userMap1[8] === 0" class="map-button"(click)="onEnemyClick(EnemyType.JABALI6)"[disabled]="hero!.level<8 || disabledEnemies.has(EnemyType.JABALI6) || disabledEnemies.has(EnemyType.JABALI6) || disabledEnemies.has(EnemyType.JABALI6)"style="top: -3%; left: 80%;z-index: 1;">
+          <button  *ngIf="userMap1[8] % 10 !== 0 || userMap1[8] === 0" class="map-button"(click)="onEnemyClick(EnemyType.JABALI6)"[disabled]="hero!.level<8 || disabledEnemies.has(EnemyType.JABALI6) || disabledEnemies.has(EnemyType.JABALI6_UP1) || disabledEnemies.has(EnemyType.JABALI6_UP2)"style="top: -3%; left: 80%;z-index: 1;">
             <img [src]="enemyStyles[EnemyType.JABALI6].missionIcon"alt="mission JABALI6"style="width: 80px; height: 80px;" />
           </button>
-          <button *ngIf="userMap1[8] !== 0 && userMap1[8] % 50 !== 0 && userMap1[8] % 10 === 0"class="map-button-up1"(click)="onEnemyClick(EnemyType.JABALI6_UP1)"[disabled]="hero!.level<8 || disabledEnemies.has(EnemyType.JABALI6) || disabledEnemies.has(EnemyType.JABALI6) || disabledEnemies.has(EnemyType.JABALI6)"style="top: -3%; left: 80%; z-index: 2;">
+          <button *ngIf="userMap1[8] !== 0 && userMap1[8] % 50 !== 0 && userMap1[8] % 10 === 0"class="map-button-up1"(click)="onEnemyClick(EnemyType.JABALI6_UP1)"[disabled]="hero!.level<8 || disabledEnemies.has(EnemyType.JABALI6) || disabledEnemies.has(EnemyType.JABALI6_UP1) || disabledEnemies.has(EnemyType.JABALI6_UP2)"style="top: -3%; left: 80%; z-index: 2;">
             <img [src]="enemyStyles[EnemyType.JABALI6_UP1].missionIcon"alt="mission JABALI6_UP1"style="width: 80px; height: 80px;" />
           </button>
-          <button *ngIf="userMap1[8] !== 0 && userMap1[8] % 50 === 0"class="map-button-up2"(click)="onEnemyClick(EnemyType.JABALI6_UP2)"[disabled]="hero!.level<8 || disabledEnemies.has(EnemyType.JABALI6) || disabledEnemies.has(EnemyType.JABALI6) || disabledEnemies.has(EnemyType.JABALI6)"style="top: -3%; left: 80%; z-index: 3;">
+          <button *ngIf="userMap1[8] !== 0 && userMap1[8] % 50 === 0"class="map-button-up2"(click)="onEnemyClick(EnemyType.JABALI6_UP2)"[disabled]="hero!.level<8 || disabledEnemies.has(EnemyType.JABALI6) || disabledEnemies.has(EnemyType.JABALI6_UP1) || disabledEnemies.has(EnemyType.JABALI6_UP2)"style="top: -3%; left: 80%; z-index: 3;">
             <img [src]="enemyStyles[EnemyType.JABALI6_UP2].missionIcon"alt="mission JABALI6_UP2"style="width: 80px; height: 80px;" />
           </button>
 
-          <button  *ngIf="userMap1[9] % 10 !== 0 || userMap1[9] === 0" class="map-button"(click)="onEnemyClick(EnemyType.JABALI7)"[disabled]="hero!.level<10 || disabledEnemies.has(EnemyType.JABALI7) || disabledEnemies.has(EnemyType.JABALI7) || disabledEnemies.has(EnemyType.JABALI7)"style="top: -15%; left: 50%;z-index: 1;">
+          <button  *ngIf="userMap1[9] % 10 !== 0 || userMap1[9] === 0" class="map-button"(click)="onEnemyClick(EnemyType.JABALI7)"[disabled]="hero!.level<10 || disabledEnemies.has(EnemyType.JABALI7) || disabledEnemies.has(EnemyType.JABALI7_UP1) || disabledEnemies.has(EnemyType.JABALI7_UP2)"style="top: -15%; left: 50%;z-index: 1;">
             <img [src]="enemyStyles[EnemyType.JABALI7].missionIcon"alt="mission JABALI7"style="width: 80px; height: 80px;" />
           </button>
-          <button *ngIf="userMap1[9] !== 0 && userMap1[9] % 50 !== 0 && userMap1[9] % 10 === 0"class="map-button-up1"(click)="onEnemyClick(EnemyType.JABALI7_UP1)"[disabled]="hero!.level<10 || disabledEnemies.has(EnemyType.JABALI7) || disabledEnemies.has(EnemyType.JABALI7) || disabledEnemies.has(EnemyType.JABALI7)"style="top: -15%; left: 50%; z-index: 2;">
+          <button *ngIf="userMap1[9] !== 0 && userMap1[9] % 50 !== 0 && userMap1[9] % 10 === 0"class="map-button-up1"(click)="onEnemyClick(EnemyType.JABALI7_UP1)"[disabled]="hero!.level<10 || disabledEnemies.has(EnemyType.JABALI7) || disabledEnemies.has(EnemyType.JABALI7_UP1) || disabledEnemies.has(EnemyType.JABALI7_UP2)"style="top: -15%; left: 50%; z-index: 2;">
             <img [src]="enemyStyles[EnemyType.JABALI7_UP1].missionIcon"alt="mission JABALI7_UP1"style="width: 80px; height: 80px;" />
           </button>
-          <button *ngIf="userMap1[9] !== 0 && userMap1[9] % 50 === 0"class="map-button-up2"(click)="onEnemyClick(EnemyType.JABALI7_UP2)"[disabled]="hero!.level<10 || disabledEnemies.has(EnemyType.JABALI7) || disabledEnemies.has(EnemyType.JABALI7) || disabledEnemies.has(EnemyType.JABALI7)"style="top: -15%; left: 50%; z-index: 3;">
+          <button *ngIf="userMap1[9] !== 0 && userMap1[9] % 50 === 0"class="map-button-up2"(click)="onEnemyClick(EnemyType.JABALI7_UP2)"[disabled]="hero!.level<10 || disabledEnemies.has(EnemyType.JABALI7) || disabledEnemies.has(EnemyType.JABALI7_UP1) || disabledEnemies.has(EnemyType.JABALI7_UP2)"style="top: -15%; left: 50%; z-index: 3;">
             <img [src]="enemyStyles[EnemyType.JABALI7_UP2].missionIcon"alt="mission JABALI7_UP2"style="width: 80px; height: 80px;" />
           </button>
       </div>
@@ -1054,25 +1054,25 @@
       </button>
 
       <!-- Botón debajo -->
-       <button *ngIf="enemyType" class="normal-button btn-loot"(click)="onClipClick('clipLoo')"style="position: absolute; top: 20px; left: 0;">
+       <button *ngIf="enemyType" class="normal-button btn-loot"(click)="playButtonSound();onClipClick('clipLoo')"style="position: absolute; top: 20px; left: 0;">
           <div class="image-container" style="position: relative; display: inline-block;">
             <img class="background-image" style="max-width: 250px; display: block;"[src]="this.imageUrls['BOTON_madera_8']"alt="start"/>
             <div class="overlay-text"style="position: absolute;left: 180px;font-weight: bold;">LOOT</div>
           </div>
         </button>
-        <button *ngIf="enemyType" class="normal-button btn-stats"(click)="onClipClick('clipSta')"style="position: absolute; top: 20px; left: 0;">
+        <button *ngIf="enemyType" class="normal-button btn-stats"(click)="playButtonSound();onClipClick('clipSta')"style="position: absolute; top: 20px; left: 0;">
           <div class="image-container" style="position: relative; display: inline-block;">
             <img class="background-image" style="max-width: 250px; display: block;"[src]="this.imageUrls['BOTON_madera_8']"alt="start"/>
             <div class="overlay-text"style="position: absolute;left: 180px;font-weight: bold;">ENEMY</div>
           </div>
         </button>
-        <button *ngIf="enemyType" class="normal-button btn-desc"(click)="onClipClick('clipDe')"style="position: absolute; top: 20px;; left: 0px;;">
+        <button *ngIf="enemyType" class="normal-button btn-desc"(click)="playButtonSound();onClipClick('clipDe')"style="position: absolute; top: 20px;; left: 0px;;">
           <div class="image-container" style="position: relative; display: inline-block;">
             <img class="background-image" style="max-width: 250px; display: block;"[src]="this.imageUrls['BOTON_madera_8']"alt="start"/>
             <div class="overlay-text"style="position: absolute;left: 170px;font-weight: bold">HERO</div>
           </div>
         </button>
-        <button *ngIf="enemyType" class="normal-button btn-battle"(click)="onClipClick('clipBa')"style="position: absolute; top: 20px;; left: 0px;">
+        <button *ngIf="enemyType" class="normal-button btn-battle"(click)="playButtonSound();onClipClick('clipBa')"style="position: absolute; top: 20px;; left: 0px;">
           <div class="image-container" style="position: relative; display: inline-block;">
             <img class="background-image" style="max-width: 250px; display: block;"[src]="this.imageUrls['BOTON_madera_8']"alt="start"/>
             <div class="overlay-text"style="position: absolute;left: 180px;font-weight: bold;">BATTLE</div>
@@ -1118,19 +1118,19 @@
 
                                       <!-- Botonera -->
     <div class="botonera1" style="margin-top: 10px; display: flex; gap: 10px;height: fit-content;padding: 5px;">
-      <button *ngIf="gifBattleUrl" class="normal-button btn-startbattle" (click)="logBattleGif()"> 
+      <button *ngIf="gifBattleUrl" class="normal-button btn-startbattle" (click)="playButtonSound();logBattleGif()"> 
         <div class="image-container">
           <img class="background-image" style="max-width: 150px;" [src]="imageUrls['BOTON_madera_8']" alt="log" />
           <div class="overlay-text" style="font-size: 12px;">LOG</div>
         </div>
       </button>
-      <button *ngIf="!gifBattleUrl" class="normal-button btn-startbattle" (click)="rewardsBattleGif()"> 
+      <button *ngIf="!gifBattleUrl" class="normal-button btn-startbattle" (click)="playButtonSound();rewardsBattleGif()"> 
         <div class="image-container">
           <img class="background-image" style="max-width: 150px;" [src]="imageUrls['BOTON_madera_8']" alt="rewards" />
           <div class="overlay-text" style="font-size: 12px;">Rewards</div>
         </div>
       </button>
-      <button class="normal-button btn-startbattle" (click)="exitBattleGif()"> 
+      <button class="normal-button btn-startbattle" (click)="playButtonSound();exitBattleGif()"> 
         <div class="image-container">
           <img class="background-image" style="max-width: 150px;" [src]="imageUrls['BOTON_madera_8']" alt="exit" />
           <div class="overlay-text" style="font-size: 12px;">EXIT</div>
@@ -1145,7 +1145,7 @@
   <div *ngIf="state == 'itemDetails'"class="left-section" style="padding: 10px;">
     <!--Preference 1-->
     <div *ngIf="mainClip == 'clipSto' && !preference_storage"style="width: 127%; max-height: 626px; overflow-y: auto; padding: 10px; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr 1fr 1fr; gap: 10px; background-color: #966e64d2; border: 4px solid #5c3a1e; border-radius: 12px; box-shadow: inset 0 0 10px #3b1e0f; align-items: stretch;">
-      <div *ngFor="let item of items"class="skillButton-container" style="position: relative;width: 110px;height: 110px;aspect-ratio: 1;background-color: #f8d3bd;border: 3px solid #3b1e0f;border-radius: 8px;box-shadow: 2px 2px 5px #00000066;display: flex;align-items: center;justify-content: center;cursor: pointer;"(click)="onItemClick(item)">
+      <div *ngFor="let item of items"class="skillButton-container" style="position: relative;width: 110px;height: 110px;aspect-ratio: 1;background-color: #f8d3bd;border: 3px solid #3b1e0f;border-radius: 8px;box-shadow: 2px 2px 5px #00000066;display: flex;align-items: center;justify-content: center;cursor: pointer;"(click)="playButtonSound();onItemClick(item)">
         <!-- Icono del ítem, grado y cantidad-->
         <img [src]="item.icon" [alt]="item.name" style="width: 110px;height: 110px;border-radius: 8px; z-index: 1;" />
         <img [src]="gradeStyles[item.grade].icon"[alt]="item.grade" style="z-index: 3;position: absolute;width: 30px;height: 30px;bottom: 5px;left: 5px;background-color: #e7a78a;border-radius: 50%;border: 2px solid #2e0b02;"/>
@@ -1167,7 +1167,7 @@
     </div>
     <!--Preference 2-->
     <div *ngIf="mainClip == 'clipSto'&& preference_storage"style="width: 127%; max-height: 626px; overflow-y: auto; padding: 10px; display: grid; grid-template-columns: 1fr; grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; gap: 10px; background-color: #966e64d2; border: 4px solid #5c3a1e; border-radius: 12px; box-shadow: inset 0 0 10px #3b1e0f; align-items: stretch;">
-      <div *ngFor="let item of items"class="button-wrapper" (click)="onItemClick(item)">
+      <div *ngFor="let item of items"class="button-wrapper" (click)="playButtonSound();onItemClick(item)">
         <!-- Icono del ítem y bonificaciones-->
         <button class="hero-button" style="width: 100%; padding: 0; box-shadow: 1px 1px 10px #130401fd;">
           <div class="button-content" style="align-items: center;">
@@ -1227,7 +1227,7 @@
         <input type="range"min="1"[max]="item.amount"[(ngModel)]="selectedAmount" style="width: 100%;height: 10px;margin-top: 40px; background: linear-gradient(to right, #a0522d, #8b4513);border: 2px solid #3b1e0f;border-radius: 8px; outline: none;accent-color: #5c3a1e;box-shadow: 0 0 5px #3b1e0f;"/>
       </div>
       <!-- Botón de venta -->
-      <button *ngIf="item != null" class="normal-button" style="width: 200px; height: 80px;" (click)="onSellItemClick(item)">
+      <button *ngIf="item != null" class="normal-button" style="width: 200px; height: 80px;" (click)="playButtonSound();onSellItemClick(item)">
         <div class="image-container" style="width: 200px;">
           <img class="background-image"[src]="this.imageUrls['BOTON_madera_8']"alt="start" style="width: 180px;"/>
           <div class="overlay-text">SELL</div>
@@ -1239,7 +1239,7 @@
 <!--CrafterDetails-->
   <div *ngIf="state == 'crafterDetails'"class="left-section" style="padding: 10px; gap:0px">
     <div *ngIf="mainClip == 'clipSto'"style="width: 127%; max-height: 626px; overflow-y: auto; padding: 10px; display: grid; grid-template-columns: 1fr; grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; gap: 10px; background-color: #966e64d2; border: 4px solid #5c3a1e; border-radius: 12px; box-shadow: inset 0 0 10px #3b1e0f; align-items: stretch;">
-      <div *ngFor="let item of itemsToCraft"class="button-wrapper" (click)="onItemClick(item)">
+      <div *ngFor="let item of itemsToCraft"class="button-wrapper" (click)="playButtonSound();onItemClick(item)">
         <!-- Icono del ítem y bonificaciones-->
         <button class="hero-button" style="width: 100%; padding: 0; box-shadow: 1px 1px 10px #130401fd;">
           <div class="button-content" style="align-items: center;">
@@ -1343,7 +1343,7 @@
         <input type="range"min="1"[max]="10"[(ngModel)]="selectedAmount"(ngModelChange)="checkItemRequirements(item)" style="width: 100%;height: 10px;background: linear-gradient(to right, #a0522d, #8b4513);border: 2px solid #3b1e0f;border-radius: 8px; outline: none;accent-color: #5c3a1e;box-shadow: 0 0 5px #3b1e0f;"/>
       </div>
       <!-- Botón de crafteo -->
-      <button *ngIf="item != null"[disabled]="!item1Have || !item2Have || !item3Have || gold < item.price/10 " class="normal-button" style="width: 200px; height: 80px;"(click)="craftItem(selectedAmount)">
+      <button *ngIf="item != null"[disabled]="!item1Have || !item2Have || !item3Have || gold < item.price/10 " class="normal-button" style="width: 200px; height: 80px;"(click)="playButtonSound();craftItem(selectedAmount)">
         <div class="image-container" style="width: 200px;">
           <img class="background-image"[src]="this.imageUrls['BOTON_madera_8']"alt="start" style="width: 180px;"/>
           <div class="overlay-text">CRAFT</div>
@@ -1394,12 +1394,12 @@
 <button
   *ngIf="hero!.state[0] && hero!.state[1] == ''"
   class="battle-done-button animated-button"
-  (click)="onStartBattleClick(hero,i)">
+  (click)="playButtonSound();onStartBattleClick(hero,i)">
   Batalla terminada
 </button>
 
     <!-- BOTÓN DEL HÉROE -->
-    <button (click)="onHeroClick(hero)" class="hero-button">
+    <button (click)="playButtonSound();onHeroClick(hero)" class="hero-button">
       <div class="button-content">
         <img [src]="hero!.icon" alt="{{ hero!.name }}" class="hero-image-button" />
         <label class="hero-label">{{ hero!.name }}</label>
@@ -1432,7 +1432,7 @@
   <div *ngFor="let crafter of crafters" class="button-wrapper">
     <button class="hero-button" 
             style="width: 100%; padding: 0; box-shadow: 1px 1px 10px #130401fd; position: relative;" 
-            (click)="onCrafterClick(crafter)">
+            (click)="playButtonSound();onCrafterClick(crafter)">
       
       <!-- Level en la esquina superior derecha -->
       <div style="

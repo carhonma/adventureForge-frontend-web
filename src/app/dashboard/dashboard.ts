@@ -33,7 +33,7 @@ interface User {
 })
 export class DashboardComponent implements OnInit {
   firestore = getFirestore(inject(FirebaseApp));
-  admin: Boolean = true; //esto hay que quitarlo para jugar normal
+  admin: Boolean = false; //esto hay que quitarlo para jugar normal
   user: any = {};
   title ='sin título';
   logDetail ='sin detalles del log';
@@ -137,7 +137,8 @@ export class DashboardComponent implements OnInit {
   TurnActionLog:string | null = null;
   TurnActionLogDescription:string | null = null;
   tooltipX: number = 0;
-tooltipY: number = 0;
+  tooltipY: number = 0;
+  soundbutton: string = '';
   private countdownInterval: any;
   
   
@@ -154,6 +155,7 @@ tooltipY: number = 0;
 
   async ngOnInit(): Promise<void> {
     this.user = this.authService.getCurrentUser();
+    this.soundbutton = await this.storageService.getSoundUrl('sonidos', 'zipclick.mp3');
     //funcion apra que funcione el moussehover en el log
 (window as any).setHoveredAction = (value: string | null, event?: MouseEvent) => {
   if (value && turnActionStyles[value as TurnActionType]) {
@@ -244,6 +246,8 @@ tooltipY: number = 0;
     this.getUserData(this.user.email);//sin esto no se ven los datos del usuario al recargar pero al quitar lo de arriba puede que existan problemas al crear usuarios
     this.getHerosData(true);this.getItemsData(false);this.getCraftersData();}
     
+    
+ 
   getHerosData(showInfo: Boolean, heroId?: string): Promise<Hero[]> {
     return new Promise((resolve, reject) => {
       this.firebaseService.getHerosData(this.user.email, heroId).subscribe(
@@ -1086,6 +1090,11 @@ usePotion(){
   }
 }
 
+  playButtonSound() {
+  const clickSound = new Audio(this.soundbutton); // URL de tu sonido en Firebase
+  clickSound.volume = 0.7; // Volumen del efecto
+  clickSound.play();
+}
 
 
 

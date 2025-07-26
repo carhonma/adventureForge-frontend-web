@@ -180,8 +180,16 @@
  <body> 
   <main class="main">
       <div class="content">
+         
          <img *ngIf="!isAuthenticated" class="background-image" style="max-width: 120px;" [src]="imageUrls['LOGO']" alt="logo" />
          <img *ngIf="isAuthenticated"class="background-image" style="max-width: 120px;" [src]="imageUrls['LOGO_jugador1']" alt="logo" />
+          <div style="position: relative;">
+            <div style="text-align: center;font-family: 'MedievalSharp', serif; color: #3b1e0f; font-weight: bold;">
+              🎻 {{ (volume * 100) | number:'1.0-0' }}%
+            </div>
+            <input type="range"min="0"max="1"step="0.01"[(ngModel)]="volume"(input)="changeVolume()"style="height: 10px; background: linear-gradient(to right, #a0522d, #8b4513);border: 2px solid #3b1e0f; border-radius: 8px;outline: none; accent-color: #5c3a1e;box-shadow: 0 0 5px #3b1e0f;"/>
+          </div>
+
         <div class="divider" role="separator" aria-label="Divider"></div>
 
         <div class="right-side">

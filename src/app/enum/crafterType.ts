@@ -17,6 +17,6 @@ export enum CrafterType {
     [CrafterType.Carpenter]: { icon: 'crafters/carpenter.png',ableToCraft:["BOW","CROSIER","WAND"]},
     [CrafterType.Enchanter]: { icon: 'crafters/enchanter.png',ableToCraft:[""]},
     [CrafterType.Tailor]: { icon: 'crafters/tailor.png',ableToCraft:["MEDIUMARMOR","LIGHTARMOR"]},
-    [CrafterType.WeaponSmith]: { icon: 'crafters/weaponsmith.png',ableToCraft:["SWORD","AXE","DAGE"]},
+    [CrafterType.WeaponSmith]: { icon: 'crafters/weaponsmith.png',ableToCraft:["SWORD","AXE","HAMMER","DAGE"]},
 
   };
