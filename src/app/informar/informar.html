@@ -21,14 +21,12 @@
   </textarea><br>
         <!-- BOTONERA -->
       <div class="botonera1">
-        
-        <button class="normal-button"style="height: 80px" (click)="reportar()" [disabled]="descripcionIncidencia==''"> 
-          <div class="image-container">
-            <img class="background-image" style="max-width: 250px;" [src]="this.imageUrls['BOTON_madera_8']" alt="start"/>
-            <div class="overlay-text">REPORTAR</div>
-          </div>
-        </button>
-        
+        <button class="normal-button" (click)="reportar()"[disabled]="descripcionIncidencia==''"style="height: 50px;"> 
+        <div class="image-container"style="height: 50px;">
+          <div class="background-image" alt="exit" [ngStyle]="getSprite('sprite12','button')" style="transform: scale(0.6);transform-origin: top center;"></div><!--buttonspriteimg-->
+          <div class="overlay-text" style="font-size: 12px;">REPORTAR</div>
+        </div>
+      </button>
     </div>
 </div>
 </div>

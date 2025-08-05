@@ -11,7 +11,6 @@ export class Hero {
   ID: number;
   name: string;
   type: HeroType;
-  icon: string;
   lifeBarIcon: string;
   expBarIcon: string;
   level: number;
@@ -50,7 +49,6 @@ export class Hero {
     this.id = id;
     this.name = name;
     this.type = type;
-    this.icon = heroStyles[type as HeroType]?.icon || '❓';
     this.lifeBarIcon = lifeBarIcon;
     this.expBarIcon = expBarIcon;
     this.level = level;

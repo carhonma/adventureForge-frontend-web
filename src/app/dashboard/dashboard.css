@@ -130,39 +130,40 @@
   border: 2px solid transparent;
   
 }
-.btn-loot   { transform: translate(150%, 10%);}
-.btn-stats   { transform: translate(150%, 112%);}
-.btn-desc    { transform: translate(150%, 214%);}
-.btn-battle  { transform: translate(150%, 316%);}
+.btn-loot   { transform: translate(124%, 10%);}
+.btn-stats   { transform: translate(124%, 90%);}
+.btn-desc    { transform: translate(124%, 170%);}
+.btn-battle  { transform: translate(124%, 250%);}
 .btn-home    { transform: translate(-50%, 10%);}
-.btn-storage { transform: translate(-50%, 112%);}
+.btn-storage { transform: translate(-50%, 90%);}
 
 
 .normal-button.btn-startbattle:hover {
   transform:scale(1.1);
 }
 .normal-button.btn-loot:hover {
-  transform: translate(158%, 10%)
+  transform: translate(132%, 10%)
 }
 .normal-button.btn-stats:hover {
-  transform: translate(158%, 112%)
+  transform: translate(132%, 90%)
 }
 .normal-button.btn-desc:hover {
-  transform: translate(158%, 214%)
+  transform: translate(132%, 170%)
 }
 .normal-button.btn-battle:hover {
-  transform: translate(158%, 316%)
+  transform: translate(132%, 250%)
 }
 .normal-button.btn-home:hover {
   transform: translate(-58%, 10%)
 }
 .normal-button.btn-storage:hover {
-  transform: translate(-58%, 112%)
+  transform: translate(-58%, 90%)
 }
 
 
 .hero-button {
   display: flex;
+  padding: 2px;
   align-items: center;
   justify-content: flex-start;
   max-height: 5cm; /* Altura máxima del botón */
@@ -263,7 +264,7 @@
 
 .overlay-text {
   position: absolute;
-  top: 40%;      
+  top: 43%;      
   left: 50%;     
   transform: translate(-50%, -50%); 
   color: #5a381b;
@@ -1361,4 +1362,27 @@
   z-index: 10;
   transition: opacity 0.3s ease, transform 0.3s ease;
   transform: translateY(30px);
+}
+
+
+
+
+.hero-sprite-gif {
+  animation: appearHero 2.5s ease-out;
+  position: relative;
+  z-index: 100;
+}
+
+@keyframes appearHero {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(15deg);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(0.8) rotate(0deg);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

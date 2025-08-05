@@ -5,6 +5,7 @@ import { HeroType } from '../enum/heroType';
 import { StorageService } from '../services/storage.service';
 import { ImageService } from '../services/image.service';
 import e from 'express';
+import { SpritesService } from '../services/sprites.service';
 
 @Component({
   selector: 'app-login',
@@ -18,14 +19,16 @@ export class LoginComponent implements OnInit {
   state: string = 'loginState';
   password1: string = '';
   password2: string = '';
-  heroImageUrls: { [key: string]: string } = {};
   otherImageUrls: { [key: string]: string } = {};
+  spriteButton : string = '';
+  spriteHeros : string = '';
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private storageService: StorageService,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private spritesService: SpritesService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -37,28 +40,15 @@ export class LoginComponent implements OnInit {
         'fondos/desierto3.jpg',
         'iconos/add.png',
         'iconos/gold.png',
-        'characters/guerrero.png',
-        'characters/picaro.png',
-        'characters/mago.png',
-        'characters/paladin.png',
-        'characters/cazador.png',
-        'characters/clerigo.png',
       ]);
 
       // Obtener las URLs precargadas
+      this.spriteButton = this.imageService.getCachedImage('iconos/botones_madera.png')!;
+      this.spriteHeros = this.imageService.getCachedImage('iconos/heros.png')!;
       this.otherImageUrls['GOOGLE'] = this.imageService.getCachedImage('iconos/google.png')!;
       this.otherImageUrls['FONDO'] = this.imageService.getCachedImage('fondos/desierto4.jpg')!;
       this.otherImageUrls['ADD'] = this.imageService.getCachedImage('iconos/add.png')!;
       this.otherImageUrls['GOLD'] = this.imageService.getCachedImage('iconos/gold.png')!;
-
-
-
-      this.heroImageUrls['GUERRERO'] = this.imageService.getCachedImage('characters/guerrero.png')!;
-      this.heroImageUrls['PICARO'] = this.imageService.getCachedImage('characters/picaro.png')!;
-      this.heroImageUrls['MAGO'] = this.imageService.getCachedImage('characters/mago.png')!;
-      this.heroImageUrls['PALADIN'] = this.imageService.getCachedImage('characters/paladin.png')!;
-      this.heroImageUrls['CAZADOR'] = this.imageService.getCachedImage('characters/cazador.png')!;
-      this.heroImageUrls['CLERIGO'] = this.imageService.getCachedImage('characters/clerigo.png')!;
     } catch (error) {
       //console.error('Error al precargar las imágenes:', error);
     }
@@ -130,4 +120,13 @@ googleAuth() {
     alert('Volvemos al login');
     
   }
+  getSprite(name: string, spriteType: string): { [key: string]: string } | undefined {
+  if(spriteType== "hero"){
+    return this.spritesService.getStyleByName(name, this.spriteHeros, spriteType);
+  }
+  else{
+    return this.spritesService.getStyleByName(name, this.spriteButton, spriteType);
+  }
+  
+}
 }

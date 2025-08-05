@@ -11,7 +11,8 @@ import { ItemType, itemStyles } from './enum/itemType';
 import { GradeType, gradeStyles } from './enum/gradeType';
 import { TurnActionType,turnActionStyles } from './enum/turnActionType';
 import { isPlatformBrowser } from '@angular/common';
-
+import spriteDataButtons from '../assets/sprites_buttons.json';
+import { SpritesService } from './services/sprites.service';
 
 @Component({
   selector: 'app-root',
@@ -30,6 +31,9 @@ export class AppComponent implements OnInit {
   mostrarInfo :boolean = false;
   backgroundMusic!: HTMLAudioElement;
   volume: number = 0.1;
+  sprites = spriteDataButtons;
+  spriteButton : string = '';
+  spriteHeros : string = '';
   private readonly isBrowser: boolean;
 
   constructor(
@@ -39,14 +43,15 @@ export class AppComponent implements OnInit {
     private renderer: Renderer2,
     private firebaseService: FirebaseService,
     private imageService: ImageService,
-    @Inject(PLATFORM_ID) platformId: object          // ←‑ inyecta platformId
+    private spritesService: SpritesService,
+    @Inject(PLATFORM_ID) platformId: object     
   ) {
-    this.isBrowser = isPlatformBrowser(platformId);  // ←‑ calcula una vez
+    this.isBrowser = isPlatformBrowser(platformId);
   }
  
 
   ngOnInit() {
-    
+
     this.firebaseService.testConnection().subscribe(
       (response) => {
         this.firebaseStatus = response;
@@ -56,15 +61,6 @@ export class AppComponent implements OnInit {
         this.firebaseStatus = '❌';
       }
     );
-    if(this.soundUrl==''){
-      this.storageService.getSoundUrl('sonidos', 'Balearic Slide - Jeremy Black.mp3')
-    .then(url => {
-      this.soundUrl = url;
-      this.backgroundMusic = new Audio(this.soundUrl);
-      this.backgroundMusic.loop = true;
-      this.backgroundMusic.volume = this.volume;
-      this.backgroundMusic.play();
-    });}
 
     this.authService.getAuthState().subscribe(async (user) => {
       this.isAuthenticated = !!user;
@@ -76,6 +72,16 @@ export class AppComponent implements OnInit {
       }
       if(this.isAuthenticated){
         this.router.navigate(['/dashboard']);
+        if(this.soundUrl==''){
+      this.storageService.getSoundUrl('sonidos', 'antientitymix.mp3')
+    .then(url => {
+      //this.backgroundMusic.pause();
+      this.soundUrl = url;
+      this.backgroundMusic = new Audio(this.soundUrl);
+      this.backgroundMusic.loop = true;
+      this.backgroundMusic.volume = this.volume;
+      this.backgroundMusic.play();
+    });}
       }
       else{
         this.router.navigate(['/login']);
@@ -102,13 +108,9 @@ export class AppComponent implements OnInit {
         'iconos/map_2.jpg',
         'iconos/marco_item.png',
         'iconos/marco_description.png',
-        'iconos/boton_madera_1.png',
-        'iconos/boton_madera_4.png',
-        'iconos/boton_madera_5.png',
-        'iconos/boton_madera_8.png',
-        'iconos/boton_madera_9.png',
-        'iconos/boton_madera_10.png',
-        'iconos/boton_madera_11.png',
+        'iconos/botones_madera.png',
+        'iconos/heros.png',
+        'missions/missions_map1.png',
 
         'crafters/alchemist.png',
         'crafters/armorsmith.png',
@@ -116,13 +118,6 @@ export class AppComponent implements OnInit {
         'crafters/enchanter.png',
         'crafters/tailor.png',
         'crafters/weaponsmith.png',
-
-        'characters/guerrero.png',
-        'characters/picaro.png',
-        'characters/mago.png',
-        'characters/paladin.png',
-        'characters/cazador.png',
-        'characters/clerigo.png',
 
         'skills/STANDARD_ATTACK.png',
         'skills/HARD_STRIKE.png',
@@ -248,38 +243,16 @@ export class AppComponent implements OnInit {
         'bars/exp0.png','bars/exp10.png','bars/exp100.png','bars/exp12.5.png','bars/exp25.png','bars/exp37.5.png','bars/exp5.png','bars/exp50.png','bars/exp62.5.png','bars/exp75.png','bars/exp87.5.png','bars/exp90.png',
         'bars/life0.png','bars/life10.png','bars/life100.png','bars/life12.5.png','bars/life25.png','bars/life37.5.png','bars/life5.png','bars/life50.png','bars/life62.5.png','bars/life75.png','bars/life87.5.png','bars/life90.png'
       ]);
-      this.imageUrls['BOTON_madera_8'] = this.imageService.getCachedImage('iconos/boton_madera_8.png')!;
       this.imageUrls['LOGO'] = this.imageService.getCachedImage('iconos/logo3.png')!;
       this.imageUrls['LOGO_jugador1'] = this.imageService.getCachedImage('iconos/logo_jugador1.png')!;
-
+      this.spriteButton = this.imageService.getCachedImage('iconos/botones_madera.png')!;
+      this.spriteHeros = this.imageService.getCachedImage('iconos/heros.png')!;
       crafterStyles[CrafterType.Alchemist].icon = this.imageService.getCachedImage('crafters/alchemist.png')!;
       crafterStyles[CrafterType.Armorsmith].icon = this.imageService.getCachedImage('crafters/armorsmith.png')!;
       crafterStyles[CrafterType.Carpenter].icon = this.imageService.getCachedImage('crafters/carpenter.png')!;
       crafterStyles[CrafterType.Enchanter].icon = this.imageService.getCachedImage('crafters/enchanter.png')!;
       crafterStyles[CrafterType.Tailor].icon = this.imageService.getCachedImage('crafters/tailor.png')!;
       crafterStyles[CrafterType.WeaponSmith].icon = this.imageService.getCachedImage('crafters/weaponsmith.png')!;
-
-      heroStyles[HeroType.GUERRERO].icon = this.imageService.getCachedImage('characters/guerrero.png')!;
-      heroStyles[HeroType.PICARO].icon = this.imageService.getCachedImage('characters/picaro.png')!;
-      heroStyles[HeroType.MAGO].icon = this.imageService.getCachedImage('characters/mago.png')!;
-      heroStyles[HeroType.PALADIN].icon = this.imageService.getCachedImage('characters/paladin.png')!;
-      heroStyles[HeroType.CAZADOR].icon = this.imageService.getCachedImage('characters/cazador.png')!;
-      heroStyles[HeroType.CLERIGO].icon = this.imageService.getCachedImage('characters/clerigo.png')!;
-
-      heroStyles[HeroType.GUERRERO].gif = this.imageService.getCachedImage('characters/guerrero.png')!;
-      heroStyles[HeroType.PICARO].gif = this.imageService.getCachedImage('characters/picaro.png')!;
-      heroStyles[HeroType.MAGO].gif = this.imageService.getCachedImage('characters/mago.png')!;
-      heroStyles[HeroType.PALADIN].gif = this.imageService.getCachedImage('characters/paladin.png')!;
-      heroStyles[HeroType.CAZADOR].gif = this.imageService.getCachedImage('characters/cazador.png')!;
-      heroStyles[HeroType.CLERIGO].gif = this.imageService.getCachedImage('characters/clerigo.png')!;
-
-      /*heroStyles[HeroType.GUERRERO].gif = this.imageService.getCachedImage('gifs/Y_golem1_victory.gif')!;
-      heroStyles[HeroType.PICARO].gif = this.imageService.getCachedImage('gifs/Y_golem1_victory.gif')!;
-      heroStyles[HeroType.MAGO].gif = this.imageService.getCachedImage('gifs/Y_golem1_victory.gif')!;
-      heroStyles[HeroType.PALADIN].gif = this.imageService.getCachedImage('gifs/Y_golem1_victory.gif')!;
-      heroStyles[HeroType.CAZADOR].gif = this.imageService.getCachedImage('gifs/Y_golem1_victory.gif')!;
-      heroStyles[HeroType.CLERIGO].gif = this.imageService.getCachedImage('gifs/Y_golem1_victory.gif')!;*/
-      //heroStyles[HeroType.GUERRERO].gif = await this.storageService.getImageUrl('gifs', 'Y_ent1_victory.gif');//ejemplo con storageService
 
       turnActionStyles[TurnActionType.STANDARD_ATTACK].icon = this.imageService.getCachedImage('skills/STANDARD_ATTACK.png')!;
       turnActionStyles[TurnActionType.HARD_STRIKE].icon = this.imageService.getCachedImage('skills/HARD_STRIKE.png')!;
@@ -512,11 +485,6 @@ export class AppComponent implements OnInit {
     try {
       // Usa el StorageService para obtener la URL pública
       this.imageUrl = await this.storageService.getImageUrl('fondos', 'desierto3.jpg');
- 
-      //this.soundUrl = await this.storageService.getSoundUrl('sonidos', 'Balearic Slide - Jeremy Black.mp3');
-      //this.soundUrl = await this.storageService.getSoundUrl('sonidos', 'Broken Circuits - Telecasted.mp3');
-      //this.soundUrl = await this.storageService.getSoundUrl('sonidos', 'Sizzr - Schwartzy.mp3');
-      //this.soundUrl = await this.storageService.getSoundUrl('sonidos', 'Talk - Anno Domini Beats.mp3');
       
      if (this.isBrowser) {
         this.renderer.setStyle(document.body, 'background-image', `url(${this.imageUrl})`);
@@ -532,7 +500,10 @@ export class AppComponent implements OnInit {
     this.authService.logout()
       .then(() => this.router.navigate(['/login']))
       .catch(err => console.error(err));
+      this.soundUrl='';
+      this.backgroundMusic.pause();
   }
+  
 
   informar(): void {
   const currentUrl = this.router.url;
@@ -551,6 +522,14 @@ export class AppComponent implements OnInit {
 changeVolume() {
   if (this.backgroundMusic) {
     this.backgroundMusic.volume = this.volume;
+  }
+}
+getSprite(name: string, spriteType: string): { [key: string]: string } | undefined {
+  if(spriteType== "hero"){
+    return this.spritesService.getStyleByName(name, this.spriteHeros, spriteType);
+  }
+  else{
+    return this.spritesService.getStyleByName(name, this.spriteButton, spriteType);
   }
 }
 }

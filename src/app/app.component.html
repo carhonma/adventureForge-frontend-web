@@ -175,8 +175,6 @@
   }
 </style>
 
-
-  
  <body> 
   <main class="main">
       <div class="content">
@@ -206,7 +204,18 @@
               </a>
             }
           </div>-->
-          
+         <!--<div [ngStyle]="getStyle(spriteButton1)"></div>
+         <div [ngStyle]="getStyle(spriteButton2)"></div>
+         <div [ngStyle]="getStyle(spriteButton3)"></div>
+         <div [ngStyle]="getStyle(spriteButton4)"></div>
+         <div [ngStyle]="getStyle(spriteButton5)"></div>
+         <div [ngStyle]="getStyle(spriteButton6)"></div>
+         <div [ngStyle]="getStyle(spriteButton7)"></div>
+         <div [ngStyle]="getStyle(spriteButton8)"></div>
+         <div [ngStyle]="getStyle(spriteButton9)"></div>
+         <div [ngStyle]="getStyle(spriteButton10)"></div>
+         <div [ngStyle]="getStyle(spriteButton11)"></div>-->
+
           <div class="social-links">
             <a
               href="https://www.instagram.com/carhonma"
@@ -323,9 +332,9 @@
 
                                       <!-- Botonera -->
     <div class="botonera1" style="margin-top: 10px; display: flex; gap: 10px;height: fit-content;padding: 5px;">
-      <button class="normal-button btn-startbattle" (click)="mostrarInfo = false"> 
-        <div class="image-container">
-          <img class="background-image" style="max-width: 150px;" [src]="imageUrls['BOTON_madera_8']" alt="exit" />
+      <button class="normal-button btn-startbattle" (click)="mostrarInfo = false"style="height: 50px;margin-top: 4px;"> 
+        <div class="image-container"style="height: 50px;">
+          <div class="background-image" alt="exit" [ngStyle]="getSprite('sprite12','button')" style="transform: scale(0.6);transform-origin: top center;"></div><!--buttonspriteimg-->
           <div class="overlay-text" style="font-size: 12px;">EXIT</div>
         </div>
       </button>

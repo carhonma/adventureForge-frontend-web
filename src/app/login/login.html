@@ -6,8 +6,10 @@
   <table class="box">
     <tr>
     <td style="width: 50%;">
-      <img *ngIf="state=='loginState'"style="width: 500px;" [src]="heroImageUrls['MAGO']" alt="imageHeroe" />
-      <img *ngIf="state=='registerState'"style="width: 500px;" [src]="heroImageUrls['PICARO']" alt="imageHeroe" />
+      <div style="width: 500px; height: 500px; overflow: hidden; position: relative;">
+      <div *ngIf="state=='loginState'"[ngStyle]="getSprite('MAGO', 'hero')"style=" transform-origin: left top;"></div><!--herospriteimg-->
+      <div *ngIf="state=='registerState'"[ngStyle]="getSprite('PICARO', 'hero')"style=" transform-origin: left top;"></div><!--herospriteimg-->
+    </div>
     </td>
       <td style="width: 50%;">
         <div class="fomrulary"*ngIf="state=='loginState'">

@@ -1,0 +1,8 @@
+[
+  {"name":"GUERRERO","x":0,"y":0,"width":500,"height":500},
+  {"name":"PICARO","x":500,"y":0,"width":500,"height":500},
+  {"name":"MAGO","x":1000,"y":0,"width":500,"height":500},
+  {"name":"PALADIN","x":0,"y":500,"width":500,"height":500},
+  {"name":"CAZADOR","x":500,"y":500,"width":500,"height":500},
+  {"name":"CLERIGO","x":1000,"y":500,"width":500,"height":500}
+]

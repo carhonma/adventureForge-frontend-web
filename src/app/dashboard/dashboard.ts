@@ -17,11 +17,14 @@ import { GradeType, gradeStyles } from '../enum/gradeType';
 import { TurnActionType, turnActionStyles } from '../enum/turnActionType';
 import { ImageService } from '../services/image.service';
 import { FirebaseService } from '../services/firebase.service';
+import { SpritesService } from '../services/sprites.service';
 import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs';
 import { CrafterType,crafterStyles } from '../enum/crafterType';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ChangeDetectorRef } from '@angular/core';
+import {SpriteData} from '../services/spritesDataModel';
+
 interface User {
   name: string;
 }
@@ -139,6 +142,9 @@ export class DashboardComponent implements OnInit {
   tooltipX: number = 0;
   tooltipY: number = 0;
   soundbutton: string = '';
+  spriteButton : string = '';
+  spriteHeros : string = '';
+  spriteMissions_map1 : string = '';
   private countdownInterval: any;
   
   
@@ -147,6 +153,7 @@ export class DashboardComponent implements OnInit {
      private storageService: StorageService,
      private imageService: ImageService,
      private firebaseService: FirebaseService,
+     private spritesService: SpritesService,
      private activatedRoute: ActivatedRoute,
      private sanitizer: DomSanitizer,
      private cdr: ChangeDetectorRef,
@@ -190,24 +197,9 @@ export class DashboardComponent implements OnInit {
               'iconos/map_2.jpg',
               'iconos/marco_description.png',
               'iconos/marco_item.png',
-              'iconos/boton_madera_1.png',
-              'iconos/boton_madera_4.png',
-              'iconos/boton_madera_5.png',
-              'iconos/boton_madera_8.png',
-              'iconos/boton_madera_9.png',
-              'iconos/boton_madera_10.png',
-              'iconos/boton_madera_11.png',
               'items/potion1.png',
               'items/potion2.png',
-
-              'characters/guerrero.png',
-              'characters/picaro.png',
-              'characters/mago.png',
-              'characters/paladin.png',
-              'characters/cazador.png',
-              'characters/clerigo.png',
-              
-              
+    
             ]);
 
 } else {
@@ -217,7 +209,9 @@ export class DashboardComponent implements OnInit {
   }
 
   preloadUserData(){ 
-
+      this.spriteButton = this.imageService.getCachedImage('iconos/botones_madera.png')!;
+      this.spriteHeros = this.imageService.getCachedImage('iconos/heros.png')!;
+      this.spriteMissions_map1 = this.imageService.getCachedImage('missions/missions_map1.png')!;
       this.imageUrls['FONDO'] = this.imageService.getCachedImage('fondos/desierto4.jpg')!;
       this.imageUrls['ADD'] = this.imageService.getCachedImage('iconos/add.png')!;
       this.imageUrls['MARCO_POCION'] = this.imageService.getCachedImage('iconos/marco_pocion.png')!;
@@ -231,14 +225,6 @@ export class DashboardComponent implements OnInit {
       this.imageUrls['MAP2'] = this.imageService.getCachedImage('iconos/map_2.jpg')!;
       this.imageUrls['MARCO'] = this.imageService.getCachedImage('iconos/marco_description.png')!;
       this.imageUrls['MARCOITEM'] = this.imageService.getCachedImage('iconos/marco_item.png')!;
-      this.imageUrls['BOTON_madera_1'] = this.imageService.getCachedImage('iconos/boton_madera_1.png')!;
-      this.imageUrls['BOTON_madera_4'] = this.imageService.getCachedImage('iconos/boton_madera_4.png')!;
-      this.imageUrls['BOTON_madera_5'] = this.imageService.getCachedImage('iconos/boton_madera_5.png')!;
-      this.imageUrls['BOTON_madera_8'] = this.imageService.getCachedImage('iconos/boton_madera_8.png')!;
-      this.imageUrls['BOTON_madera_9'] = this.imageService.getCachedImage('iconos/boton_madera_9.png')!;
-      this.imageUrls['BOTON_madera_10'] = this.imageService.getCachedImage('iconos/boton_madera_10.png')!;
-      this.imageUrls['BOTON_madera_11'] = this.imageService.getCachedImage('iconos/boton_madera_11.png')!;
-
       this.imageUrls['BARRA_life_0'] = this.imageService.getCachedImage('bars/life0.png')!;this.imageUrls['BARRA_life_10'] = this.imageService.getCachedImage('bars/life10.png')!;this.imageUrls['BARRA_life_100'] = this.imageService.getCachedImage('bars/life100.png')!;this.imageUrls['BARRA_life_12.5'] = this.imageService.getCachedImage('bars/life12.5.png')!;this.imageUrls['BARRA_life_25'] = this.imageService.getCachedImage('bars/life25.png')!;this.imageUrls['BARRA_life_37.5'] = this.imageService.getCachedImage('bars/life37.5.png')!;this.imageUrls['BARRA_life_5'] = this.imageService.getCachedImage('bars/life5.png')!;this.imageUrls['BARRA_life_50'] = this.imageService.getCachedImage('bars/life50.png')!;this.imageUrls['BARRA_life_62.5'] = this.imageService.getCachedImage('bars/life62.5.png')!;this.imageUrls['BARRA_life_75'] = this.imageService.getCachedImage('bars/life75.png')!;this.imageUrls['BARRA_life_87.5'] = this.imageService.getCachedImage('bars/life87.5.png')!;this.imageUrls['BARRA_life_90'] = this.imageService.getCachedImage('bars/life90.png')!;
       this.imageUrls['BARRA_exp_0'] = this.imageService.getCachedImage('bars/exp0.png')!;this.imageUrls['BARRA_exp_10'] = this.imageService.getCachedImage('bars/exp10.png')!;this.imageUrls['BARRA_exp_100'] = this.imageService.getCachedImage('bars/exp100.png')!;this.imageUrls['BARRA_exp_12.5'] = this.imageService.getCachedImage('bars/exp12.5.png')!;this.imageUrls['BARRA_exp_25'] = this.imageService.getCachedImage('bars/exp25.png')!;this.imageUrls['BARRA_exp_37.5'] = this.imageService.getCachedImage('bars/exp37.5.png')!;this.imageUrls['BARRA_exp_5'] = this.imageService.getCachedImage('bars/exp5.png')!;this.imageUrls['BARRA_exp_50'] = this.imageService.getCachedImage('bars/exp50.png')!;this.imageUrls['BARRA_exp_62.5'] = this.imageService.getCachedImage('bars/exp62.5.png')!;this.imageUrls['BARRA_exp_75'] = this.imageService.getCachedImage('bars/exp75.png')!;this.imageUrls['BARRA_exp_87.5'] = this.imageService.getCachedImage('bars/exp87.5.png')!;this.imageUrls['BARRA_exp_90'] = this.imageService.getCachedImage('bars/exp90.png')!;
     
@@ -257,7 +243,6 @@ export class DashboardComponent implements OnInit {
             ID: heroData.ID as number,
             name: heroData.Name || 'Nombre Desconocido',
             type: heroData.Type || 'Tipo Desconocido',
-            icon: heroStyles[heroData.Type as HeroType]?.icon || '❓',
             lifeBarIcon:this.getLifeBarImage(heroData.o0_life,heroData.maxHealth+heroData.Items_maxHealth),
             expBarIcon: this.getExpBarImage(heroData.o1_exp,heroData.maxExp),
             level: heroData.Level,
@@ -693,7 +678,6 @@ if (this.pociones.length > 0) {
   addHero() {
     const heroesSize = this.heroes.length+1;
     const heroName = `hero${heroesSize.toString().padStart(2, '0')}`;
-    const gif = heroStyles[this.heroType as HeroType].gif;
     const data = {
       email:this.user.email,
       ID:heroesSize,
@@ -701,7 +685,7 @@ if (this.pociones.length > 0) {
       Type:this.heroType,
     }
     this.firebaseService.addHero(data).subscribe(
-      async (response) => { console.log('✅ AddHero:',this.heroType+" adquirido por "+this.user.email),this.getUserData(this.user.email),this.showAddHeroGif(gif)},
+      async (response) => { console.log('✅ AddHero:',this.heroType+" adquirido por "+this.user.email),this.getUserData(this.user.email),this.showAddHeroGif();},
       (error) => {
         console.error('Error al crear heroe:', error);
       }
@@ -751,10 +735,9 @@ triggerShineEffect(where:any) {
   }
 }
 
-async showAddHeroGif(gifName: string) {
-  if (this.mostrarHeroGif) return; // evitar clics múltiples mientras se muestra
+async showAddHeroGif() {
+  if (this.mostrarHeroGif) return;
 
-  this.gifHeroUrl = await this.imageService.getImageUrl(gifName);
   this.mostrarHeroGif = true;
   this.desapareciendo = false;
 
@@ -762,10 +745,8 @@ async showAddHeroGif(gifName: string) {
     this.desapareciendo = true;
     setTimeout(() => {
       this.mostrarHeroGif = false;
-      this.gifHeroUrl = null;
     }, 500);
   }, 2500);
-  this.getHerosData(false);
 }
 async showBattleGif(gifName: string) {
   this.gifBattleUrl = await this.imageService.getImageUrl(gifName);
@@ -1094,9 +1075,20 @@ usePotion(){
   const clickSound = new Audio(this.soundbutton); // URL de tu sonido en Firebase
   clickSound.volume = 0.7; // Volumen del efecto
   clickSound.play();
+  }
+
+getSprite(name: string, spriteType: string): { [key: string]: string } | undefined {
+  if(spriteType== "hero"){
+    return this.spritesService.getStyleByName(name, this.spriteHeros, spriteType);
+  }
+  if(spriteType== "mission"){
+    return this.spritesService.getStyleByName(name, this.spriteMissions_map1, spriteType);
+  }
+  else{
+    return this.spritesService.getStyleByName(name, this.spriteButton, spriteType);
+  }
+  
 }
-
-
 
 
 

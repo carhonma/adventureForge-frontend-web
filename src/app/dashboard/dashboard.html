@@ -1,15 +1,15 @@
 
 <div class="dashboard">
-  <button  class="normal-button btn-home"(click)="playButtonSound();onMainClipClick('clipHo')"style="position: absolute">
+  <button  class="normal-button btn-home"(click)="playButtonSound();onMainClipClick('clipHo')"style="position: absolute;">
     <div class="image-container" style="position: relative; display: inline-block;">
-      <img class="background-image" style="max-width: 250px; display: block;"[src]="this.imageUrls['BOTON_madera_8']"alt="start"/>
-      <div class="overlay-text"style="position: absolute;left: 80px;font-weight: bold;">HOME</div>
+      <div class="background-image" alt="start" [ngStyle]="getSprite('sprite12','button')" style="transform: scale(0.8);"></div><!--buttonspriteimg-->
+      <div class="overlay-text"style="position: absolute;left: 100px;font-weight: bold;">HOME</div>
     </div>
   </button>
   <button  class="normal-button btn-storage"(click)="playButtonSound();onMainClipClick('clipSto')"style="position: absolute;">
     <div class="image-container" style="position: relative; display: inline-block;">
-      <img class="background-image" style="max-width: 250px; display: block;"[src]="this.imageUrls['BOTON_madera_8']"alt="start"/>
-      <div class="overlay-text"style="position: absolute;left:80px;font-weight: bold;">STORAGE</div>
+      <div class="background-image" alt="start" [ngStyle]="getSprite('sprite12','button')" style="transform: scale(0.8);"></div><!--buttonspriteimg-->
+      <div class="overlay-text"style="position: absolute;left: 100px;font-weight: bold;">STORAGE</div>
     </div>
   </button>
   <div *ngIf="!state"class="left-section">
@@ -18,7 +18,9 @@
   <!--heroDetails-->
   <div *ngIf="state == 'heroDetails'"class="left-section">
     <div class="top-left-overlay"[ngStyle]="{'border': '4px ridge ' + (hero!.type ? heroBackground : '#f9f9f9'), 'background-color': hero!.type ? heroBackground : '#f9f9f9' }">
-      <img *ngIf="state == 'heroDetails'" [src]="hero!.icon" alt="imageHero"  class="hero-image" />
+      <div *ngIf="state == 'heroDetails'"style="overflow: hidden; position: relative;"class="hero-image">
+        <div class="background-image"[ngStyle]="getSprite(hero!.type, 'hero')"style="transform: scale(0.3); transform-origin: left top;"></div><!--herospriteimg-->
+      </div>
     </div>
     <div class="main-content-row">
       
@@ -37,7 +39,9 @@
             <img [src]="this.imageUrls['EDIT']" alt="Cancelar" style=" height: 100%;background-color: #ffffff7a; border-radius: 4px;border: 1px solid #ccc;" />
           </button>
         </div>   
-        <img *ngIf="state == 'heroDetails'" [src]="hero!.icon" alt="imageHero" style="width: 500px;padding-top: 30px;opacity: 0.5;" />
+
+      <div class="background-image"[ngStyle]="getSprite(hero!.type, 'hero')"style="margin-top: 30px;opacity: 0.5;"></div><!--herospriteimg-->
+
           <!--EQUIPO-->
         <div  class="equipment">
           <div class="loading-overlay" *ngIf="isBusy">
@@ -381,20 +385,16 @@
       class="normal-button"(click)="nextpotion(potionIndex,-1);" [disabled]="potionIndex - 1 < 0 || isLoadingPociones"
       style="
         position: absolute;
-        left: -25px;
+        left: -30px;
         top: 25%;
         height: 30px;
-        padding: 0;
+        width: 38px;
         background: none;
         border: none;
       "
     >
       <div class="image-container">
-        <img
-          style="max-height: 25px;"
-          [src]="this.imageUrls['BOTON_madera_4']"
-          alt="left"
-        />
+        <div class="background-image" alt="left" [ngStyle]="getSprite('sprite6','button')"style="transform: scale(0.28);transform-origin: left;"></div><!--buttonspriteimg-->
       </div>
     </button>
     <!-- Botón lateral derecho -->
@@ -402,20 +402,17 @@
       class="normal-button"(click)="nextpotion(potionIndex,1);" [disabled]="pociones.length < potionIndex +2 || isLoadingPociones"
       style="
         position: absolute;
-        right: -25px;
+        right: -30px;
         top: 25%;
         height: 30px;
+        width: 38px;
         padding: 0;
         background: none;
         border: none;
       "
     >
       <div class="image-container">
-        <img
-          style="max-height: 25px;"
-          [src]="this.imageUrls['BOTON_madera_5']"
-          alt="right"
-        />
+        <div class="background-image" alt="right" [ngStyle]="getSprite('sprite7','button')"style="transform: scale(0.28);transform-origin: left;"></div><!--buttonspriteimg-->
       </div>
     </button>
   </div>
@@ -427,13 +424,8 @@
     style="height: 2px; margin-right: -3px; z-index: 1;"
   >
     <div class="image-container">
-      <img
-        class="background-image"
-        style="max-width: 83px; margin-right: 1px;"
-        [src]="this.imageUrls['BOTON_madera_8']"
-        alt="start"
-      />
-      <div class="overlay-text">Usar</div>
+      <div class="background-image" alt="start" [ngStyle]="getSprite('sprite12','button')" style="transform: scale(0.28);"></div><!--buttonspriteimg-->
+      <div class="overlay-text"style="top:48%">Usar</div>
     </div>
   </button>
 </div>
@@ -600,20 +592,20 @@
       </div>
       <!-- BOTONERA -->
       <div class="botonera1">
-        <button class="normal-button" (click)="changeHero('prev')"style="height: 80px"> 
+        <button class="normal-button" (click)="changeHero('prev')"style="height: 80px;width: 85px;"> 
           <div class="image-container">
-            <img style="max-height: 50px;" [src]="this.imageUrls['BOTON_madera_4']" alt="left"/>
+            <div class="background-image" alt="left" [ngStyle]="getSprite('sprite6','button')"style="transform: scale(0.6);transform-origin: left;"></div><!--buttonspriteimg-->
           </div>
         </button>
         <button [disabled]="hero!.actualLife == 0" class="normal-button" (click)="playButtonSound();onBattleClick(hero!)"style="height: 80px"> 
           <div class="image-container">
-            <img class="background-image" style="max-width: 250px;" [src]="this.imageUrls['BOTON_madera_8']" alt="start"/>
+            <div class="background-image" alt="start" [ngStyle]="getSprite('sprite12','button')" style="transform: scale(0.8);"></div><!--buttonspriteimg-->
             <div class="overlay-text">START BATTLE</div>
           </div>
         </button>
-        <button class="normal-button" (click)="changeHero('next')"style="height: 80px"> 
+        <button class="normal-button" (click)="changeHero('next')"style="height: 80px;width: 85px;"> 
           <div class="image-container">
-            <img style="max-height: 50px;" [src]="this.imageUrls['BOTON_madera_5']" alt="right"/>
+            <div class="background-image" alt="right" [ngStyle]="getSprite('sprite7','button')"style="transform: scale(0.6);transform-origin: left;"></div><!--buttonspriteimg-->
           </div>
         </button>
     </div>
@@ -624,7 +616,7 @@
     
   
 <!--heroShop-->
-<div *ngIf="state == 'heroShop'" class="left-section">
+<div *ngIf="state == 'heroShop'" class="left-section"style="height: fit-content;">
   <!-- Fila con el contenido principal: izquierda y derecha -->
   <div class="main-content-row">
     <div class="big-left-div-shop">
@@ -635,7 +627,9 @@
           (mouseenter)="onHeroShopHover(heroType)"
           class="hero-button-shop"
           [disabled]="mostrarHeroGif || gold < heroStyles[heroType].price">
-          <img [src]="heroStyles[heroType].icon" alt="{{heroType}}" class="hero-image-shop" />
+          <div class="hero-image-shop"style="overflow: hidden; position: relative;height: 150px;width: 150px;">
+            <div class="background-image"[ngStyle]="getSprite(heroType, 'hero')"style="transform: scale(0.3); transform-origin: left top;"></div><!--herospriteimg-->
+          </div>
         </button>
       </div>
     </div>
@@ -650,22 +644,37 @@
           <p>price: <label class="hero-label" style="background-color: #966e64; padding: 5px; padding-left: 10px; border-radius: 6px;">{{heroStyles[heroType].price}}<img [src]="imageUrls['GOLD']" class="hero-image-button" style="width: 30px;margin-left: 10px;vertical-align: bottom;"/></label></p>
         </div>
         <div class="half-second-column-div">
-          <div class="skillButton-container">
+          <div class="skillButton-container"style="height: 50%;width: 90%;margin-inline: auto;">
             <p class="skillButton">STANDARD_ATTACK</p>
             <div class="skillTooltip" [innerHTML]="turnActionStyles[TurnActionType.STANDARD_ATTACK].description"></div>
             <br>
           </div>
-          <div *ngIf="heroType == HeroType.GUERRERO" class="skillButton-container">
+          <div *ngIf="heroType == HeroType.GUERRERO" class="skillButton-container"style="height: 50%;width: 90%;margin-inline: auto;">
             <p class="skillButton">BUFF_ARMOR</p>
             <div class="skillTooltip" [innerHTML]="turnActionStyles[TurnActionType.BUFF_ARMOR].description"></div>
             <br>
           </div>
-          <div *ngIf="heroType == HeroType.PICARO" class="skillButton-container">
+          <div *ngIf="heroType == HeroType.PICARO" class="skillButton-container"style="height: 50%;width: 90%;margin-inline: auto;">
             <p class="skillButton">HARD_SHOT</p>
             <div class="skillTooltip" [innerHTML]="turnActionStyles[TurnActionType.HARD_SHOT].description"></div>
             <br>
           </div>
-          <div *ngIf="heroType == HeroType.MAGO" class="skillButton-container">
+          <div *ngIf="heroType == HeroType.MAGO" class="skillButton-container"style="height: 50%;width: 90%;margin-inline: auto;">
+            <p class="skillButton">HARD_SPELL</p>
+            <div class="skillTooltip" [innerHTML]="turnActionStyles[TurnActionType.HARD_SPELL].description"></div>
+            <br>
+          </div>
+          <div *ngIf="heroType == HeroType.PALADIN" class="skillButton-container"style="height: 50%;width: 90%;margin-inline: auto;">
+            <p class="skillButton">BUFF_ARMOR</p>
+            <div class="skillTooltip" [innerHTML]="turnActionStyles[TurnActionType.BUFF_ARMOR].description"></div>
+            <br>
+          </div>
+          <div *ngIf="heroType == HeroType.CAZADOR" class="skillButton-container"style="height: 50%;width: 90%;margin-inline: auto;">
+            <p class="skillButton">HARD_SHOT</p>
+            <div class="skillTooltip" [innerHTML]="turnActionStyles[TurnActionType.HARD_SHOT].description"></div>
+            <br>
+          </div>
+          <div *ngIf="heroType == HeroType.CLERIGO" class="skillButton-container"style="height: 50%;width: 90%;margin-inline: auto;">
             <p class="skillButton">HARD_SPELL</p>
             <div class="skillTooltip" [innerHTML]="turnActionStyles[TurnActionType.HARD_SPELL].description"></div>
             <br>
@@ -677,9 +686,9 @@
 
     
   <div *ngIf="mostrarHeroGif" [ngClass]="{ 'gif-overlay': true, 'fade-out': desapareciendo }">
-    <div class="gif-center">
-      <img *ngIf="gifHeroUrl" [src]="gifHeroUrl" alt="heroGif" />
-    </div>
+    
+      <div *ngIf="mostrarHeroGif" class="hero-sprite-gif" [ngStyle]="getSprite(heroType, 'hero')"></div>
+    
   </div>
 </div>
 
@@ -810,11 +819,9 @@
   <table style="width: 100%;height: 100%;">
     <tr>
       <td style="width: 200px;padding-top:10px;padding-left:10px;">
-        <img class="background-image-obj"
-             [src]="heroStyles[heroType].icon"
-             alt="imageEnemy"
-             style="width: 200px; position: relative; z-index: 2;" 
-             />
+        <div style="width: 200px; height: 200px; overflow: hidden; position: relative;">
+      <div class="background-image"[ngStyle]="getSprite(heroType, 'hero')"style="transform: scale(0.4); transform-origin: left top;"></div><!--herospriteimg-->
+    </div>
       </td>
       <td style="padding-inline: 10px; padding-top: 10px;">
         <div class="background-image-obj"style="background-color: #f7d9c4bd;padding: 10px; height: 200px;">
@@ -887,7 +894,7 @@
       <div *ngIf="enemyType != null" class="botonera1" style="margin-top: 15px;z-index: -1;">
         <button class="normal-button btn-startbattle" [disabled]="hero!.state[1] !=''" (click)="playButtonSound();startBattleTimer(enemyType!)"style="height: 80px"> 
           <div class="image-container">
-            <img class="background-image" style="max-width: 250px;" [src]="this.imageUrls['BOTON_madera_8']" alt="start"/>
+            <div class="background-image" alt="start" [ngStyle]="getSprite('sprite12','button')" style="transform: scale(0.8);"></div><!--buttonspriteimg-->
             <div class="overlay-text" >START BATTLE</div>
           </div>
         </button>
@@ -898,7 +905,7 @@
     <div class="right-columns"style="margin-left: inherit;margin-right: auto;">
   <div class="map-wrapper"style="margin-left: 9px;margin-right: -11px;">
     <button [disabled]="map==1" class="normal-button"(click)="changeMap('prev')">
-      <img class="background-image" [src]="this.imageUrls['BOTON_madera_4']" alt="botón izquierdo"style="width: 120px;margin-top: 150px;" />
+      <div class="background-image" alt="left" [ngStyle]="getSprite('sprite6','button')"style="margin-top: 100px;transform-origin: left;"></div><!--buttonspriteimg-->
     </button>
     <!-- Mapa 1 -->
     <div *ngIf="map == 1"class="scroll-container">
@@ -1050,31 +1057,31 @@
           </button>
       </div>
       <button [disabled]="map==2" class="normal-button"(click)="changeMap('next')">
-        <img class="background-image" [src]="this.imageUrls['BOTON_madera_5']" alt="botón izquierdo"style="width: 120px;margin-top: 150px;" />
+        <div class="background-image" alt="right" [ngStyle]="getSprite('sprite7','button')"style="margin-top: 100px;transform-origin: left;"></div><!--buttonspriteimg-->
       </button>
 
       <!-- Botón debajo -->
        <button *ngIf="enemyType" class="normal-button btn-loot"(click)="playButtonSound();onClipClick('clipLoo')"style="position: absolute; top: 20px; left: 0;">
           <div class="image-container" style="position: relative; display: inline-block;">
-            <img class="background-image" style="max-width: 250px; display: block;"[src]="this.imageUrls['BOTON_madera_8']"alt="start"/>
+            <div class="background-image" alt="start" [ngStyle]="getSprite('sprite12','button')" style="transform: scale(0.8);"></div><!--buttonspriteimg-->
             <div class="overlay-text"style="position: absolute;left: 180px;font-weight: bold;">LOOT</div>
           </div>
         </button>
         <button *ngIf="enemyType" class="normal-button btn-stats"(click)="playButtonSound();onClipClick('clipSta')"style="position: absolute; top: 20px; left: 0;">
           <div class="image-container" style="position: relative; display: inline-block;">
-            <img class="background-image" style="max-width: 250px; display: block;"[src]="this.imageUrls['BOTON_madera_8']"alt="start"/>
+            <div class="background-image" alt="start" [ngStyle]="getSprite('sprite12','button')" style="transform: scale(0.8);"></div><!--buttonspriteimg-->
             <div class="overlay-text"style="position: absolute;left: 180px;font-weight: bold;">ENEMY</div>
           </div>
         </button>
         <button *ngIf="enemyType" class="normal-button btn-desc"(click)="playButtonSound();onClipClick('clipDe')"style="position: absolute; top: 20px;; left: 0px;;">
           <div class="image-container" style="position: relative; display: inline-block;">
-            <img class="background-image" style="max-width: 250px; display: block;"[src]="this.imageUrls['BOTON_madera_8']"alt="start"/>
+            <div class="background-image" alt="start" [ngStyle]="getSprite('sprite12','button')" style="transform: scale(0.8);"></div><!--buttonspriteimg-->
             <div class="overlay-text"style="position: absolute;left: 170px;font-weight: bold">HERO</div>
           </div>
         </button>
         <button *ngIf="enemyType" class="normal-button btn-battle"(click)="playButtonSound();onClipClick('clipBa')"style="position: absolute; top: 20px;; left: 0px;">
           <div class="image-container" style="position: relative; display: inline-block;">
-            <img class="background-image" style="max-width: 250px; display: block;"[src]="this.imageUrls['BOTON_madera_8']"alt="start"/>
+            <div class="background-image" alt="start" [ngStyle]="getSprite('sprite12','button')" style="transform: scale(0.8);"></div><!--buttonspriteimg-->
             <div class="overlay-text"style="position: absolute;left: 180px;font-weight: bold;">BATTLE</div>
           </div>
         </button>
@@ -1118,21 +1125,21 @@
 
                                       <!-- Botonera -->
     <div class="botonera1" style="margin-top: 10px; display: flex; gap: 10px;height: fit-content;padding: 5px;">
-      <button *ngIf="gifBattleUrl" class="normal-button btn-startbattle" (click)="playButtonSound();logBattleGif()"> 
-        <div class="image-container">
-          <img class="background-image" style="max-width: 150px;" [src]="imageUrls['BOTON_madera_8']" alt="log" />
+      <button *ngIf="gifBattleUrl" class="normal-button btn-startbattle" (click)="playButtonSound();logBattleGif()"style="width: 190px;height: 50px;margin-top: 7px;"> 
+        <div class="image-container"style="height: 50px;">
+          <div class="background-image" alt="log" [ngStyle]="getSprite('sprite12','button')" style="transform: scale(0.6);transform-origin: top left;"></div><!--buttonspriteimg-->
           <div class="overlay-text" style="font-size: 12px;">LOG</div>
         </div>
       </button>
-      <button *ngIf="!gifBattleUrl" class="normal-button btn-startbattle" (click)="playButtonSound();rewardsBattleGif()"> 
-        <div class="image-container">
-          <img class="background-image" style="max-width: 150px;" [src]="imageUrls['BOTON_madera_8']" alt="rewards" />
-          <div class="overlay-text" style="font-size: 12px;">Rewards</div>
+      <button *ngIf="!gifBattleUrl" class="normal-button btn-startbattle" (click)="playButtonSound();rewardsBattleGif()"style="width: 190px;height: 50px;margin-top: 7px;"> 
+        <div class="image-container"style="height: 50px;">
+          <div class="background-image" alt="rewards" [ngStyle]="getSprite('sprite12','button')" style="transform: scale(0.6);transform-origin: top left;"></div><!--buttonspriteimg-->
+          <div class="overlay-text" style="font-size: 12px;">REWARDS</div>
         </div>
       </button>
-      <button class="normal-button btn-startbattle" (click)="playButtonSound();exitBattleGif()"> 
-        <div class="image-container">
-          <img class="background-image" style="max-width: 150px;" [src]="imageUrls['BOTON_madera_8']" alt="exit" />
+      <button class="normal-button btn-startbattle" (click)="playButtonSound();exitBattleGif()"style="width: 190px;height: 50px;margin-top: 7px;"> 
+        <div class="image-container"style="height: 50px;">
+          <div class="background-image" alt="exit" [ngStyle]="getSprite('sprite12','button')" style="transform: scale(0.6);transform-origin: top left;"></div><!--buttonspriteimg-->
           <div class="overlay-text" style="font-size: 12px;">EXIT</div>
         </div>
       </button>
@@ -1227,9 +1234,9 @@
         <input type="range"min="1"[max]="item.amount"[(ngModel)]="selectedAmount" style="width: 100%;height: 10px;margin-top: 40px; background: linear-gradient(to right, #a0522d, #8b4513);border: 2px solid #3b1e0f;border-radius: 8px; outline: none;accent-color: #5c3a1e;box-shadow: 0 0 5px #3b1e0f;"/>
       </div>
       <!-- Botón de venta -->
-      <button *ngIf="item != null" class="normal-button" style="width: 200px; height: 80px;" (click)="playButtonSound();onSellItemClick(item)">
-        <div class="image-container" style="width: 200px;">
-          <img class="background-image"[src]="this.imageUrls['BOTON_madera_8']"alt="start" style="width: 180px;"/>
+      <button *ngIf="item != null" class="normal-button" (click)="playButtonSound();onSellItemClick(item)">
+        <div class="image-container">
+          <div class="background-image" alt="start" [ngStyle]="getSprite('sprite12','button')"style="transform: scale(0.8);"></div><!--buttonspriteimg-->
           <div class="overlay-text">SELL</div>
         </div>
       </button>
@@ -1334,7 +1341,7 @@
         </div>
       </div>
       <!-- Barra de cantidad crafteable -->
-      <div *ngIf="item != null && item.type !='RAW'"style="position: relative; width: 60%; margin-bottom: 15px;">
+      <div *ngIf="item != null && item.type !='RAW'"style="position: relative; width: 60%;">
         <div style="position: absolute;top: -20px;left: 0;right: 0;text-align: center;font-family: 'MedievalSharp', serif;color: #3b1e0f;font-weight: bold;">
           Quantity: {{ selectedAmount }}
           Total: {{ getCraftTotal(item.price, selectedAmount) }}
@@ -1343,9 +1350,9 @@
         <input type="range"min="1"[max]="10"[(ngModel)]="selectedAmount"(ngModelChange)="checkItemRequirements(item)" style="width: 100%;height: 10px;background: linear-gradient(to right, #a0522d, #8b4513);border: 2px solid #3b1e0f;border-radius: 8px; outline: none;accent-color: #5c3a1e;box-shadow: 0 0 5px #3b1e0f;"/>
       </div>
       <!-- Botón de crafteo -->
-      <button *ngIf="item != null"[disabled]="!item1Have || !item2Have || !item3Have || gold < item.price/10 " class="normal-button" style="width: 200px; height: 80px;"(click)="playButtonSound();craftItem(selectedAmount)">
-        <div class="image-container" style="width: 200px;">
-          <img class="background-image"[src]="this.imageUrls['BOTON_madera_8']"alt="start" style="width: 180px;"/>
+      <button *ngIf="item != null"[disabled]="!item1Have || !item2Have || !item3Have || gold < item.price/10 " class="normal-button"style="width: 100%;height: 100%;" (click)="playButtonSound();craftItem(selectedAmount)">
+        <div class="image-container"style="width: 100%;height: 100%;">
+          <div class="background-image" alt="start" [ngStyle]="getSprite('sprite12','button')" style="transform: scale(0.8);"></div><!--buttonspriteimg-->
           <div class="overlay-text">CRAFT</div>
         </div>
       </button>
@@ -1391,20 +1398,22 @@
     </button>
 
     <!-- BOTÓN DE BATALLA -->
-<button
-  *ngIf="hero!.state[0] && hero!.state[1] == ''"
-  class="battle-done-button animated-button"
-  (click)="playButtonSound();onStartBattleClick(hero,i)">
-  Batalla terminada
-</button>
+  <button
+    *ngIf="hero!.state[0] && hero!.state[1] == ''"
+    class="battle-done-button animated-button"
+    (click)="playButtonSound();onStartBattleClick(hero,i)">
+    Batalla terminada
+  </button>
 
     <!-- BOTÓN DEL HÉROE -->
-    <button (click)="playButtonSound();onHeroClick(hero)" class="hero-button">
-      <div class="button-content">
-        <img [src]="hero!.icon" alt="{{ hero!.name }}" class="hero-image-button" />
-        <label class="hero-label">{{ hero!.name }}</label>
-      </div>
-    </button>
+  <button (click)="playButtonSound();onHeroClick(hero)" class="hero-button">
+    <div style="width: 46px; height: 46px; overflow: hidden; position: relative;">
+      <div class="background-image"[ngStyle]="getSprite(hero!.type, 'hero')"style="transform: scale(0.09); transform-origin: left top;"></div><!--herospriteimg-->
+    </div>
+    <div>
+      <label class="hero-label"style="margin-inline: 5px;">{{ hero!.name }}</label>
+    </div>       
+  </button>
   </div>
 
   <!-- BOTÓN DE SHOP -->
